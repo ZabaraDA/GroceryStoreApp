@@ -1,0 +1,187 @@
+﻿<Application x:Class="GroceryStoreApp.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:GroceryStoreApp"
+             StartupUri="Windows/MenuWindow.xaml">
+             <!--StartupUri="Windows/AuthorizationWindow.xaml">-->
+    <Application.Resources>
+
+        <Geometry x:Key="SettingsPathData">M59.534,34.913l-0.019,0-0.595,5.54L52.853,39.8a18.358,18.358,0,0,1-1.659,4.112L56.021,47.7l-3.5,
+            4.465,0,0.005-0.024.02-0.023.029-0.007-.005-4.416,3.56L44.227,51.02a18.383,18.383,0,0,1-4.175,1.764l0.736,6.059-5.531.672,0,
+            0.019-0.083-.009-0.083.01,0-.019-5.54-.595L30.2,52.854a18.367,18.367,0,0,1-4.161-1.687l-3.8,4.854-4.52-3.541,0.04-.051-3.525-4.372,
+            4.752-3.831a18.385,18.385,0,0,1-1.764-4.176l-6.059.736-0.672-5.531-0.019,0,0.009-.083-0.01-.083,0.019,0,0.595-5.54L17.147,30.2A18.36,
+            18.36,0,0,1,18.9,25.912l-4.785-3.749,3.374-4.306-0.02-.025,0.106-.086,0.081-.1,0.024,0.019,4.259-3.433,3.831,4.752a18.381,18.381,0,0,1,
+            4.175-1.764l-0.736-6.059,5.531-.672,0-.019,0.083,0.009,0.083-.01,0,0.019,5.54,0.595L39.8,17.146a18.366,18.366,0,0,1,4.237,1.73l3.727-4.757,
+            4.342,3.4,0.059-.048,3.6,4.47L51.02,25.773a18.385,18.385,0,0,1,1.764,4.176l6.059-.736,0.672,5.531,0.019,0-0.009.083ZM35,20.979A14.021,14.021,
+            0,1,0,49.021,35,14.021,14.021,0,0,0,35,20.979Zm0,21.28A7.259,7.259,0,1,1,42.259,35,7.259,7.259,0,0,1,35,42.259Z</Geometry>
+        <Geometry x:Key="ProductPathData">M66.775,65.445H3.226V33.685H19.113V4.625H50.888v29.06H66.775V65.445Zm-60.789-29V62.686H32.241V36.444H31.426L28.1,
+            49.563H10.2L6.876,36.444H5.986Zm6.536,10.772H25.78l2.729-10.772H9.794ZM25.681,7.384l2.729,10.772H41.667L44.4,7.384H25.681Zm22.447,
+            0H47.313L43.99,20.5h-17.9L22.763,7.384h-0.89V33.626H48.128V7.384Zm-6.56,29.06L44.3,47.216H57.554l2.728-10.772H41.568Zm22.447,
+            0H63.2L59.877,49.563h-17.9L38.651,36.444H37.76V62.686H64.015V36.444Zm-20.169,25.5H39.1v-1.91h4.742v1.91Zm18.9,
+            0H44.7v-1.91H62.741v1.91ZM42.3,57.091H60.349V59H42.3v-1.91ZM27.959,32.884H23.218v-1.91h4.741v1.91Zm18.9,
+            0H28.808v-1.91H46.854v1.91ZM26.416,28.03H44.461v1.91H26.416V28.03ZM12.072,61.945H7.331v-1.91h4.741v1.91Zm18.9,
+            0H12.921v-1.91H30.967v1.91ZM10.528,57.091H28.574V59H10.528v-1.91Z</Geometry>
+        <Geometry x:Key="AddProductPathData">M47.608,39.348V60.176H9.85V22.418H29.939A15.338,15.338,0,1,1,47.608,39.348ZM13.129,
+            25.7V56.9h31.2V39.518a15.274,15.274,0,0,1-4.254-.845l-0.664,2.622H18.136L14.187,25.7H13.129ZM20.9,38.5H36.651l0.336-1.328A15.333,
+            15.333,0,0,1,29.907,25.7H17.654Zm24.275-27.26A12.959,12.959,0,1,0,58.131,24.2,12.959,12.959,0,0,0,45.172,11.245Zm1.646,
+            14.584v7.735H43.533V25.829H35.8V22.544h7.735V14.81h3.285v7.735h7.735v3.285H46.818ZM20.361,56.015H14.727v-2.27h5.634v2.27Zm22.453,
+            0H21.371v-2.27H42.815v2.27ZM18.527,50.244H39.971v2.271H18.527V50.244Z</Geometry>
+        <Geometry x:Key="UserPathData">M63.57,48.868a63.368,63.368,0,0,1-10.408,1.044c-0.46,0-.966-0.013-1.5-0.035-0.287,1.377-.87,
+            2.546-1.995,2.8A89.394,89.394,0,0,1,35,54.144a89.394,89.394,0,0,1-14.667-1.47c-1.125-.251-1.708-1.421-2-2.8-0.535.023-1.041,
+            0.035-1.5,0.035A63.366,63.366,0,0,1,6.429,48.867c-2.169-.485-1.5-5.78-1.5-5.78A19.736,19.736,0,0,1,7.9,37.272,32.445,32.445,
+            0,0,1,11,33.568a7.008,7.008,0,1,1,11.688.057c0.313,0.327.643,0.686,0.972,1.058,0.963-1.208,2.106-2.5,3.113-3.545a9.876,
+            9.876,0,1,1,16.472.08c0.991,1.033,2.1,2.3,3.045,3.476,0.351-.4.7-0.78,1.035-1.124a7.008,7.008,0,1,1,11.688.057,32.3,32.3,0,0,
+            1,3.039,3.648,20.947,20.947,0,0,1,3.017,5.815S65.739,48.384,63.57,48.868ZM10.3,38.905a12.406,12.406,0,0,0-2.116,5.764c2.978,
+            1.957,9.917,1.483,9.917,1.483l0.121-1.614a26.367,26.367,0,0,1,3.662-7.393,12.432,12.432,0,0,0-1.54-1.332,7.01,7.01,0,0,
+            1-7.017-.03A12.552,12.552,0,0,0,10.3,38.905ZM16.86,24.888a4.838,4.838,0,1,0,4.835,4.838A4.836,4.836,0,0,0,16.86,
+            24.888Zm18.173-5.97a6.811,6.811,0,1,0,6.814,6.811A6.812,6.812,0,0,0,35.033,18.918ZM39.942,34.3a9.889,9.889,0,0,
+            1-9.889-.042,17.675,17.675,0,0,0-4.266,4.4,17.452,17.452,0,0,0-2.981,8.113A34.928,34.928,0,0,0,35,48.895a34.949,
+            34.949,0,0,0,12.134-2.108,17.45,17.45,0,0,0-2.984-8.136A17.688,17.688,0,0,0,39.942,34.3Zm13.244-9.407a4.838,4.838,0,1,
+            0,4.835,4.838A4.836,4.836,0,0,0,53.186,24.889Zm6.469,14.017a12.561,12.561,0,0,0-2.986-3.093,7.01,7.01,0,0,1-7.017-.029,
+            12.413,12.413,0,0,0-1.592,1.371,28,28,0,0,1,3.717,7.383L51.9,46.152s3.885,0.754,9.873-1.467A12.4,12.4,0,0,0,59.655,38.907Z</Geometry>
+        <Geometry x:Key="AccountPathData">M52.356,38.984L50.57,37.2l-1.786,1.785L47,37.2l-1.787,1.786L43.323,37.1l-1.886,1.884L39.652,
+            37.2l-1.786,1.785L36.078,37.2l-1.787,1.786L32.335,37.03h-0.6a10.289,10.289,0,1,1-.295-5.19H52.356l3.575,3.572ZM21.638,
+            29.55A5.451,5.451,0,1,0,27.092,35,5.452,5.452,0,0,0,21.638,29.55Z</Geometry>
+        <Geometry x:Key="ProfilePathData">M48.6,49.318A82.867,82.867,0,0,1,35,50.681a82.868,82.868,0,0,1-13.6-1.362c-2.833-.633-1.957-7.542-1.957-7.542s0.667-2.869,
+            3.884-7.588a42.34,42.34,0,0,1,4.041-4.834,9.154,9.154,0,1,1,15.269.074,42.163,42.163,0,0,1,3.97,4.76,27.321,27.321,0,0,1,3.942,7.588S51.429,48.686,48.6,
+            49.318ZM35.031,18.028a6.313,6.313,0,1,0,6.316,6.313A6.314,6.314,0,0,0,35.031,18.028Zm8.451,18.292a16.4,16.4,0,0,0-3.9-4.036,9.167,9.167,0,0,1-9.166-.038,
+            16.384,16.384,0,0,0-3.955,4.075A16.177,16.177,0,0,0,23.7,43.84a33.336,33.336,0,0,0,22.551.021A16.174,16.174,0,0,0,43.482,36.319Z</Geometry>
+        <Geometry x:Key="ChangePathData">M499.462,233.421c-113.218,0-209.487,74.51-244.916,178.405l77.738-52.139L362.9,405.479l-115.849,77.7,0.043,0.064-45.854,
+            30.748L93.007,352.119l45.854-30.748,54.383,81.339c41.567-128.027,162.932-220.7,306.218-220.7,156.35,0,286.618,110.334,315.569,256.549H751.986C724.981,
+            320.952,622.176,233.421,499.462,233.421Zm0,533.158c115.861,0,213.962-78.033,247.287-185.73l-79.033,53.007-30.611-45.792,
+            115.849-77.7-0.043-.064,45.854-30.748L906.993,641.424l-45.854,30.748-53.728-80.359C767.565,722.667,644.785,817.991,
+            499.462,817.991c-158.647,0-290.45-113.6-316.787-263.016h62.862C270.2,675.825,374.51,766.579,499.462,766.579Z</Geometry>
+        <Geometry x:Key="ReducePathData">M50.357,35.308L63.631,48.631l-2.914,2.925-16.142-16.2,0.02-.02-0.052-.052L60.711,19.109l2.919,
+            2.92ZM44.544,48.63L41.63,51.555l-16.142-16.2,0.02-.02-0.052-.052L41.625,19.108l2.919,2.92L31.27,35.307Zm-19.087-.662-2.915,
+            2.925L6.4,34.691l0.02-.02L6.369,34.62,22.538,18.445l2.919,2.92L12.183,34.645Z</Geometry>
+        
+        <Style TargetType="PasswordBox">
+            <Setter Property="PasswordChar" Value="●"/>
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="SelectionBrush" Value="Black"/>
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type PasswordBox}">
+                        <Grid>
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+
+                            <Border VerticalAlignment="Bottom" Background="{TemplateBinding BorderBrush}" Name="border1" Height="1"></Border>
+                            <Border VerticalAlignment="Bottom" Background="{TemplateBinding Background}" Height="1" Name="border" Width="{TemplateBinding Width}">
+                                <Border.LayoutTransform>
+                                    <ScaleTransform ScaleX="0"></ScaleTransform>
+                                </Border.LayoutTransform>
+                            </Border>
+                            <Border VerticalAlignment="Bottom" Background="{TemplateBinding SelectionBrush}" Visibility="Hidden" Name="border2" Height="1" ></Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+
+                                <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="true"/>
+                                    <Condition Property="IsFocused" Value="false"/>
+
+                                </MultiTrigger.Conditions>
+                                <MultiTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard TargetName="border" TargetProperty="LayoutTransform.ScaleX">
+                                            <DoubleAnimation  To="1" From="0" Duration="0:00:0.3"></DoubleAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </MultiTrigger.EnterActions>
+                                <MultiTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard TargetName="border" TargetProperty="LayoutTransform.ScaleX">
+                                            <DoubleAnimation To="0" From="1" Duration="0:00:0.3"></DoubleAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </MultiTrigger.ExitActions>
+                            </MultiTrigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="Visibility" Value="Hidden"/>
+                                <Setter TargetName="border2" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
+                        <Condition Property="IsSelectionActive" Value="false"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Path" x:Key="NavigationPath">
+            <Setter Property="Width" Value="30" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10 0 15 0" />
+            <Setter Property="Stretch" Value="Uniform"></Setter>
+            <Setter Property="Fill" Value="#FFAB2929"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Fill" Value="#FF3E3D3D"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+        <Style x:Key="ButtonFocusVisual" >
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type Button}" x:Key="NavigationStyle">
+            <Setter Property="Background" Value="#FF9A9A9A"/>
+            <Setter Property="Foreground" Value="#FF423F3F"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Height" Value="45"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="FocusVisualStyle"
+                    Value="{StaticResource ButtonFocusVisual}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="5" Background="{TemplateBinding Background}" x:Name="ColorBackground">
+                            <Grid>
+                                <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF5A5A5A"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FF5D5D5D" />
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter TargetName="ColorBackground" Property="Background" Value="#FF3E3D3D"></Setter>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="true">
+                                <Setter Property="Background" TargetName="ColorBackground" Value="Green"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+    </Application.Resources>
+</Application>

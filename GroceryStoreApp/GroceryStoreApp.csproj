@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{28C3A4E9-A431-4623-A769-ABA050498FF3}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>GroceryStoreApp</RootNamespace>
+    <AssemblyName>GroceryStoreApp</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="CsClasses\ParametersClass.cs" />
+    <Compile Include="Databases\DatadasesModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DatadasesModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\DatadasesModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\DatadasesModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DatadasesModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\Адрес.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\Аккаунт.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\Должность.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\ЕдиницаИзмерения.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\КатегорияТовара.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\МестоОтправки.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\МодификаторЦены.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\НаселённыйПункт.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\Планировка.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\Поставка.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\Поставщик.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\Регион.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\Склад.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\Сотрудник.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\Списание.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\СписаниеТовар.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\Стеллаж.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\Тип.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\ТипСтелажа.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\Товар.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\ТоварПоставка.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\ТорговыйЗал.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\ТорговыйЗалСтеллаж.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\Улица.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\Филиал.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\ФилиалТовар.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\Элемент.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\ЭлементПланировка.cs">
+      <DependentUpon>DatadasesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddProductPage.xaml.cs">
+      <DependentUpon>AddProductPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddUserPage.xaml.cs">
+      <DependentUpon>AddUserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DataProductPage.xaml.cs">
+      <DependentUpon>DataProductPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DataUserPage.xaml.cs">
+      <DependentUpon>DataUserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\CaptchaWindow.xaml.cs">
+      <DependentUpon>CaptchaWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MenuWindow.xaml.cs">
+      <DependentUpon>MenuWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Pages\AddProductPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddUserPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\DataProductPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\DataUserPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\AuthorizationWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Windows\AuthorizationWindow.xaml.cs">
+      <DependentUpon>AuthorizationWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Windows\CaptchaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MenuWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EntityDeploy Include="Databases\DatadasesModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DatadasesModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Databases\DatadasesModel.edmx.diagram">
+      <DependentUpon>DatadasesModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WpfCustomControlLibrary\WpfCustomControlLibrary.csproj">
+      <Project>{f103c134-4c3c-4d7d-ab09-e974e01530e3}</Project>
+      <Name>WpfCustomControlLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Databases\DatadasesModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DatadasesModel.Context.cs</LastGenOutput>
+      <DependentUpon>DatadasesModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Databases\DatadasesModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DatadasesModel.edmx</DependentUpon>
+      <LastGenOutput>DatadasesModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
