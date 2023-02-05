@@ -15,9 +15,12 @@ using System.Windows.Shapes;
 
 namespace GroceryStoreApp.Pages
 {
-    public partial class AddProductPage : Page
+    /// <summary>
+    /// Логика взаимодействия для WelcomePage.xaml
+    /// </summary>
+    public partial class WelcomePage : Page
     {
-        public AddProductPage()
+        public WelcomePage()
         {
             InitializeComponent();
         }

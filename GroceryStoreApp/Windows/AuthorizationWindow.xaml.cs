@@ -28,6 +28,8 @@ namespace GroceryStoreApp
         public AuthorizationWindow()
         {
             InitializeComponent();
+            LoginTextBox.Text = "ad";
+            PasswordBox.Password = "ad";
 
             dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
             dispatcherTimer.Tick += DispatcherTimer_Tick;
@@ -50,7 +52,6 @@ namespace GroceryStoreApp
 
         private void OpenButton_Click(object sender, RoutedEventArgs e)
         {
-
             Аккаунт selectedAccount = databasesEntities.Аккаунт.Where(x => x.Логин.Equals(LoginTextBox.Text) && x.Пароль.Equals(PasswordBox.Password)).FirstOrDefault();
 
             if (selectedAccount == null)
@@ -75,7 +76,9 @@ namespace GroceryStoreApp
             else
             {
                 ParametersClass.SelectedAccount = selectedAccount;
-                ParametersClass.SelectedUser = databasesEntities.Сотрудник.Where(x => x.Код.Equals(selectedAccount.КодСотрудника)).FirstOrDefault();
+                //ParametersClass.SelectedUser = databasesEntities.Сотрудник.Where(x => x.Код.Equals(selectedAccount.КодСотрудника)).FirstOrDefault();
+                ParametersClass.SelectedUser = selectedAccount.Сотрудник;
+
                 if (incorrectly == true)
                 {                 
                     CaptchaWindow captchaWindow = new CaptchaWindow();

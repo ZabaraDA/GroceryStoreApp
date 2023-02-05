@@ -23,11 +23,12 @@ namespace GroceryStoreApp.Windows
         DoubleAnimation doubleAnimation = new DoubleAnimation();
 
         int quantity = 0;
-        readonly List<(Page, string, string)> navigationButtonList = new List<(Page, string, string)>()
+        readonly List<(int access,Page page, string content, string data)> navigationButtonList = new List<(int access, Page page, string content, string data)>()
         {
           //(new ProfilePage(),"Профиль","SettingsPathData"),
-          (new AddUserPage(), "Аккаунты","ProfilePathData"),
-          (new DataUserPage(), "Сотрудники","ProfilePathData"),
+          (1,new AddUserPage(), "Аккаунты","ProfilePathData"),
+          (1,new DataUserPage(), "Сотрудники","ProfilePathData"),
+
         };
         public MenuWindow()
         {
@@ -39,7 +40,7 @@ namespace GroceryStoreApp.Windows
             //HidePath.Data = Geometry.Parse(PathDataClass.hideData);
             StatusBarTextBlock.Text = "Главное меню - Приветствие";
 
-            //MenuFrame.Navigate(new WelcomePage());
+            MenuFrame.Navigate(new WelcomePage());
 
             ButtonGenerator();
         }
@@ -50,11 +51,12 @@ namespace GroceryStoreApp.Windows
             {
                 NavigationButton navigationButton = new NavigationButton()
                 {
-                    Content = navigationButtonList[i].Item2,
-                    Data = (Geometry)Application.Current.FindResource(navigationButtonList[i].Item3),
+                    Content = navigationButtonList[i].content,
+                    Data = (Geometry)Application.Current.FindResource(navigationButtonList[i].data),
                     Tag = quantity++,
-                };
 
+                };
+                 
                 navigationButton.Click += Button_Click;
                 ControlStackPanel.Children.Add(navigationButton);
             }
@@ -63,7 +65,8 @@ namespace GroceryStoreApp.Windows
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var a = sender as NavigationButton;
-            MenuFrame.Navigate(navigationButtonList[(int)a.Tag].Item1);
+            StatusBarTextBlock.Text = "Главное меню - " + navigationButtonList[(int)a.Tag].content;
+            MenuFrame.Navigate(navigationButtonList[(int)a.Tag].page);
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

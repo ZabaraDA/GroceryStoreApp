@@ -62,7 +62,7 @@
 
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" VerticalAlignment="Top" Margin="10 10 10 0">
                     <Border Width="50" Height="50"  Background="White" CornerRadius="5"></Border>
-                    <StackPanel>
+                    <StackPanel Margin="10">
                         <TextBlock Text="Имя" Name="NameTextBlock"></TextBlock>
                         <TextBlock Text="Фамилия" Name="SurnameTextBlock"></TextBlock>
                     </StackPanel>
