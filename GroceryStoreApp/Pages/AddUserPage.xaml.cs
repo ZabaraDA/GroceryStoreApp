@@ -32,6 +32,7 @@ namespace GroceryStoreApp.Pages
 
         byte[] photoProfile;
 
+        bool addWithAccount;
         public AddUserPage()
         {
             InitializeComponent();
@@ -199,7 +200,7 @@ namespace GroceryStoreApp.Pages
                 }
             }
 
-           
+
             if (EmploymentDatePicker.Text == "" || EmploymentDatePicker.Text == null)
             {
                 errors.AppendLine("Укажите дату трудоустройства");
@@ -208,13 +209,13 @@ namespace GroceryStoreApp.Pages
             {
                 errors.AppendLine("Введите электронную почту");
             }
-            if(photoProfile == null)
+            if (photoProfile == null)
             {
-                if (MessageBox.Show("Вы уверены","Внимание",MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
+                if (MessageBox.Show("Вы уверены", "Внимание", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
                 {
                     return;
                 }
-                
+
             }
 
             if (errors.Length == 0)
@@ -263,17 +264,17 @@ namespace GroceryStoreApp.Pages
             List<Control> children = UserInfoStackPanel.Children.OfType<Control>().ToList();
             foreach (Control control in children)
             {
-                if(control as TextBox != null)
+                if (control as TextBox != null)
                 {
                     var textBox = control as TextBox;
                     textBox.Text = null;
                 }
-                else if(control as ComboBox != null)
+                else if (control as ComboBox != null)
                 {
                     var comboBox = control as ComboBox;
                     comboBox.SelectedIndex = 0;
                 }
-                else if(control as DatePicker != null)
+                else if (control as DatePicker != null)
                 {
                     var datePicker = control as DatePicker;
                     datePicker.Text = null;
@@ -287,20 +288,21 @@ namespace GroceryStoreApp.Pages
 
         private void AddAccountButton_Click(object sender, RoutedEventArgs e)
         {
-            //if (addWithAccount == false)
-            //{
-            //    addWithAccount = true;
-            //    AccountDataStackPanel.Visibility = Visibility.Visible;
-            //    AddAccountButton.Content = "Удалить аккаунт";
-            //    AccountTextBlock.Visibility = Visibility.Collapsed;
-            //}
-            //else if (addWithAccount == true)
-            //{
-            //    addWithAccount = false;
-            //    AccountDataStackPanel.Visibility = Visibility.Collapsed;
-            //    AddAccountButton.Content = "Добавить аккаунт";
-            //    AccountTextBlock.Visibility = Visibility.Visible;
-            //}
+            if (addWithAccount == false)
+            {
+                addWithAccount = true;
+                AccountStackPanel.Visibility = Visibility.Visible;
+                NoAccountStackPanel.Visibility = Visibility.Collapsed;
+                AddAccountButton.Content = "Отменить добавление аккаунта";
+               
+            }
+            else if (addWithAccount == true)
+            {
+                addWithAccount = false;
+                AccountStackPanel.Visibility= Visibility.Collapsed;
+                NoAccountStackPanel.Visibility = Visibility.Visible;
+                AddAccountButton.Content = "Добавить аккаунт";
+            }
         }
     }
 }

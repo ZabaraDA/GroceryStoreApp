@@ -57,7 +57,7 @@
             <my:LoginTextBoxWithRemoved x:Name="LoginTextBox" Uid="Введите логин" ></my:LoginTextBoxWithRemoved>
             <TextBlock Text="Введите пароль"></TextBlock>
 
-            <PasswordBox x:Name="PasswordBox" PasswordChanged="PasswordBox_PasswordChanged"/>
+            <PasswordBox x:Name="PasswordBox" PasswordChanged="PasswordBox_PasswordChanged" Style="{StaticResource AuthorizationPasswordBoxStyle}"/>
             <Button Content="Забыли пароль?"  Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF636363" 
                     HorizontalAlignment="Right" FontFamily="Segoe UI Light" FontSize="20" Cursor="Hand" Focusable="False"></Button>
         </StackPanel>

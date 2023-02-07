@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:GroceryStoreApp"
              StartupUri="Windows/AuthorizationWindow.xaml">
-             <!--StartupUri="Windows/MenuWindow.xaml">-->
+    <!--StartupUri="Windows/MenuWindow.xaml">-->
     <Application.Resources>
         <!--<Style TargetType="Calendar">
             <Setter Property="FontSize" Value="24"></Setter>
@@ -15,7 +15,7 @@
                 </Setter.Value>
             </Setter>
         </Style>-->
-        
+
         <Geometry x:Key="SettingsPathData">M59.534,34.913l-0.019,0-0.595,5.54L52.853,39.8a18.358,18.358,0,0,1-1.659,4.112L56.021,47.7l-3.5,
             4.465,0,0.005-0.024.02-0.023.029-0.007-.005-4.416,3.56L44.227,51.02a18.383,18.383,0,0,1-4.175,1.764l0.736,6.059-5.531.672,0,
             0.019-0.083-.009-0.083.01,0-.019-5.54-.595L30.2,52.854a18.367,18.367,0,0,1-4.161-1.687l-3.8,4.854-4.52-3.541,0.04-.051-3.525-4.372,
@@ -295,7 +295,7 @@
         <SolidColorBrush x:Key="TextBox.Focus.Border1" Color="#FF0CA500"/>
         <SolidColorBrush x:Key="TextBlock.Static.Foreground" Color="Gray"/>
         <!--#endregion-->
-        <Style TargetType="PasswordBox">
+        <Style TargetType="PasswordBox" x:Key="AuthorizationPasswordBoxStyle">
             <Setter Property="PasswordChar" Value="●"/>
             <Setter Property="Width" Value="300"/>
             <Setter Property="Background" Value="Black"/>
@@ -361,6 +361,42 @@
                 </MultiTrigger>
             </Style.Triggers>
         </Style>
+        <Style TargetType="PasswordBox" x:Key="BasePasswordBoxStyle">
+            <Setter Property="PasswordChar" Value="●"/>
+            <Setter Property="SelectionBrush" Value="Black"/>
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type PasswordBox}">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True" CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.MouseOver.Border1}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.Focus.Border1}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
+                        <Condition Property="IsSelectionActive" Value="false"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
 
         <Style TargetType="Path" x:Key="NavigationPath">
             <Setter Property="Width" Value="30" />
@@ -376,7 +412,7 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        
+
         <Style x:Key="ButtonFocusVisual" >
             <Setter Property="Control.Template">
                 <Setter.Value>
