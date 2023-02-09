@@ -84,10 +84,10 @@
                                         <TextBlock Text="Семейное положение"></TextBlock>
                                     </StackPanel>
                                     <StackPanel Name="FullNameStackPanel">
-                                        <my:TextBoxWithRemoved Uid="Введите фамилию" Width="300" Name="SurnameTextBox"/>
-                                        <my:TextBoxWithRemoved Uid="Введите имя"  Width="300" Name="NameTextBox"/>
-                                        <my:TextBoxWithRemoved Uid="Введите отчество" Width="300" Name="PatronymicTextBox"/>
-                                        <ComboBox x:Name="GenderComboBox"  Width="300">
+                                        <my:TextBoxWithRemoved Uid="Введите фамилию" Width="300" Name="SurnameTextBox" MaxLength="50"/>
+                                        <my:TextBoxWithRemoved Uid="Введите имя"  Width="300" Name="NameTextBox" MaxLength="30"/>
+                                        <my:TextBoxWithRemoved Uid="Введите отчество" Width="300" Name="PatronymicTextBox" MaxLength="50"/>
+                                        <ComboBox x:Name="GenderComboBox" Width="300">
                                             <ComboBoxItem Content="Не выбрано"></ComboBoxItem>
                                             <ComboBoxItem Content="Мужской"></ComboBoxItem>
                                             <ComboBoxItem Content="Женский"></ComboBoxItem>
@@ -158,13 +158,13 @@
                         </Border>
                         <Border Background="#FFB9B9B9" Padding="20" CornerRadius="0 10 10 0" >
                             <StackPanel HorizontalAlignment="Left" Name="AddressInfoStackPanel">
-                                <ComboBox x:Name="RegionComboBox"></ComboBox>
-                                <ComboBox x:Name="TypeLocalityComboBox">
+                                <ComboBox x:Name="RegionComboBox" DropDownClosed="ComboBox_DropDownClosed"></ComboBox>
+                                <ComboBox x:Name="TypeLocalityComboBox" DropDownClosed="ComboBox_DropDownClosed">
                                     <ComboBoxItem Content="Все категории"></ComboBoxItem>
                                     <ComboBoxItem Content="Городские населённые пункты"></ComboBoxItem>
                                     <ComboBoxItem Content="Сельские населённые пункты"></ComboBoxItem>
                                 </ComboBox>
-                                <ComboBox x:Name="LocalityComboBox"></ComboBox>
+                                <ComboBox x:Name="LocalityComboBox" DropDownClosed="ComboBox_DropDownClosed"></ComboBox>
                                 <ComboBox x:Name="StreetComboBox"></ComboBox>
                                 <my:TextBoxWithRemoved Uid="Введите номер дома" Name="HouseTextBox"></my:TextBoxWithRemoved>
                             </StackPanel>
@@ -193,9 +193,9 @@
                                 <Border Background="#FFB9B9B9" Padding="20" CornerRadius="0 10 10 0" >
                                     <StackPanel HorizontalAlignment="Left" Name="InfoStackPanel">
                                         <ComboBox x:Name="AccessComboBox">
-                                            <ComboBoxItem Content="Все категории"></ComboBoxItem>
-                                            <ComboBoxItem Content="Городские населённые пункты"></ComboBoxItem>
-                                            <ComboBoxItem Content="Сельские населённые пункты"></ComboBoxItem>
+                                            <ComboBoxItem Content="Выберите уровень доступа"></ComboBoxItem>
+                                            <ComboBoxItem Content="Системный администратор"></ComboBoxItem>
+                                            <ComboBoxItem Content="Администратор"></ComboBoxItem>
                                         </ComboBox>
                                         <my:TextBoxWithRemoved Uid="Введите логин" Name="LoginTextBox"></my:TextBoxWithRemoved>
                                         <PasswordBox Name="PasswordBox"></PasswordBox>

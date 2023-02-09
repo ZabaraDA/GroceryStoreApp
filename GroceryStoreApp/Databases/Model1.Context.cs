@@ -42,7 +42,8 @@ namespace GroceryStoreApp.Databases
         public virtual DbSet<Списание> Списание { get; set; }
         public virtual DbSet<СписаниеТовар> СписаниеТовар { get; set; }
         public virtual DbSet<Стеллаж> Стеллаж { get; set; }
-        public virtual DbSet<Тип> Тип { get; set; }
+        public virtual DbSet<ТипНаселённогоПункта> ТипНаселённогоПункта { get; set; }
+        public virtual DbSet<ТипРегиона> ТипРегиона { get; set; }
         public virtual DbSet<ТипСтелажа> ТипСтелажа { get; set; }
         public virtual DbSet<Товар> Товар { get; set; }
         public virtual DbSet<ТоварПоставка> ТоварПоставка { get; set; }

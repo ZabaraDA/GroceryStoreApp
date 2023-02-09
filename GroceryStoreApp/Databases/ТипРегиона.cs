@@ -12,20 +12,18 @@ namespace GroceryStoreApp.Databases
     using System;
     using System.Collections.Generic;
     
-    public partial class Улица
+    public partial class ТипРегиона
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Улица()
+        public ТипРегиона()
         {
-            this.Адрес = new HashSet<Адрес>();
+            this.Регион = new HashSet<Регион>();
         }
     
         public int Код { get; set; }
         public string Наименование { get; set; }
-        public int КодНаселённогоПункта { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Адрес> Адрес { get; set; }
-        public virtual НаселённыйПункт НаселённыйПункт { get; set; }
+        public virtual ICollection<Регион> Регион { get; set; }
     }
 }

@@ -21,37 +21,72 @@ namespace GroceryStoreApp.Pages
 {
     public partial class AddUserPage : Page
     {
-        GroceryStoreDatabasesEntities databasesEntities = new GroceryStoreDatabasesEntities();
-
-        OpenFileDialog openFileDialog = new OpenFileDialog()
+        readonly GroceryStoreDatabasesEntities databasesEntities = new GroceryStoreDatabasesEntities();
+        readonly OpenFileDialog openFileDialog = new OpenFileDialog()
         {
             Multiselect = false,
             Filter = "Images (*.JPG; *.PNG)| *.JPG;*.PNG"
         };
-        ImageSource photo;
+        readonly ImageSource photo;
 
         byte[] photoProfile;
 
-        bool addWithAccount;
+        bool addWithAccount = false;
         public AddUserPage()
         {
             InitializeComponent();
 
             photo = PhotoProfileImageBrush.ImageSource;
 
+            GenderComboBox.SelectedIndex = 0;
+            FamilyStatusComboBox.SelectedIndex = 0;
+            TypeLocalityComboBox.SelectedIndex = 0;
+
             var professionItems = databasesEntities.Должность.ToList();
             professionItems.Insert(0, new Должность
             {
-                Наименование = "Не выбрано"
+                Наименование = "Укажите должность"
             });
             ProfessionComboBox.ItemsSource = professionItems.ToList();
             ProfessionComboBox.DisplayMemberPath = "Наименование";
             ProfessionComboBox.SelectedIndex = 0;
 
-            GenderComboBox.SelectedIndex = 0;
 
-            FamilyStatusComboBox.SelectedIndex = 0;
+            var subsidiaryItems = databasesEntities.Филиал.ToList();
+            subsidiaryItems.Insert(0, new Филиал
+            {
+                Наименование = "Укажите филиал"
+            });
+            SubsidiaryComboBox.ItemsSource = subsidiaryItems.ToList();
+            SubsidiaryComboBox.DisplayMemberPath = "Наименование";
+            SubsidiaryComboBox.SelectedIndex = 0;
 
+            var regionItems = databasesEntities.Регион.ToList();
+            regionItems.Insert(0, new Регион
+            {
+                Наименование = "Укажите регион"
+            });
+            RegionComboBox.ItemsSource = regionItems.ToList();
+            RegionComboBox.DisplayMemberPath = "Наименование";
+            RegionComboBox.SelectedIndex = 0;
+
+            var streetItems = databasesEntities.Улица.ToList();
+            streetItems.Insert(0, new Улица
+            {
+                Наименование = "Укажите улицу"
+            });
+            StreetComboBox.ItemsSource = streetItems.ToList();
+            StreetComboBox.DisplayMemberPath = "Наименование";
+            StreetComboBox.SelectedIndex = 0;
+
+            var localityItems = databasesEntities.НаселённыйПункт.ToList();
+            localityItems.Insert(0, new НаселённыйПункт
+            {
+                Наименование = "Укажите населённый пункт"
+            });
+            LocalityComboBox.ItemsSource = localityItems.ToList();
+            LocalityComboBox.DisplayMemberPath = "Наименование";
+            LocalityComboBox.SelectedIndex = 0;
         }
 
         private void AddPhotoButton_Click(object sender, RoutedEventArgs e)
@@ -63,7 +98,7 @@ namespace GroceryStoreApp.Pages
                 bitmapImage.UriSource = new Uri(openFileDialog.FileName);
                 bitmapImage.EndInit();
 
-                CroppedBitmap croppedBitmap = new CroppedBitmap();
+                CroppedBitmap croppedBitmap;
                 int pixelSizeImage = 200;
 
                 if (bitmapImage.PixelWidth > bitmapImage.PixelHeight)
@@ -200,7 +235,10 @@ namespace GroceryStoreApp.Pages
                 }
             }
 
-
+            //if (SubsidiaryComboBox.SelectedIndex == 0)
+            //{
+            //    errors.AppendLine("Укажите филиал");
+            //}
             if (EmploymentDatePicker.Text == "" || EmploymentDatePicker.Text == null)
             {
                 errors.AppendLine("Укажите дату трудоустройства");
@@ -209,17 +247,72 @@ namespace GroceryStoreApp.Pages
             {
                 errors.AppendLine("Введите электронную почту");
             }
+            if (RegionComboBox.SelectedIndex == 0)
+            {
+                errors.AppendLine("Укажите регион");
+            }
+            if (LocalityComboBox.SelectedIndex == 0)
+            {
+                errors.AppendLine("Укажите населённый пункт");
+            }
+            if (StreetComboBox.SelectedIndex == 0)
+            {
+                errors.AppendLine("Укажите улицу");
+            }
+            if (HouseTextBox.Text == "" || HouseTextBox.Text == null)
+            {
+                errors.AppendLine("Введите номер дома");
+            }
+
+            if (addWithAccount == true)
+            {
+                if (AccessComboBox.SelectedIndex == 0)
+                {
+                    errors.AppendLine("Укажите уровень доступа");
+                }
+                if (LoginTextBox.Text == "" || LoginTextBox.Text == null)
+                {
+                    errors.AppendLine("Введите логин");
+                }
+                else if (LoginTextBox.Text.Length < 8)
+                {
+                    errors.AppendLine("Логин должен содержать не менее 8 символов");
+                }
+                if (PasswordBox.Password == "" || PasswordBox.Password == null)
+                {
+                    errors.AppendLine("Введите пароль");
+                }
+                else if (PasswordBox.Password.Length < 8)
+                {
+                    errors.AppendLine("Пароль должен содержать не менее 8 символов");
+                }
+                else if (PasswordBox.Password != DoublePasswordBox.Password)
+                {
+                    errors.AppendLine("Значения паролей не совпадают");
+                }
+            }
+
             if (photoProfile == null)
             {
                 if (MessageBox.Show("Вы уверены", "Внимание", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
                 {
                     return;
                 }
-
             }
+
 
             if (errors.Length == 0)
             {
+                databasesEntities.Адрес.Add(new Адрес
+                {
+                    КодРегиона = databasesEntities.Регион.Where(x => x.Наименование.Equals(RegionComboBox.Text)).FirstOrDefault().Код,
+                    КодНаселённогоПункта = databasesEntities.НаселённыйПункт.Where(x => x.Наименование.Equals(LocalityComboBox.Text)).FirstOrDefault().Код,
+                    КодУлицы = databasesEntities.Улица.Where(x => x.Наименование.Equals(StreetComboBox.Text)).FirstOrDefault().Код,
+                    Дом = Convert.ToInt16(HouseTextBox.Text),
+                    ТипАдреса = false,
+                    //НаселённыйПункт = LocalityComboBox.SelectedItem as НаселённыйПункт,
+                    //Улица = StreetComboBox.SelectedItem as Улица,
+                });
 
                 databasesEntities.Сотрудник.Add(new Сотрудник
                 {
@@ -237,7 +330,20 @@ namespace GroceryStoreApp.Pages
                     Фото = photoProfile,
                     Пол = Convert.ToBoolean(GenderComboBox.SelectedIndex),
                     СемейноеПоложение = Convert.ToBoolean(FamilyStatusComboBox.SelectedIndex),
+
                 });
+                if (addWithAccount == true)
+                {
+                    databasesEntities.Аккаунт.Add(new Аккаунт
+                    {
+                        КодСотрудника = databasesEntities.Сотрудник.Count(),
+                        Логин = LoginTextBox.Text,
+                        Пароль = PasswordBox.Password,
+                        УровеньДоступа = (byte)AccessComboBox.SelectedIndex
+                    });
+                }
+
+
                 try
                 {
                     databasesEntities.SaveChanges();
@@ -294,15 +400,43 @@ namespace GroceryStoreApp.Pages
                 AccountStackPanel.Visibility = Visibility.Visible;
                 NoAccountStackPanel.Visibility = Visibility.Collapsed;
                 AddAccountButton.Content = "Отменить добавление аккаунта";
-               
+
             }
             else if (addWithAccount == true)
             {
                 addWithAccount = false;
-                AccountStackPanel.Visibility= Visibility.Collapsed;
+                AccountStackPanel.Visibility = Visibility.Collapsed;
                 NoAccountStackPanel.Visibility = Visibility.Visible;
                 AddAccountButton.Content = "Добавить аккаунт";
             }
+        }
+        private void ComboBox_DropDownClosed(object sender, EventArgs e)
+        {
+                var localityItems = databasesEntities.НаселённыйПункт.ToList();
+            if (RegionComboBox.SelectedIndex > 0)
+            {
+                localityItems = localityItems.Where(x => x.Регион.Equals(RegionComboBox.SelectedItem)).ToList();
+            }
+                localityItems.Insert(0, new НаселённыйПункт
+                {
+                    Наименование = "Укажите населённый пункт"
+                });
+                LocalityComboBox.ItemsSource = localityItems.ToList();
+                LocalityComboBox.DisplayMemberPath = "Наименование";
+                LocalityComboBox.SelectedIndex = 0;
+                var streetItems = databasesEntities.Улица.ToList();
+
+            if(LocalityComboBox.SelectedIndex > 0)
+            {
+                streetItems = streetItems.Where(x => x.НаселённыйПункт.Equals(LocalityComboBox.SelectedItem)).ToList();
+            }
+                streetItems.Insert(0, new Улица
+                {
+                    Наименование = "Укажите улицу"
+                });
+                StreetComboBox.ItemsSource = streetItems.ToList();
+                StreetComboBox.DisplayMemberPath = "Наименование";
+                StreetComboBox.SelectedIndex = 0;
         }
     }
 }

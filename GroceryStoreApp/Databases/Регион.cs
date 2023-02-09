@@ -18,14 +18,17 @@ namespace GroceryStoreApp.Databases
         public Регион()
         {
             this.Адрес = new HashSet<Адрес>();
+            this.НаселённыйПункт = new HashSet<НаселённыйПункт>();
         }
     
         public int Код { get; set; }
         public string Наименование { get; set; }
-        public int ТипРегиона { get; set; }
+        public int Тип { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Адрес> Адрес { get; set; }
-        public virtual Тип Тип { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<НаселённыйПункт> НаселённыйПункт { get; set; }
+        public virtual ТипРегиона ТипРегиона { get; set; }
     }
 }

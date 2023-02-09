@@ -10,9 +10,9 @@
             <PropertyRef Name="Код" />
           </Key>
           <Property Name="Код" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Регион" Type="int" Nullable="false" />
-          <Property Name="НаселённыйПункт" Type="int" Nullable="false" />
-          <Property Name="Улица" Type="int" Nullable="false" />
+          <Property Name="КодРегиона" Type="int" Nullable="false" />
+          <Property Name="КодНаселённогоПункта" Type="int" Nullable="false" />
+          <Property Name="КодУлицы" Type="int" Nullable="false" />
           <Property Name="Дом" Type="smallint" Nullable="false" />
           <Property Name="ТипАдреса" Type="bit" Nullable="false" />
         </EntityType>
@@ -79,7 +79,8 @@
           </Key>
           <Property Name="Код" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Наименование" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="ТипНаселённогоПункта" Type="int" Nullable="false" />
+          <Property Name="Тип" Type="int" Nullable="false" />
+          <Property Name="КодРегиона" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Планировка">
           <Key>
@@ -114,7 +115,7 @@
           </Key>
           <Property Name="Код" Type="int" Nullable="false" />
           <Property Name="Наименование" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="ТипРегиона" Type="int" Nullable="false" />
+          <Property Name="Тип" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Склад">
           <Key>
@@ -128,7 +129,7 @@
           <Key>
             <PropertyRef Name="Код" />
           </Key>
-          <Property Name="Код" Type="int" Nullable="false" />
+          <Property Name="Код" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Фамилия" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Имя" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Отчество" Type="nvarchar" MaxLength="50" />
@@ -140,10 +141,11 @@
           <Property Name="ДатаРождения" Type="date" Nullable="false" />
           <Property Name="ДатаТрудоустройства" Type="date" Nullable="false" />
           <Property Name="ДатаУвольнения" Type="date" />
-          <Property Name="Фото" Type="image" Nullable="false" />
+          <Property Name="Фото" Type="image" />
           <Property Name="ИНН" Type="char" MaxLength="30" Nullable="false" />
           <Property Name="ОМС" Type="char" MaxLength="30" Nullable="false" />
           <Property Name="СНИЛС" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="КодАдреса" Type="int" />
         </EntityType>
         <EntityType Name="Списание">
           <Key>
@@ -171,13 +173,19 @@
           <Property Name="Статус" Type="bit" Nullable="false" />
           <Property Name="КодФилиала" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Тип">
+        <EntityType Name="ТипНаселённогоПункта">
           <Key>
             <PropertyRef Name="Код" />
           </Key>
           <Property Name="Код" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Наименование" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Назначение" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ТипРегиона">
+          <Key>
+            <PropertyRef Name="Код" />
+          </Key>
+          <Property Name="Код" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Наименование" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="ТипСтелажа">
           <Key>
@@ -243,6 +251,7 @@
           </Key>
           <Property Name="Код" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Наименование" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="КодНаселённогоПункта" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Филиал">
           <Key>
@@ -250,7 +259,7 @@
           </Key>
           <Property Name="Код" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Адрес" Type="int" Nullable="false" />
-          <Property Name="Название" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Наименование" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <EntityType Name="ФилиалТовар">
           <Key>
@@ -287,7 +296,7 @@
               <PropertyRef Name="Код" />
             </Principal>
             <Dependent Role="Адрес">
-              <PropertyRef Name="НаселённыйПункт" />
+              <PropertyRef Name="КодНаселённогоПункта" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -299,7 +308,7 @@
               <PropertyRef Name="Код" />
             </Principal>
             <Dependent Role="Адрес">
-              <PropertyRef Name="Регион" />
+              <PropertyRef Name="КодРегиона" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -311,7 +320,7 @@
               <PropertyRef Name="Код" />
             </Principal>
             <Dependent Role="Адрес">
-              <PropertyRef Name="Улица" />
+              <PropertyRef Name="КодУлицы" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -387,15 +396,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_НаселённыйПункт_Тип">
-          <End Role="Тип" Type="Self.Тип" Multiplicity="1" />
+        <Association Name="FK_НаселённыйПункт_Регион">
+          <End Role="Регион" Type="Self.Регион" Multiplicity="1" />
           <End Role="НаселённыйПункт" Type="Self.НаселённыйПункт" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Тип">
+            <Principal Role="Регион">
               <PropertyRef Name="Код" />
             </Principal>
             <Dependent Role="НаселённыйПункт">
-              <PropertyRef Name="ТипНаселённогоПункта" />
+              <PropertyRef Name="КодРегиона" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_НаселённыйПункт_ТипНаселённогоПункта">
+          <End Role="ТипНаселённогоПункта" Type="Self.ТипНаселённогоПункта" Multiplicity="1" />
+          <End Role="НаселённыйПункт" Type="Self.НаселённыйПункт" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ТипНаселённогоПункта">
+              <PropertyRef Name="Код" />
+            </Principal>
+            <Dependent Role="НаселённыйПункт">
+              <PropertyRef Name="Тип" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -423,15 +444,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Регион_Тип">
-          <End Role="Тип" Type="Self.Тип" Multiplicity="1" />
+        <Association Name="FK_Регион_ТипРегиона">
+          <End Role="ТипРегиона" Type="Self.ТипРегиона" Multiplicity="1" />
           <End Role="Регион" Type="Self.Регион" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Тип">
+            <Principal Role="ТипРегиона">
               <PropertyRef Name="Код" />
             </Principal>
             <Dependent Role="Регион">
-              <PropertyRef Name="ТипРегиона" />
+              <PropertyRef Name="Тип" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -447,15 +468,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Сотрудник_Адрес1">
-          <End Role="Адрес" Type="Self.Адрес" Multiplicity="1" />
-          <End Role="Сотрудник" Type="Self.Сотрудник" Multiplicity="0..1" />
+        <Association Name="FK_Сотрудник_Адрес">
+          <End Role="Адрес" Type="Self.Адрес" Multiplicity="0..1" />
+          <End Role="Сотрудник" Type="Self.Сотрудник" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Адрес">
               <PropertyRef Name="Код" />
             </Principal>
             <Dependent Role="Сотрудник">
-              <PropertyRef Name="Код" />
+              <PropertyRef Name="КодАдреса" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -627,6 +648,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Улица_НаселённыйПункт">
+          <End Role="НаселённыйПункт" Type="Self.НаселённыйПункт" Multiplicity="1" />
+          <End Role="Улица" Type="Self.Улица" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="НаселённыйПункт">
+              <PropertyRef Name="Код" />
+            </Principal>
+            <Dependent Role="Улица">
+              <PropertyRef Name="КодНаселённогоПункта" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Филиал_Адрес">
           <End Role="Адрес" Type="Self.Адрес" Multiplicity="1" />
           <End Role="Филиал" Type="Self.Филиал" Multiplicity="*" />
@@ -705,7 +738,8 @@
           <EntitySet Name="Списание" EntityType="Self.Списание" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="СписаниеТовар" EntityType="Self.СписаниеТовар" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Стеллаж" EntityType="Self.Стеллаж" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Тип" EntityType="Self.Тип" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ТипНаселённогоПункта" EntityType="Self.ТипНаселённогоПункта" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ТипРегиона" EntityType="Self.ТипРегиона" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ТипСтелажа" EntityType="Self.ТипСтелажа" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Товар" EntityType="Self.Товар" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ТоварПоставка" EntityType="Self.ТоварПоставка" Schema="dbo" store:Type="Tables" />
@@ -752,8 +786,12 @@
             <End Role="Филиал" EntitySet="Филиал" />
             <End Role="МодификаторЦены" EntitySet="МодификаторЦены" />
           </AssociationSet>
-          <AssociationSet Name="FK_НаселённыйПункт_Тип" Association="Self.FK_НаселённыйПункт_Тип">
-            <End Role="Тип" EntitySet="Тип" />
+          <AssociationSet Name="FK_НаселённыйПункт_Регион" Association="Self.FK_НаселённыйПункт_Регион">
+            <End Role="Регион" EntitySet="Регион" />
+            <End Role="НаселённыйПункт" EntitySet="НаселённыйПункт" />
+          </AssociationSet>
+          <AssociationSet Name="FK_НаселённыйПункт_ТипНаселённогоПункта" Association="Self.FK_НаселённыйПункт_ТипНаселённогоПункта">
+            <End Role="ТипНаселённогоПункта" EntitySet="ТипНаселённогоПункта" />
             <End Role="НаселённыйПункт" EntitySet="НаселённыйПункт" />
           </AssociationSet>
           <AssociationSet Name="FK_Поставка_МестоОтправки" Association="Self.FK_Поставка_МестоОтправки">
@@ -764,15 +802,15 @@
             <End Role="Филиал" EntitySet="Филиал" />
             <End Role="Поставка" EntitySet="Поставка" />
           </AssociationSet>
-          <AssociationSet Name="FK_Регион_Тип" Association="Self.FK_Регион_Тип">
-            <End Role="Тип" EntitySet="Тип" />
+          <AssociationSet Name="FK_Регион_ТипРегиона" Association="Self.FK_Регион_ТипРегиона">
+            <End Role="ТипРегиона" EntitySet="ТипРегиона" />
             <End Role="Регион" EntitySet="Регион" />
           </AssociationSet>
           <AssociationSet Name="FK_Склад_Поставщик" Association="Self.FK_Склад_Поставщик">
             <End Role="Поставщик" EntitySet="Поставщик" />
             <End Role="Склад" EntitySet="Склад" />
           </AssociationSet>
-          <AssociationSet Name="FK_Сотрудник_Адрес1" Association="Self.FK_Сотрудник_Адрес1">
+          <AssociationSet Name="FK_Сотрудник_Адрес" Association="Self.FK_Сотрудник_Адрес">
             <End Role="Адрес" EntitySet="Адрес" />
             <End Role="Сотрудник" EntitySet="Сотрудник" />
           </AssociationSet>
@@ -832,6 +870,10 @@
             <End Role="ТорговыйЗал" EntitySet="ТорговыйЗал" />
             <End Role="ТорговыйЗалСтеллаж" EntitySet="ТорговыйЗалСтеллаж" />
           </AssociationSet>
+          <AssociationSet Name="FK_Улица_НаселённыйПункт" Association="Self.FK_Улица_НаселённыйПункт">
+            <End Role="НаселённыйПункт" EntitySet="НаселённыйПункт" />
+            <End Role="Улица" EntitySet="Улица" />
+          </AssociationSet>
           <AssociationSet Name="FK_Филиал_Адрес" Association="Self.FK_Филиал_Адрес">
             <End Role="Адрес" EntitySet="Адрес" />
             <End Role="Филиал" EntitySet="Филиал" />
@@ -863,16 +905,16 @@
             <PropertyRef Name="Код" />
           </Key>
           <Property Name="Код" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Регион" Type="Int32" Nullable="false" />
-          <Property Name="НаселённыйПункт" Type="Int32" Nullable="false" />
-          <Property Name="Улица" Type="Int32" Nullable="false" />
+          <Property Name="КодРегиона" Type="Int32" Nullable="false" />
+          <Property Name="КодНаселённогоПункта" Type="Int32" Nullable="false" />
+          <Property Name="КодУлицы" Type="Int32" Nullable="false" />
           <Property Name="Дом" Type="Int16" Nullable="false" />
           <Property Name="ТипАдреса" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="НаселённыйПункт1" Relationship="Self.FK_Адрес_НаселённыйПункт" FromRole="Адрес" ToRole="НаселённыйПункт" />
-          <NavigationProperty Name="Регион1" Relationship="Self.FK_Адрес_Регион" FromRole="Адрес" ToRole="Регион" />
-          <NavigationProperty Name="Улица1" Relationship="Self.FK_Адрес_Улица" FromRole="Адрес" ToRole="Улица" />
+          <NavigationProperty Name="НаселённыйПункт" Relationship="Self.FK_Адрес_НаселённыйПункт" FromRole="Адрес" ToRole="НаселённыйПункт" />
+          <NavigationProperty Name="Регион" Relationship="Self.FK_Адрес_Регион" FromRole="Адрес" ToRole="Регион" />
+          <NavigationProperty Name="Улица" Relationship="Self.FK_Адрес_Улица" FromRole="Адрес" ToRole="Улица" />
           <NavigationProperty Name="МестоОтправки" Relationship="Self.FK_МестоОтправки_Адрес" FromRole="Адрес" ToRole="МестоОтправки" />
-          <NavigationProperty Name="Сотрудник" Relationship="Self.FK_Сотрудник_Адрес1" FromRole="Адрес" ToRole="Сотрудник" />
+          <NavigationProperty Name="Сотрудник" Relationship="Self.FK_Сотрудник_Адрес" FromRole="Адрес" ToRole="Сотрудник" />
           <NavigationProperty Name="Филиал" Relationship="Self.FK_Филиал_Адрес" FromRole="Адрес" ToRole="Филиал" />
         </EntityType>
         <EntityType Name="Аккаунт">
@@ -948,9 +990,12 @@
           </Key>
           <Property Name="Код" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Наименование" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ТипНаселённогоПункта" Type="Int32" Nullable="false" />
+          <Property Name="Тип" Type="Int32" Nullable="false" />
+          <Property Name="КодРегиона" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Адрес" Relationship="Self.FK_Адрес_НаселённыйПункт" FromRole="НаселённыйПункт" ToRole="Адрес" />
-          <NavigationProperty Name="Тип" Relationship="Self.FK_НаселённыйПункт_Тип" FromRole="НаселённыйПункт" ToRole="Тип" />
+          <NavigationProperty Name="Регион" Relationship="Self.FK_НаселённыйПункт_Регион" FromRole="НаселённыйПункт" ToRole="Регион" />
+          <NavigationProperty Name="ТипНаселённогоПункта" Relationship="Self.FK_НаселённыйПункт_ТипНаселённогоПункта" FromRole="НаселённыйПункт" ToRole="ТипНаселённогоПункта" />
+          <NavigationProperty Name="Улица" Relationship="Self.FK_Улица_НаселённыйПункт" FromRole="НаселённыйПункт" ToRole="Улица" />
         </EntityType>
         <EntityType Name="Планировка">
           <Key>
@@ -992,9 +1037,10 @@
           </Key>
           <Property Name="Код" Type="Int32" Nullable="false" />
           <Property Name="Наименование" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ТипРегиона" Type="Int32" Nullable="false" />
+          <Property Name="Тип" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Адрес" Relationship="Self.FK_Адрес_Регион" FromRole="Регион" ToRole="Адрес" />
-          <NavigationProperty Name="Тип" Relationship="Self.FK_Регион_Тип" FromRole="Регион" ToRole="Тип" />
+          <NavigationProperty Name="НаселённыйПункт" Relationship="Self.FK_НаселённыйПункт_Регион" FromRole="Регион" ToRole="НаселённыйПункт" />
+          <NavigationProperty Name="ТипРегиона" Relationship="Self.FK_Регион_ТипРегиона" FromRole="Регион" ToRole="ТипРегиона" />
         </EntityType>
         <EntityType Name="Склад">
           <Key>
@@ -1010,7 +1056,7 @@
           <Key>
             <PropertyRef Name="Код" />
           </Key>
-          <Property Name="Код" Type="Int32" Nullable="false" />
+          <Property Name="Код" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Фамилия" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Имя" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Отчество" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -1022,11 +1068,12 @@
           <Property Name="ДатаРождения" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ДатаТрудоустройства" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ДатаУвольнения" Type="DateTime" Precision="0" />
-          <Property Name="Фото" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="Фото" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="ИНН" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="ОМС" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="СНИЛС" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Адрес" Relationship="Self.FK_Сотрудник_Адрес1" FromRole="Сотрудник" ToRole="Адрес" />
+          <Property Name="КодАдреса" Type="Int32" />
+          <NavigationProperty Name="Адрес" Relationship="Self.FK_Сотрудник_Адрес" FromRole="Сотрудник" ToRole="Адрес" />
           <NavigationProperty Name="Аккаунт" Relationship="Self.FK_Аккаунт_Сотрудник" FromRole="Сотрудник" ToRole="Аккаунт" />
           <NavigationProperty Name="Должность" Relationship="Self.FK_Сотрудник_Должность" FromRole="Сотрудник" ToRole="Должность" />
         </EntityType>
@@ -1063,15 +1110,21 @@
           <NavigationProperty Name="Филиал" Relationship="Self.FK_Стеллаж_Филиал1" FromRole="Стеллаж" ToRole="Филиал" />
           <NavigationProperty Name="ТорговыйЗалСтеллаж" Relationship="Self.FK_ТорговыйЗалСтеллаж_Стеллаж" FromRole="Стеллаж" ToRole="ТорговыйЗалСтеллаж" />
         </EntityType>
-        <EntityType Name="Тип">
+        <EntityType Name="ТипНаселённогоПункта">
           <Key>
             <PropertyRef Name="Код" />
           </Key>
           <Property Name="Код" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Наименование" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Назначение" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="НаселённыйПункт" Relationship="Self.FK_НаселённыйПункт_Тип" FromRole="Тип" ToRole="НаселённыйПункт" />
-          <NavigationProperty Name="Регион" Relationship="Self.FK_Регион_Тип" FromRole="Тип" ToRole="Регион" />
+          <NavigationProperty Name="НаселённыйПункт" Relationship="Self.FK_НаселённыйПункт_ТипНаселённогоПункта" FromRole="ТипНаселённогоПункта" ToRole="НаселённыйПункт" />
+        </EntityType>
+        <EntityType Name="ТипРегиона">
+          <Key>
+            <PropertyRef Name="Код" />
+          </Key>
+          <Property Name="Код" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Наименование" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Регион" Relationship="Self.FK_Регион_ТипРегиона" FromRole="ТипРегиона" ToRole="Регион" />
         </EntityType>
         <EntityType Name="ТипСтелажа">
           <Key>
@@ -1151,7 +1204,9 @@
           </Key>
           <Property Name="Код" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Наименование" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="КодНаселённогоПункта" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Адрес" Relationship="Self.FK_Адрес_Улица" FromRole="Улица" ToRole="Адрес" />
+          <NavigationProperty Name="НаселённыйПункт" Relationship="Self.FK_Улица_НаселённыйПункт" FromRole="Улица" ToRole="НаселённыйПункт" />
         </EntityType>
         <EntityType Name="Филиал">
           <Key>
@@ -1159,7 +1214,7 @@
           </Key>
           <Property Name="Код" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Адрес" Type="Int32" Nullable="false" />
-          <Property Name="Название" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Наименование" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Адрес1" Relationship="Self.FK_Филиал_Адрес" FromRole="Филиал" ToRole="Адрес" />
           <NavigationProperty Name="МодификаторЦены" Relationship="Self.FK_МодификаторЦены_Филиал" FromRole="Филиал" ToRole="МодификаторЦены" />
           <NavigationProperty Name="Поставка" Relationship="Self.FK_Поставка_Филиал" FromRole="Филиал" ToRole="Поставка" />
@@ -1208,7 +1263,7 @@
               <PropertyRef Name="Код" />
             </Principal>
             <Dependent Role="Адрес">
-              <PropertyRef Name="НаселённыйПункт" />
+              <PropertyRef Name="КодНаселённогоПункта" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1220,7 +1275,7 @@
               <PropertyRef Name="Код" />
             </Principal>
             <Dependent Role="Адрес">
-              <PropertyRef Name="Регион" />
+              <PropertyRef Name="КодРегиона" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1232,7 +1287,7 @@
               <PropertyRef Name="Код" />
             </Principal>
             <Dependent Role="Адрес">
-              <PropertyRef Name="Улица" />
+              <PropertyRef Name="КодУлицы" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1248,15 +1303,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Сотрудник_Адрес1">
-          <End Role="Адрес" Type="Self.Адрес" Multiplicity="1" />
-          <End Role="Сотрудник" Type="Self.Сотрудник" Multiplicity="0..1" />
+        <Association Name="FK_Сотрудник_Адрес">
+          <End Role="Адрес" Type="Self.Адрес" Multiplicity="0..1" />
+          <End Role="Сотрудник" Type="Self.Сотрудник" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Адрес">
               <PropertyRef Name="Код" />
             </Principal>
             <Dependent Role="Сотрудник">
-              <PropertyRef Name="Код" />
+              <PropertyRef Name="КодАдреса" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1380,15 +1435,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_НаселённыйПункт_Тип">
-          <End Role="Тип" Type="Self.Тип" Multiplicity="1" />
+        <Association Name="FK_НаселённыйПункт_Регион">
+          <End Role="Регион" Type="Self.Регион" Multiplicity="1" />
           <End Role="НаселённыйПункт" Type="Self.НаселённыйПункт" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Тип">
+            <Principal Role="Регион">
               <PropertyRef Name="Код" />
             </Principal>
             <Dependent Role="НаселённыйПункт">
-              <PropertyRef Name="ТипНаселённогоПункта" />
+              <PropertyRef Name="КодРегиона" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_НаселённыйПункт_ТипНаселённогоПункта">
+          <End Role="ТипНаселённогоПункта" Type="Self.ТипНаселённогоПункта" Multiplicity="1" />
+          <End Role="НаселённыйПункт" Type="Self.НаселённыйПункт" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ТипНаселённогоПункта">
+              <PropertyRef Name="Код" />
+            </Principal>
+            <Dependent Role="НаселённыйПункт">
+              <PropertyRef Name="Тип" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Улица_НаселённыйПункт">
+          <End Role="НаселённыйПункт" Type="Self.НаселённыйПункт" Multiplicity="1" />
+          <End Role="Улица" Type="Self.Улица" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="НаселённыйПункт">
+              <PropertyRef Name="Код" />
+            </Principal>
+            <Dependent Role="Улица">
+              <PropertyRef Name="КодНаселённогоПункта" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1452,15 +1531,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Регион_Тип">
-          <End Role="Тип" Type="Self.Тип" Multiplicity="1" />
+        <Association Name="FK_Регион_ТипРегиона">
+          <End Role="ТипРегиона" Type="Self.ТипРегиона" Multiplicity="1" />
           <End Role="Регион" Type="Self.Регион" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Тип">
+            <Principal Role="ТипРегиона">
               <PropertyRef Name="Код" />
             </Principal>
             <Dependent Role="Регион">
-              <PropertyRef Name="ТипРегиона" />
+              <PropertyRef Name="Тип" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1626,7 +1705,8 @@
           <EntitySet Name="Списание" EntityType="Self.Списание" />
           <EntitySet Name="СписаниеТовар" EntityType="Self.СписаниеТовар" />
           <EntitySet Name="Стеллаж" EntityType="Self.Стеллаж" />
-          <EntitySet Name="Тип" EntityType="Self.Тип" />
+          <EntitySet Name="ТипНаселённогоПункта" EntityType="Self.ТипНаселённогоПункта" />
+          <EntitySet Name="ТипРегиона" EntityType="Self.ТипРегиона" />
           <EntitySet Name="ТипСтелажа" EntityType="Self.ТипСтелажа" />
           <EntitySet Name="Товар" EntityType="Self.Товар" />
           <EntitySet Name="ТоварПоставка" EntityType="Self.ТоварПоставка" />
@@ -1653,7 +1733,7 @@
             <End Role="Адрес" EntitySet="Адрес" />
             <End Role="МестоОтправки" EntitySet="МестоОтправки" />
           </AssociationSet>
-          <AssociationSet Name="FK_Сотрудник_Адрес1" Association="Self.FK_Сотрудник_Адрес1">
+          <AssociationSet Name="FK_Сотрудник_Адрес" Association="Self.FK_Сотрудник_Адрес">
             <End Role="Адрес" EntitySet="Адрес" />
             <End Role="Сотрудник" EntitySet="Сотрудник" />
           </AssociationSet>
@@ -1697,9 +1777,17 @@
             <End Role="Филиал" EntitySet="Филиал" />
             <End Role="МодификаторЦены" EntitySet="МодификаторЦены" />
           </AssociationSet>
-          <AssociationSet Name="FK_НаселённыйПункт_Тип" Association="Self.FK_НаселённыйПункт_Тип">
-            <End Role="Тип" EntitySet="Тип" />
+          <AssociationSet Name="FK_НаселённыйПункт_Регион" Association="Self.FK_НаселённыйПункт_Регион">
+            <End Role="Регион" EntitySet="Регион" />
             <End Role="НаселённыйПункт" EntitySet="НаселённыйПункт" />
+          </AssociationSet>
+          <AssociationSet Name="FK_НаселённыйПункт_ТипНаселённогоПункта" Association="Self.FK_НаселённыйПункт_ТипНаселённогоПункта">
+            <End Role="ТипНаселённогоПункта" EntitySet="ТипНаселённогоПункта" />
+            <End Role="НаселённыйПункт" EntitySet="НаселённыйПункт" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Улица_НаселённыйПункт" Association="Self.FK_Улица_НаселённыйПункт">
+            <End Role="НаселённыйПункт" EntitySet="НаселённыйПункт" />
+            <End Role="Улица" EntitySet="Улица" />
           </AssociationSet>
           <AssociationSet Name="FK_ТорговыйЗал_Планировка" Association="Self.FK_ТорговыйЗал_Планировка">
             <End Role="Планировка" EntitySet="Планировка" />
@@ -1721,8 +1809,8 @@
             <End Role="Поставщик" EntitySet="Поставщик" />
             <End Role="Склад" EntitySet="Склад" />
           </AssociationSet>
-          <AssociationSet Name="FK_Регион_Тип" Association="Self.FK_Регион_Тип">
-            <End Role="Тип" EntitySet="Тип" />
+          <AssociationSet Name="FK_Регион_ТипРегиона" Association="Self.FK_Регион_ТипРегиона">
+            <End Role="ТипРегиона" EntitySet="ТипРегиона" />
             <End Role="Регион" EntitySet="Регион" />
           </AssociationSet>
           <AssociationSet Name="FK_Списание_Филиал" Association="Self.FK_Списание_Филиал">
@@ -1784,9 +1872,9 @@
             <EntityTypeMapping TypeName="GroceryStoreDatabasesModel.Адрес">
               <MappingFragment StoreEntitySet="Адрес">
                 <ScalarProperty Name="Код" ColumnName="Код" />
-                <ScalarProperty Name="Регион" ColumnName="Регион" />
-                <ScalarProperty Name="НаселённыйПункт" ColumnName="НаселённыйПункт" />
-                <ScalarProperty Name="Улица" ColumnName="Улица" />
+                <ScalarProperty Name="КодРегиона" ColumnName="КодРегиона" />
+                <ScalarProperty Name="КодНаселённогоПункта" ColumnName="КодНаселённогоПункта" />
+                <ScalarProperty Name="КодУлицы" ColumnName="КодУлицы" />
                 <ScalarProperty Name="Дом" ColumnName="Дом" />
                 <ScalarProperty Name="ТипАдреса" ColumnName="ТипАдреса" />
               </MappingFragment>
@@ -1860,7 +1948,8 @@
               <MappingFragment StoreEntitySet="НаселённыйПункт">
                 <ScalarProperty Name="Код" ColumnName="Код" />
                 <ScalarProperty Name="Наименование" ColumnName="Наименование" />
-                <ScalarProperty Name="ТипНаселённогоПункта" ColumnName="ТипНаселённогоПункта" />
+                <ScalarProperty Name="Тип" ColumnName="Тип" />
+                <ScalarProperty Name="КодРегиона" ColumnName="КодРегиона" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1899,7 +1988,7 @@
               <MappingFragment StoreEntitySet="Регион">
                 <ScalarProperty Name="Код" ColumnName="Код" />
                 <ScalarProperty Name="Наименование" ColumnName="Наименование" />
-                <ScalarProperty Name="ТипРегиона" ColumnName="ТипРегиона" />
+                <ScalarProperty Name="Тип" ColumnName="Тип" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1931,6 +2020,7 @@
                 <ScalarProperty Name="ИНН" ColumnName="ИНН" />
                 <ScalarProperty Name="ОМС" ColumnName="ОМС" />
                 <ScalarProperty Name="СНИЛС" ColumnName="СНИЛС" />
+                <ScalarProperty Name="КодАдреса" ColumnName="КодАдреса" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1962,12 +2052,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Тип">
-            <EntityTypeMapping TypeName="GroceryStoreDatabasesModel.Тип">
-              <MappingFragment StoreEntitySet="Тип">
+          <EntitySetMapping Name="ТипНаселённогоПункта">
+            <EntityTypeMapping TypeName="GroceryStoreDatabasesModel.ТипНаселённогоПункта">
+              <MappingFragment StoreEntitySet="ТипНаселённогоПункта">
                 <ScalarProperty Name="Код" ColumnName="Код" />
                 <ScalarProperty Name="Наименование" ColumnName="Наименование" />
-                <ScalarProperty Name="Назначение" ColumnName="Назначение" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ТипРегиона">
+            <EntityTypeMapping TypeName="GroceryStoreDatabasesModel.ТипРегиона">
+              <MappingFragment StoreEntitySet="ТипРегиона">
+                <ScalarProperty Name="Код" ColumnName="Код" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2037,6 +2134,7 @@
               <MappingFragment StoreEntitySet="Улица">
                 <ScalarProperty Name="Код" ColumnName="Код" />
                 <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+                <ScalarProperty Name="КодНаселённогоПункта" ColumnName="КодНаселённогоПункта" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2045,7 +2143,7 @@
               <MappingFragment StoreEntitySet="Филиал">
                 <ScalarProperty Name="Код" ColumnName="Код" />
                 <ScalarProperty Name="Адрес" ColumnName="Адрес" />
-                <ScalarProperty Name="Название" ColumnName="Название" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
