@@ -32,11 +32,23 @@ namespace GroceryStoreApp.Pages
         byte[] photoProfile;
 
         bool addWithAccount = false;
-        public AddUserPage()
+        public AddUserPage(Сотрудник selectedUser)
         {
             InitializeComponent();
 
-            photo = PhotoProfileImageBrush.ImageSource;
+            if (selectedUser != null)
+            {
+                DataContext = selectedUser;
+                var localityItems1 = databasesEntities.НаселённыйПункт.ToList();
+                localityItems1.Insert(0, new НаселённыйПункт
+                {
+                    Наименование = "Укажите населённый пункт"
+                });
+
+                LocalityComboBox.ItemsSource = localityItems1.ToList();
+                //LocalityComboBox.SelectedIndex = 0;
+            }
+            
 
             GenderComboBox.SelectedIndex = 0;
             FamilyStatusComboBox.SelectedIndex = 0;
@@ -50,8 +62,6 @@ namespace GroceryStoreApp.Pages
             ProfessionComboBox.ItemsSource = professionItems.ToList();
             ProfessionComboBox.DisplayMemberPath = "Наименование";
             ProfessionComboBox.SelectedIndex = 0;
-
-
             var subsidiaryItems = databasesEntities.Филиал.ToList();
             subsidiaryItems.Insert(0, new Филиал
             {
@@ -70,23 +80,22 @@ namespace GroceryStoreApp.Pages
             RegionComboBox.DisplayMemberPath = "Наименование";
             RegionComboBox.SelectedIndex = 0;
 
-            var streetItems = databasesEntities.Улица.ToList();
-            streetItems.Insert(0, new Улица
+            var streetItems = new List<Улица>() { new Улица
             {
                 Наименование = "Укажите улицу"
-            });
+            }};
             StreetComboBox.ItemsSource = streetItems.ToList();
             StreetComboBox.DisplayMemberPath = "Наименование";
             StreetComboBox.SelectedIndex = 0;
 
-            var localityItems = databasesEntities.НаселённыйПункт.ToList();
-            localityItems.Insert(0, new НаселённыйПункт
-            {
-                Наименование = "Укажите населённый пункт"
-            });
-            LocalityComboBox.ItemsSource = localityItems.ToList();
+            //var localityItems = new List<НаселённыйПункт>() { new НаселённыйПункт
+            //{
+            //    Наименование = "Укажите населённый пункт"
+            //}};
+            //LocalityComboBox.ItemsSource = localityItems.ToList();
             LocalityComboBox.DisplayMemberPath = "Наименование";
-            LocalityComboBox.SelectedIndex = 0;
+            //LocalityComboBox.SelectedIndex = 0;
+
         }
 
         private void AddPhotoButton_Click(object sender, RoutedEventArgs e)
@@ -311,7 +320,7 @@ namespace GroceryStoreApp.Pages
                     Дом = Convert.ToInt16(HouseTextBox.Text),
                     ТипАдреса = false,
                     //НаселённыйПункт = LocalityComboBox.SelectedItem as НаселённыйПункт,
-                    //Улица = StreetComboBox.SelectedItem as Улица,
+                    //Улица = StreetComboBox.SelectedItem is Улица,
                 });
 
                 databasesEntities.Сотрудник.Add(new Сотрудник
@@ -410,26 +419,50 @@ namespace GroceryStoreApp.Pages
                 AddAccountButton.Content = "Добавить аккаунт";
             }
         }
-        private void ComboBox_DropDownClosed(object sender, EventArgs e)
+
+
+        private void RegionComboBox_DropDownClosed(object sender, EventArgs e)
         {
-                var localityItems = databasesEntities.НаселённыйПункт.ToList();
             if (RegionComboBox.SelectedIndex > 0)
             {
-                localityItems = localityItems.Where(x => x.Регион.Equals(RegionComboBox.SelectedItem)).ToList();
+                TypeLocalityComboBox.IsEnabled = true;
             }
+            else
+            {
+                TypeLocalityComboBox.IsEnabled = false;
+                LocalityComboBox.IsEnabled = false;
+                StreetComboBox.IsEnabled = false;
+            }
+        }
+
+        private void TypeLocalityComboBox_DropDownClosed(object sender, EventArgs e)
+        {
+            if (TypeLocalityComboBox.SelectedIndex > 0)
+            {
+                LocalityComboBox.IsEnabled = true;
+                var localityItems = databasesEntities.НаселённыйПункт.ToList().Where(x => x.Регион.Equals(RegionComboBox.SelectedItem) && x.Тип.Equals(TypeLocalityComboBox.SelectedIndex)).ToList();
                 localityItems.Insert(0, new НаселённыйПункт
                 {
                     Наименование = "Укажите населённый пункт"
                 });
-                LocalityComboBox.ItemsSource = localityItems.ToList();
-                LocalityComboBox.DisplayMemberPath = "Наименование";
-                LocalityComboBox.SelectedIndex = 0;
-                var streetItems = databasesEntities.Улица.ToList();
 
-            if(LocalityComboBox.SelectedIndex > 0)
-            {
-                streetItems = streetItems.Where(x => x.НаселённыйПункт.Equals(LocalityComboBox.SelectedItem)).ToList();
+                LocalityComboBox.ItemsSource = localityItems.ToList();
+                LocalityComboBox.SelectedIndex = 0;
             }
+            else
+            {
+                LocalityComboBox.IsEnabled = false;
+                StreetComboBox.IsEnabled = false;
+            }
+        }
+
+        private void LocalityComboBox_DropDownClosed(object sender, EventArgs e)
+        {
+
+            if (LocalityComboBox.SelectedIndex > 0)
+            {
+                var streetItems = databasesEntities.Улица.ToList().Where(x => x.НаселённыйПункт.Equals(LocalityComboBox.SelectedItem)).ToList();
+                StreetComboBox.IsEnabled = true;
                 streetItems.Insert(0, new Улица
                 {
                     Наименование = "Укажите улицу"
@@ -437,6 +470,24 @@ namespace GroceryStoreApp.Pages
                 StreetComboBox.ItemsSource = streetItems.ToList();
                 StreetComboBox.DisplayMemberPath = "Наименование";
                 StreetComboBox.SelectedIndex = 0;
+            }
+            else
+            {
+                StreetComboBox.IsEnabled = false;
+            }
+        }
+
+        private void RegionTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var regionItems = databasesEntities.Регион.Where(x => x.Наименование.ToLower().Contains(RegionTextBox.Text.ToLower())).ToList();
+            regionItems.Insert(0, new Регион
+            {
+                Наименование = "Укажите регион"
+            });
+            RegionComboBox.ItemsSource = regionItems.ToList();
+            RegionComboBox.DisplayMemberPath = "Наименование";
+            RegionComboBox.SelectedIndex = 0;
+            RegionComboBox.StaysOpenOnEdit = true;
         }
     }
 }

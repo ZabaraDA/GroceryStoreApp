@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище GroceryStoreDatabasesModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище GroceryStoreDatabasesModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Адрес">
           <Key>
             <PropertyRef Name="Код" />
@@ -142,10 +142,11 @@
           <Property Name="ДатаТрудоустройства" Type="date" Nullable="false" />
           <Property Name="ДатаУвольнения" Type="date" />
           <Property Name="Фото" Type="image" />
-          <Property Name="ИНН" Type="char" MaxLength="30" Nullable="false" />
-          <Property Name="ОМС" Type="char" MaxLength="30" Nullable="false" />
-          <Property Name="СНИЛС" Type="char" MaxLength="30" Nullable="false" />
+          <Property Name="ИНН" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ОМС" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="СНИЛС" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="КодАдреса" Type="int" />
+          <Property Name="КодФилиала" Type="int" />
         </EntityType>
         <EntityType Name="Списание">
           <Key>
@@ -895,8 +896,7 @@
             <End Role="ЭлементПланировка" EntitySet="ЭлементПланировка" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="GroceryStoreDatabasesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1069,13 +1069,14 @@
           <Property Name="ДатаТрудоустройства" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ДатаУвольнения" Type="DateTime" Precision="0" />
           <Property Name="Фото" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="ИНН" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="ОМС" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="СНИЛС" Type="String" MaxLength="30" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="ИНН" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ОМС" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="СНИЛС" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="КодАдреса" Type="Int32" />
           <NavigationProperty Name="Адрес" Relationship="Self.FK_Сотрудник_Адрес" FromRole="Сотрудник" ToRole="Адрес" />
           <NavigationProperty Name="Аккаунт" Relationship="Self.FK_Аккаунт_Сотрудник" FromRole="Сотрудник" ToRole="Аккаунт" />
           <NavigationProperty Name="Должность" Relationship="Self.FK_Сотрудник_Должность" FromRole="Сотрудник" ToRole="Должность" />
+          <Property Name="КодФилиала" Type="Int32" />
         </EntityType>
         <EntityType Name="Списание">
           <Key>
@@ -2004,6 +2005,7 @@
           <EntitySetMapping Name="Сотрудник">
             <EntityTypeMapping TypeName="GroceryStoreDatabasesModel.Сотрудник">
               <MappingFragment StoreEntitySet="Сотрудник">
+                <ScalarProperty Name="КодФилиала" ColumnName="КодФилиала" />
                 <ScalarProperty Name="Код" ColumnName="Код" />
                 <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
                 <ScalarProperty Name="Имя" ColumnName="Имя" />

@@ -3,12 +3,200 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:GroceryStoreApp.Pages"
+      xmlns:local="clr-namespace:GroceryStoreApp.Pages" xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
       Title="DataUserPage">
+    <Page.Resources>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
+            <Setter Property="TextTrimming" Value="None"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="auto"/>
+            <Setter Property="FontSize" Value="18"/>
+           
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+
+        </Style>
+        <Style TargetType="{x:Type my:TextBoxWithRemoved}">
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            
+        </Style>
+        <Style TargetType="{x:Type ComboBox}">
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+           
+        </Style>
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource NavigationStyle}">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+           
+        </Style>
+    </Page.Resources>
 
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+
+        <ListView Name="UserListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  HorizontalAlignment="Center" HorizontalContentAlignment="Center" 
+                  BorderBrush="{x:Null}" Background="{x:Null}" SelectionChanged="UserListView_SelectionChanged">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel></WrapPanel>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Width="220">
+                        <Border CornerRadius="5">
+                            <Border.Background >
+                                <LinearGradientBrush>
+                                    <GradientStop Color="{Binding color}" Offset="0"/>
+                                    <GradientStop Color="{Binding color}" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <StackPanel Orientation="Vertical">
+                                <Border  CornerRadius="10" HorizontalAlignment="Left" Height="190" Width="190" Margin="15 15 0 15" >
+                                    <Border.Background>
+                                        <ImageBrush Stretch="UniformToFill">
+                                            <ImageBrush.ImageSource>
+                                                <Binding Path="Фото">
+                                                    <Binding.TargetNullValue>
+                                                        <ImageSource>/Images/ImageStub.png</ImageSource>
+                                                    </Binding.TargetNullValue>
+                                                </Binding>
+                                            </ImageBrush.ImageSource>
+                                        </ImageBrush>
+                                    </Border.Background>
+                                </Border>
+                                <StackPanel Margin="10 0 10 10" TextBlock.FontSize="16">
+                                    <TextBlock Text="{Binding Path=Должность.Наименование}" TextWrapping="WrapWithOverflow" Height="45"  TextAlignment="Right"></TextBlock>
+                                    <TextBlock Text="{Binding Path=Фамилия}" FontSize="20"></TextBlock>
+                                    <TextBlock Text="{Binding Path=Имя}"></TextBlock>
+                                    <TextBlock Text="{Binding Path=Отчество}"></TextBlock>
+                                    <!--<TextBlock Text="{Binding Path=Телефон, StringFormat={}Телефон: {0}}"></TextBlock>
+                                    <TextBlock Text="{Binding Path=Пол, StringFormat={}Пол: {0}}"></TextBlock>
+                                    <TextBlock Text="{Binding Path=Почта, StringFormat={}Почта: {0}}"></TextBlock>-->
+                                    <!--<TextBlock Text="{Binding Path=ИНН, StringFormat={}ИНН: {0}}"></TextBlock>
+                                    <TextBlock Text="{Binding Path=ОМС, StringFormat={}ОМС: {0}}"></TextBlock>
+                                    <TextBlock Text="{Binding Path=СНИЛС, StringFormat={}СНИЛС: {0}}"></TextBlock>-->
+                                    <!--<TextBlock Text="{Binding Path=ДатаРождения, StringFormat='Дата рождения: yyyy-MM-dd',Mode=OneWay}" 
+                                               TextWrapping="WrapWithOverflow"></TextBlock>
+                                    <TextBlock Text="{Binding Path=ДатаТрудоустройства, StringFormat='Дата трудоустройства: yyyy-MM-dd',Mode=OneWay}"
+                                               TextWrapping="WrapWithOverflow"></TextBlock>-->
+                                </StackPanel> 
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Grid Height="220" Name="UserGrid" VerticalAlignment="Bottom" Visibility="Collapsed" Margin="10" Width="1000" HorizontalAlignment="Center">
+            <Border CornerRadius="5">
+                <Border.Background >
+                    <LinearGradientBrush>
+                        <!--<GradientStop Color="#FFA9A6A6" Offset="0"/>
+                        <GradientStop Color="#FFB9B9B9" Offset="1"/>-->
+                        <GradientStop Color="{Binding color}" Offset="0"/>
+                        <GradientStop Color="{Binding color}" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <StackPanel Orientation="Horizontal">
+                    <Border  CornerRadius="10" HorizontalAlignment="Left" Height="190" Width="190" Margin="15" >
+                        <Border.Background>
+                            <ImageBrush Stretch="UniformToFill">
+                                <ImageBrush.ImageSource>
+                                    <Binding Path="Фото">
+                                        <Binding.TargetNullValue>
+                                            <ImageSource>/Images/ImageStub.png</ImageSource>
+                                        </Binding.TargetNullValue>
+                                    </Binding>
+                                </ImageBrush.ImageSource>
+                            </ImageBrush>
+                        </Border.Background>
+                    </Border>
+                    <StackPanel Margin="10" TextBlock.FontSize="16" Orientation="Vertical">
+                        <TextBlock Text="{Binding Path=Фамилия , StringFormat={}Фамилия: {0}}" FontSize="20"></TextBlock>
+                        <TextBlock Text="{Binding Path=Имя, StringFormat={}Имя: {0}}"></TextBlock>
+                        <TextBlock Text="{Binding Path=Отчество, StringFormat={}Отчество: {0}}"></TextBlock>
+                        <TextBlock Text="{Binding Path=Должность.Наименование, StringFormat={}Должность: {0}}" TextWrapping="WrapWithOverflow" Height="45"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Margin="10" TextBlock.FontSize="16" Orientation="Vertical">
+                        
+                                    <TextBlock Text="{Binding Path=Пол, StringFormat={}Пол: {0}}"></TextBlock>
+                                    <TextBlock Text="{Binding Path=Почта, StringFormat={}Почта: {0}}"></TextBlock>
+                        <TextBlock Text="{Binding Path=ИНН, StringFormat={}ИНН: {0}}"></TextBlock>
+                                    <TextBlock Text="{Binding Path=ОМС, StringFormat={}ОМС: {0}}"></TextBlock>
+                                    <TextBlock Text="{Binding Path=СНИЛС, StringFormat={}СНИЛС: {0}}"></TextBlock>
+                      
+                        </StackPanel>
+                    <StackPanel Margin="10" TextBlock.FontSize="16" Orientation="Vertical">
+                        <TextBlock Text="{Binding Path=Телефон, StringFormat={}Телефон: {0}}"></TextBlock>
+                        <TextBlock Text="{Binding Path=ДатаРождения, StringFormat='Дата рождения: yyyy-MM-dd',Mode=OneWay}" 
+                                               TextWrapping="WrapWithOverflow"></TextBlock>
+                        <TextBlock Text="{Binding Path=ДатаТрудоустройства, StringFormat='Дата трудоустройства: yyyy-MM-dd',Mode=OneWay}"
+                                               TextWrapping="WrapWithOverflow"></TextBlock>
+                        <Button Content="Изменить" x:Name="ChangeParametersButton" Click="ChangeParametersButton_Click"></Button>
+                    </StackPanel>
+                    <Button Content="Скрыть" x:Name="HidePanelButton" Click="HidePanelButton_Click" VerticalAlignment="Top" Width="70"></Button>
+                </StackPanel>
+            </Border>
+        </Grid>
+        <StackPanel Grid.Column="1" Name="UserEditStackPanel" Margin="0 0 5 0" >
+            <StackPanel>
+                <TextBlock Text="Фильтры" HorizontalAlignment="Center" TextAlignment="Center" ></TextBlock>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Выбрано " Width="auto"></TextBlock>
+                    <TextBlock Name="FilterNumberOfUserTextBlock" Width="auto"></TextBlock>
+                    <TextBlock Text=" из " Width="auto"></TextBlock>
+                    <TextBlock Name="NumberOfUsersTextBlock" Width="auto"></TextBlock>
+                    <TextBlock Text=" Сотрудников" Width="auto"></TextBlock>
+                </StackPanel>
+                <TextBlock Text="Поиск по ФИО"></TextBlock>
+                <my:TextBoxWithRemoved Name="NameSearchTextBox" TextChanged="SearchTextBox_TextChanged"></my:TextBoxWithRemoved>
+                <TextBlock Text="Семейное положение"></TextBlock>
+                <ComboBox Name="FamilyStatusSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged">
+                    <ComboBoxItem Content="Все сотрудники"></ComboBoxItem>
+                    <ComboBoxItem Content="Женат/Замужем"></ComboBoxItem>
+                    <ComboBoxItem Content="Холост/Не замужем"></ComboBoxItem>
+                </ComboBox>
+                <TextBlock Text="Должность"></TextBlock>
+                <ComboBox Name="ProfessionSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged"></ComboBox>
+                <TextBlock Text="Пол"></TextBlock>
+                <ComboBox Name="GenderSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged">
+                    <ComboBoxItem Content="Все сотрудники"></ComboBoxItem>
+                    <ComboBoxItem Content="Мужской"></ComboBoxItem>
+                    <ComboBoxItem Content="Женский"></ComboBoxItem>
+                </ComboBox>
+                <TextBlock Text="Доступ к системе" ></TextBlock>
+                <ComboBox Name="AccountSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged">
+                    <ComboBoxItem Content="Все сотрудники"></ComboBoxItem>
+                    <ComboBoxItem Content="С доступом к системе"></ComboBoxItem>
+                    <ComboBoxItem Content="Без доступа к системе"></ComboBoxItem>
+                </ComboBox>
+                <Button  Content="Сбросить фильтры" x:Name="ClearFilterButton" Click="ClearFilterButton_Click"></Button>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                <TextBlock Text="Редактировать"></TextBlock>
+                <Button Content="Добавить &#xa;сотрудника &#xa;" Height="50" x:Name="AddProductButton" Click="AddUserButton_Click"></Button>
+                <Button Content="Удалить"  x:Name="DeleteProductButton" Click="DeleteUserButton_Click" ></Button>
+                
+            </StackPanel>
+        </StackPanel>
+
     </Grid>
 </Page>
