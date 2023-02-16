@@ -100,14 +100,14 @@
                                         <my:TextBoxWithRemoved Text="{Binding Path= Фамилия}" Uid="Введите фамилию" Width="300" Name="SurnameTextBox" MaxLength="50"/>
                                         <my:TextBoxWithRemoved Text="{Binding Path= Имя}" Uid="Введите имя"  Width="300" Name="NameTextBox" MaxLength="30"/>
                                         <my:TextBoxWithRemoved Text="{Binding Path= Отчество}" Uid="Введите отчество" Width="300" Name="PatronymicTextBox" MaxLength="50"/>
-                                        <ComboBox x:Name="GenderComboBox" Width="300" SelectedIndex="{Binding Path=Пол}">
-                                            <ComboBoxItem Content="Не выбрано"></ComboBoxItem>
+                                        <ComboBox x:Name="GenderComboBox" Width="300" SelectedIndex="{Binding Path=Пол,FallbackValue=0,TargetNullValue=0}">
+                                            <ComboBoxItem Content="Не выбрано" IsSelected="True"></ComboBoxItem>
                                             <ComboBoxItem Content="Мужской"></ComboBoxItem>
                                             <ComboBoxItem Content="Женский"></ComboBoxItem>
                                         </ComboBox>
                                         <DatePicker Text="{Binding Path= ДатаРождения, StringFormat='yyyy-MM-dd'}" HorizontalContentAlignment="Center"  Width="300" Name="DOBDatePicker" Height="40" Margin="0 10 0 0"></DatePicker>
-                                        <ComboBox x:Name="FamilyStatusComboBox" SelectedIndex="{Binding Path=СемейноеПоложение}" Width="300">
-                                            <ComboBoxItem Content="Не выбрано"></ComboBoxItem>
+                                        <ComboBox x:Name="FamilyStatusComboBox" SelectedIndex="{Binding Path=СемейноеПоложение,FallbackValue=0,TargetNullValue=0}" Width="300">
+                                            <ComboBoxItem Content="Не выбрано" IsSelected="True"></ComboBoxItem>
                                             <ComboBoxItem Content="Женат/Замужем"></ComboBoxItem>
                                             <ComboBoxItem Content="Холост/Не замужем"></ComboBoxItem>
                                         </ComboBox>
@@ -140,12 +140,14 @@
 
                         <Border Background="#FFB9B9B9" Padding="20" CornerRadius="0 10 10 0" >
                             <StackPanel HorizontalAlignment="Left" Name="UserInfoStackPanel">
+                                          <!--SelectedIndex="{Binding Mode=OneWay, TargetNullValue=0,FallbackValue=0}"-->
                                 <ComboBox x:Name="SubsidiaryComboBox" 
                                           SelectedItem="{Binding Path= Филиал}"
-                                          SelectedValue="{Binding Path= Филиал.Код}"
-                                          SelectedValuePath="Код"></ComboBox>
+                                          SelectedValue="{Binding Path= Филиал.Код, TargetNullValue=0, FallbackValue=0}"
+                                          SelectedValuePath="Код" ></ComboBox>
                                 <ComboBox x:Name="ProfessionComboBox" 
                                           SelectedItem="{Binding Path= Должность}" 
+                                          SelectedIndex="{Binding Path=SelectedIndex, TargetNullValue=0,FallbackValue=0}"
                                           SelectedValue="{Binding Path= Должность.Код}"
                                           SelectedValuePath="Код"></ComboBox>
                                 <!--SelectedValue - Свойство для поиска -->
@@ -179,22 +181,32 @@
                                 <my:TextBoxWithRemoved Uid="Фильтр по региону" Name="RegionTextBox" TextChanged="RegionTextBox_TextChanged"></my:TextBoxWithRemoved>
                                 <ComboBox x:Name="RegionComboBox" DropDownClosed="RegionComboBox_DropDownClosed"
                                           SelectedItem="{Binding Path= Адрес.Регион}" 
+                                          SelectedIndex="{Binding Адрес.Регион[0], TargetNullValue=0,FallbackValue=0}"
                                           SelectedValue="{Binding Path= Адрес.КодРегиона}"
-                                          SelectedValuePath="Код"></ComboBox>
-                                <ComboBox x:Name="TypeLocalityComboBox" DropDownClosed="TypeLocalityComboBox_DropDownClosed"
-                                          IsEnabled="False" SelectedIndex="{Binding Адрес.НаселённыйПункт}"
-                                          SelectedValue="{Binding Path= КодАдреса}"
                                           SelectedValuePath="Код">
-                                    <ComboBoxItem Content="Все категории"></ComboBoxItem>
+                                 
+                                </ComboBox>
+                                <ComboBox x:Name="TypeLocalityComboBox" DropDownClosed="TypeLocalityComboBox_DropDownClosed"
+                                          IsEnabled="False" 
+                                          SelectedItem="{Binding Адрес.НаселённыйПункт.ТипНаселённогоПункта}"
+                                          SelectedIndex="{Binding Path=Адрес.НаселённыйПункт[0], TargetNullValue=0,FallbackValue=0}"
+                                          SelectedValue="{Binding Path= Тип}"
+                                          SelectedValuePath="Код">
+                                    <!--<ComboBoxItem Content="Все категории"></ComboBoxItem>
                                     <ComboBoxItem Content="Городские населённые пункты"></ComboBoxItem>
-                                    <ComboBoxItem Content="Сельские населённые пункты"></ComboBoxItem>
+                                    <ComboBoxItem Content="Сельские населённые пункты"></ComboBoxItem>-->
                                 </ComboBox>
                                 <ComboBox x:Name="LocalityComboBox" DropDownClosed="LocalityComboBox_DropDownClosed"
                                           IsEnabled="False" 
                                           SelectedItem="{Binding Path= Адрес.НаселённыйПункт}" 
-                                          SelectedValue="{Binding Path= Адрес.КодНаселённогоПункта}"
+                                          SelectedValue="{Binding Path= Адрес.КодНаселённогоПункта,TargetNullValue=0, FallbackValue=0}"
                                           SelectedValuePath="Код"></ComboBox>
-                                <ComboBox x:Name="StreetComboBox" IsEnabled="False" SelectedItem="{Binding Улица}"></ComboBox>
+                                          <!--SelectedIndex="{Binding TargetNullValue=0,FallbackValue=0}"-->
+                                <ComboBox x:Name="StreetComboBox" IsEnabled="False" 
+                                          SelectedItem="{Binding Адрес.Улица}"
+                                          SelectedValue="{Binding Path= Адрес.КодУлицы,TargetNullValue=0, FallbackValue=0}"
+                                          SelectedValuePath="Код"></ComboBox>
+                                          <!--SelectedIndex="{Binding TargetNullValue=0,FallbackValue=0}"-->
                                 <my:TextBoxWithRemoved Uid="Введите номер дома" Name="HouseTextBox" Text="{Binding Адрес.Дом}"></my:TextBoxWithRemoved>
                             </StackPanel>
                         </Border>
@@ -209,7 +221,7 @@
                                     <Button Content="Добавить аккаунт" Click="AddAccountButton_Click"></Button>
                                 </StackPanel>
                             </Border>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Collapsed" Name="AccountStackPanel">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Visibility="{Binding Path=Аккаунт, TargetNullValue=Collapsed, FallbackValue=Collapsed}" Name="AccountStackPanel">
                                 <Border Background="#FF969696" CornerRadius="10 0 0 10" Padding="20" Width="310">
                                     <StackPanel HorizontalAlignment="Left">
                                         <TextBlock Text="Предоставить доступ"></TextBlock>
@@ -221,12 +233,13 @@
 
                                 <Border Background="#FFB9B9B9" Padding="20" CornerRadius="0 10 10 0" >
                                     <StackPanel HorizontalAlignment="Left" Name="InfoStackPanel">
-                                        <ComboBox x:Name="AccessComboBox">
+                                        <ComboBox x:Name="AccessComboBox" 
+                                                  SelectedIndex="{Binding Path=Аккаунт.Доступ, TargetNullValue=0,FallbackValue=0}">
                                             <ComboBoxItem Content="Выберите уровень доступа"></ComboBoxItem>
                                             <ComboBoxItem Content="Системный администратор"></ComboBoxItem>
                                             <ComboBoxItem Content="Администратор"></ComboBoxItem>
                                         </ComboBox>
-                                        <my:TextBoxWithRemoved Uid="Введите логин" Name="LoginTextBox"></my:TextBoxWithRemoved>
+                                        <my:TextBoxWithRemoved Uid="Введите логин" Name="LoginTextBox" Text="{Binding Аккаунт.Логин}"></my:TextBoxWithRemoved>
                                         <PasswordBox Name="PasswordBox"></PasswordBox>
                                         <PasswordBox Name="DoublePasswordBox"></PasswordBox>
                                     </StackPanel>

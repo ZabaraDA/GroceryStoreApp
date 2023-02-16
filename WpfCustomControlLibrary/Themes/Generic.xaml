@@ -152,7 +152,7 @@
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Visibility="Collapsed"></TextBlock>
                             <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                             <Button Width="{TemplateBinding Height}" Height="auto" HorizontalAlignment="Right" x:Name="PART_Button" Content="X" Visibility="Collapsed" 
-                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" FontSize="20"></Button>
+                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" FontSize="20" Margin="1"></Button>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>

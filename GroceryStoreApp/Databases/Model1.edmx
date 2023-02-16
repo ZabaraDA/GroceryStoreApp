@@ -134,8 +134,8 @@
           <Property Name="Имя" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Отчество" Type="nvarchar" MaxLength="50" />
           <Property Name="КодДолжности" Type="int" Nullable="false" />
-          <Property Name="Почта" Type="nchar" MaxLength="50" Nullable="false" />
-          <Property Name="Телефон" Type="char" MaxLength="15" Nullable="false" />
+          <Property Name="Почта" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Телефон" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="Пол" Type="bit" Nullable="false" />
           <Property Name="СемейноеПоложение" Type="bit" Nullable="false" />
           <Property Name="ДатаРождения" Type="date" Nullable="false" />
@@ -493,6 +493,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Сотрудник_Филиал">
+          <End Role="Филиал" Type="Self.Филиал" Multiplicity="0..1" />
+          <End Role="Сотрудник" Type="Self.Сотрудник" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Филиал">
+              <PropertyRef Name="Код" />
+            </Principal>
+            <Dependent Role="Сотрудник">
+              <PropertyRef Name="КодФилиала" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Списание_Филиал">
           <End Role="Филиал" Type="Self.Филиал" Multiplicity="1" />
           <End Role="Списание" Type="Self.Списание" Multiplicity="*" />
@@ -819,6 +831,10 @@
             <End Role="Должность" EntitySet="Должность" />
             <End Role="Сотрудник" EntitySet="Сотрудник" />
           </AssociationSet>
+          <AssociationSet Name="FK_Сотрудник_Филиал" Association="Self.FK_Сотрудник_Филиал">
+            <End Role="Филиал" EntitySet="Филиал" />
+            <End Role="Сотрудник" EntitySet="Сотрудник" />
+          </AssociationSet>
           <AssociationSet Name="FK_Списание_Филиал" Association="Self.FK_Списание_Филиал">
             <End Role="Филиал" EntitySet="Филиал" />
             <End Role="Списание" EntitySet="Списание" />
@@ -1061,8 +1077,8 @@
           <Property Name="Имя" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Отчество" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="КодДолжности" Type="Int32" Nullable="false" />
-          <Property Name="Почта" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Телефон" Type="String" MaxLength="15" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Почта" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Телефон" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Пол" Type="Boolean" Nullable="false" />
           <Property Name="СемейноеПоложение" Type="Boolean" Nullable="false" />
           <Property Name="ДатаРождения" Type="DateTime" Nullable="false" Precision="0" />
@@ -1077,6 +1093,7 @@
           <NavigationProperty Name="Аккаунт" Relationship="Self.FK_Аккаунт_Сотрудник" FromRole="Сотрудник" ToRole="Аккаунт" />
           <NavigationProperty Name="Должность" Relationship="Self.FK_Сотрудник_Должность" FromRole="Сотрудник" ToRole="Должность" />
           <Property Name="КодФилиала" Type="Int32" />
+          <NavigationProperty Name="Филиал" Relationship="GroceryStoreDatabasesModel.FK_Сотрудник_Филиал" FromRole="Сотрудник" ToRole="Филиал" />
         </EntityType>
         <EntityType Name="Списание">
           <Key>
@@ -1223,6 +1240,7 @@
           <NavigationProperty Name="Стеллаж" Relationship="Self.FK_Стеллаж_Филиал1" FromRole="Филиал" ToRole="Стеллаж" />
           <NavigationProperty Name="ТорговыйЗал" Relationship="Self.FK_ТорговыйЗал_Филиал" FromRole="Филиал" ToRole="ТорговыйЗал" />
           <NavigationProperty Name="ФилиалТовар" Relationship="Self.FK_ФилиалТовар_Филиал" FromRole="Филиал" ToRole="ФилиалТовар" />
+          <NavigationProperty Name="Сотрудник" Relationship="GroceryStoreDatabasesModel.FK_Сотрудник_Филиал" FromRole="Филиал" ToRole="Сотрудник" />
         </EntityType>
         <EntityType Name="ФилиалТовар">
           <Key>
@@ -1862,7 +1880,23 @@
             <End Role="Элемент" EntitySet="Элемент" />
             <End Role="ЭлементПланировка" EntitySet="ЭлементПланировка" />
           </AssociationSet>
+          <AssociationSet Name="FK_Сотрудник_Филиал" Association="GroceryStoreDatabasesModel.FK_Сотрудник_Филиал">
+            <End Role="Филиал" EntitySet="Филиал" />
+            <End Role="Сотрудник" EntitySet="Сотрудник" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Сотрудник_Филиал">
+          <End Type="GroceryStoreDatabasesModel.Филиал" Role="Филиал" Multiplicity="0..1" />
+          <End Type="GroceryStoreDatabasesModel.Сотрудник" Role="Сотрудник" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Филиал">
+              <PropertyRef Name="Код" />
+            </Principal>
+            <Dependent Role="Сотрудник">
+              <PropertyRef Name="КодФилиала" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

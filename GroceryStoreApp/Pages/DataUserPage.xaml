@@ -13,7 +13,6 @@
             <Setter Property="Width" Value="200"/>
             <Setter Property="Height" Value="auto"/>
             <Setter Property="FontSize" Value="18"/>
-           
             <Setter Property="HorizontalAlignment" Value="Left"></Setter>
 
         </Style>
