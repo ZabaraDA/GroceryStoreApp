@@ -38,21 +38,11 @@
                HorizontalAlignment="Center" 
                />
         <StackPanel  HorizontalAlignment="Right" Margin="2" Orientation="Horizontal" Grid.Column="1">
-            <Button Background="#FF5B5B5B" x:Name="CollapseButton" Click="CollapseButton_Click" Width="58" Style="{x:Null}">
-                <Path  Fill="#FF2F2F2F" Stretch="Fill" Name="HidePath"
-                       VerticalAlignment="Bottom" Margin="17 24 17 6"
-                       Style="{x:Null}"></Path>
-            </Button>
-            <Button Background="#FF5B5B5B" x:Name="FullScreenButton" Click="FullScreenButton_Click" Width="58" Style="{x:Null}">
-                <Path  Fill="#FF2F2F2F" Stretch="Fill" 
-                       Name="WindowStatePath" Margin="18 9 18 7" 
-                       Style="{x:Null}"></Path>
-            </Button>
-            <Button Background="#FF5B5B5B" x:Name="ExitButton" Click="ExitButton_Click" Width="58" Style="{x:Null}">
-                <Path  Fill="#FF2F2F2F" Stretch="Fill" 
-                       Name="ExitPath" Margin="18 8 18 8" 
-                       Style="{x:Null}" ></Path>
-            </Button>
+            <my:NavigationButton Data="{StaticResource HidePathData}"  Style="{StaticResource StateNavigationButtonStyle}" VerticalContentAlignment="Bottom"
+                                 HorizontalAlignment="Left" x:Name="CollapseButton" Click="CollapseButton_Click"></my:NavigationButton>
+            <my:NavigationButton Data="{StaticResource FullScreenPathData}"  Style="{StaticResource StateNavigationButtonStyle}" VerticalContentAlignment="Bottom"
+                                 HorizontalAlignment="Left" x:Name="StateScreenButton" Click="StateScreenButton_Click"></my:NavigationButton>
+            <my:NavigationButton Data="{StaticResource ExitPathData}" Style="{StaticResource StateNavigationButtonStyle}" x:Name="ExitButton" Click="ExitButton_Click"></my:NavigationButton>
         </StackPanel>
         <Grid Width="70" Grid.Row="1" HorizontalAlignment="Left" Name="ControlGrid" Grid.ColumnSpan="2"  Background="#FF9A9A9A" MouseEnter="ControlPanel_MouseEnter" MouseLeave="ControlPanel_MouseLeave">
             <Grid.Effect>

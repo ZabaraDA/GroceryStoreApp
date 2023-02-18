@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GroceryStoreApp.Pages" xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
       mc:Ignorable="d" 
-      Title="DataUserPage">
+      Title="DataUserPage" IsVisibleChanged="Page_IsVisibleChanged">
     <Page.Resources>
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
@@ -104,12 +104,10 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Grid Height="220" Name="UserGrid" VerticalAlignment="Bottom" Visibility="Collapsed" Margin="10" Width="1000" HorizontalAlignment="Center">
-            <Border CornerRadius="5">
-                <Border.Background >
+        <Grid Height="220" Name="UserGrid" VerticalAlignment="Bottom" Visibility="Collapsed" Width="1050"  HorizontalAlignment="Center">
+            <Border CornerRadius="5" BorderBrush="#FF3E3E3E" BorderThickness="1">
+                <Border.Background>
                     <LinearGradientBrush>
-                        <!--<GradientStop Color="#FFA9A6A6" Offset="0"/>
-                        <GradientStop Color="#FFB9B9B9" Offset="1"/>-->
                         <GradientStop Color="{Binding color}" Offset="0"/>
                         <GradientStop Color="{Binding color}" Offset="1"/>
                     </LinearGradientBrush>

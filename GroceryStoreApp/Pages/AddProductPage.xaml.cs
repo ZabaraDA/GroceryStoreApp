@@ -21,5 +21,20 @@ namespace GroceryStoreApp.Pages
         {
             InitializeComponent();
         }
+
+        private void AddProductButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AddPhotoButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ClearInputFields_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

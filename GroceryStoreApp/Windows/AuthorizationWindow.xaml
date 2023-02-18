@@ -16,6 +16,7 @@
     </WindowChrome.WindowChrome>
     <Window.Resources>
         <Style TargetType="Button" BasedOn="{StaticResource NavigationStyle}"></Style>
+       
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -42,13 +43,9 @@
         </Border>
         <TextBlock Text="Окно авторизации" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"></TextBlock>
         <StackPanel  HorizontalAlignment="Right" Margin="2" Orientation="Horizontal">
-            <Button Background="#FF5A5A5A" Width="58" Style="{x:Null}" HorizontalAlignment="Left" x:Name="CollapseButton" Click="CollapseButton_Click">
-                <!--<Image Source="images/RemoveImage.png"></Image>-->
-            </Button>
-            <Button Background="#FF5A5A5A" Style="{x:Null}" Width="58" HorizontalAlignment="Left" x:Name="ExitButton" Click="ExitButton_Click">
-                <!--<Image Source="images/ExitImage.png"></Image>-->
-
-            </Button>
+            <my:NavigationButton Data="{StaticResource HidePathData}"  Style="{StaticResource StateNavigationButtonStyle}" VerticalContentAlignment="Bottom"
+                                 HorizontalAlignment="Left" x:Name="CollapseButton" Click="CollapseButton_Click"></my:NavigationButton>
+            <my:NavigationButton Data="{StaticResource ExitPathData}" Style="{StaticResource StateNavigationButtonStyle}" x:Name="ExitButton" Click="ExitButton_Click"></my:NavigationButton>
         </StackPanel>
 
         <StackPanel Grid.Row="1"  Width="300" Name="AuthorizationStackPanel">

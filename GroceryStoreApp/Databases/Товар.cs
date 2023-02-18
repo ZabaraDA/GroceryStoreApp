@@ -27,17 +27,20 @@ namespace GroceryStoreApp.Databases
         public string Актикул { get; set; }
         public string ШтрихКод { get; set; }
         public string Наименование { get; set; }
-        public int Категория { get; set; }
+        public Nullable<int> КодПроизводителя { get; set; }
+        public int КодКатегории { get; set; }
         public decimal Цена { get; set; }
         public byte НДС { get; set; }
         public decimal Количество { get; set; }
         public int СрокГодности { get; set; }
         public int КодЕдиницыИзмерения { get; set; }
+        public byte[] Фото { get; set; }
     
         public virtual ЕдиницаИзмерения ЕдиницаИзмерения { get; set; }
-        public virtual КатегорияТовара КатегорияТовара { get; set; }
+        public virtual Категория Категория { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<МодификаторЦены> МодификаторЦены { get; set; }
+        public virtual Производитель Производитель { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<СписаниеТовар> СписаниеТовар { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

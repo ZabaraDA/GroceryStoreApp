@@ -160,5 +160,11 @@ namespace GroceryStoreApp.Pages
         {
             UserGrid.Visibility = Visibility.Collapsed;
         }
+
+        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            SearchUserDataUpdate();
+            //databasesEntities.ChangeTracker.Entries().ToList().ForEach(x =>x.Reload());
+        }
     }
 }

@@ -19,22 +19,24 @@ namespace GroceryStoreApp.Databases
         {
             this.МодификаторЦены = new HashSet<МодификаторЦены>();
             this.Поставка = new HashSet<Поставка>();
+            this.Сотрудник = new HashSet<Сотрудник>();
             this.Списание = new HashSet<Списание>();
             this.Стеллаж = new HashSet<Стеллаж>();
             this.ТорговыйЗал = new HashSet<ТорговыйЗал>();
             this.ФилиалТовар = new HashSet<ФилиалТовар>();
-            this.Сотрудник = new HashSet<Сотрудник>();
         }
     
         public int Код { get; set; }
-        public int Адрес { get; set; }
+        public int КодАдресаФилиала { get; set; }
         public string Наименование { get; set; }
     
-        public virtual Адрес Адрес1 { get; set; }
+        public virtual Адрес Адрес { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<МодификаторЦены> МодификаторЦены { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Поставка> Поставка { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Сотрудник> Сотрудник { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Списание> Списание { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -43,7 +45,5 @@ namespace GroceryStoreApp.Databases
         public virtual ICollection<ТорговыйЗал> ТорговыйЗал { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ФилиалТовар> ФилиалТовар { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Сотрудник> Сотрудник { get; set; }
     }
 }

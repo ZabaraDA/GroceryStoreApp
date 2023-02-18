@@ -67,18 +67,18 @@
     </ApplicationDefinition>
     <Compile Include="CsClasses\ParametersClass.cs" />
     <Compile Include="Databases\Model1.Context.cs">
-      <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
       <DependentUpon>Model1.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="Databases\Model1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Model1.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Databases\Model1.Designer.cs">
-      <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
     <Compile Include="Databases\Адрес.cs">
@@ -93,7 +93,7 @@
     <Compile Include="Databases\ЕдиницаИзмерения.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\КатегорияТовара.cs">
+    <Compile Include="Databases\Категория.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Databases\МестоОтправки.cs">
@@ -112,6 +112,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Databases\Поставщик.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\Производитель.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Databases\Регион.cs">
@@ -286,7 +289,6 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="Databases\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -295,8 +297,8 @@
     </Content>
     <Content Include="Databases\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
+      <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

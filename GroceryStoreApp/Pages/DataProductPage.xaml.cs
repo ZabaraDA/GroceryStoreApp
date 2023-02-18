@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GroceryStoreApp.Databases;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,45 @@ namespace GroceryStoreApp.Pages
     /// </summary>
     public partial class DataProductPage : Page
     {
+        GroceryStoreDatabasesEntities databasesEntities = new GroceryStoreDatabasesEntities();
         public DataProductPage()
         {
             InitializeComponent();
+            FilterProduct();
+        }
+        private void FilterProduct()
+        {
+            ProductListView.ItemsSource = databasesEntities.Товар.ToList();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SearchComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void AddProductButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteProductButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ClearFilterButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

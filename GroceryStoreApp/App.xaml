@@ -2,6 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:GroceryStoreApp"
+             xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
              StartupUri="Windows/AuthorizationWindow.xaml"
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
     <!--StartupUri="Windows/MenuWindow.xaml">-->
@@ -55,6 +56,15 @@
         <Geometry x:Key="AccountPathData">M52.356,38.984L50.57,37.2l-1.786,1.785L47,37.2l-1.787,1.786L43.323,37.1l-1.886,1.884L39.652,
             37.2l-1.786,1.785L36.078,37.2l-1.787,1.786L32.335,37.03h-0.6a10.289,10.289,0,1,1-.295-5.19H52.356l3.575,3.572ZM21.638,
             29.55A5.451,5.451,0,1,0,27.092,35,5.452,5.452,0,0,0,21.638,29.55Z</Geometry>
+        <Geometry x:Key="ExitPathData">M810,737.709L737.709,810,500,572.286,262.291,810l-72.286-72.286L427.714,500,190.005,
+            262.291l72.286-72.286L500,427.714,737.709,190.005,810,262.291,572.286,500Z</Geometry>
+        <Geometry x:Key="HidePathData">M795.5,761.5h-591v-78h591v78Z</Geometry>
+        <Geometry x:Key="ExpandPathData">M19.643,35.308L6.369,48.631l2.914,2.925,16.142-16.2-0.02-.02,0.052-.052L9.289,
+            19.109l-2.919,2.92ZM25.456,48.63l2.915,2.925,16.142-16.2-0.02-.02,0.052-.052L28.375,19.108l-2.919,2.92L38.73,
+            35.307Zm19.087-.662,2.914,2.925L63.6,34.691l-0.02-.02,0.052-.052L47.462,18.445l-2.919,2.92L57.817,34.645Z</Geometry>
+        <Geometry x:Key="FullScreenPathData">M231,769V231H769V769H231ZM735.077,264.923H264.923V735.077H735.077V264.923Z</Geometry>
+        <Geometry x:Key="CollapsePathData">M725.75,664.918v64.8l-523.385.321v-0.321h-0.007V335.085h71.873v-65.12H797.624V664.6ZM237.283,
+            369.866v325.39H690.825V369.866H237.283ZM762.7,304.746H309.157v30.339H725.75V630.136H762.7V304.746Z</Geometry>
         <!--#endregion-->
         <!--#region  brush-->
         <!--Control colors.-->
@@ -745,7 +755,38 @@
                 </MultiTrigger>
             </Style.Triggers>
         </Style>
-
+        <Style TargetType="my:NavigationButton" x:Key="StateNavigationButtonStyle">
+            <Setter Property="Background" Value="#FF5A5A5A"></Setter>
+            <Setter Property="Foreground" Value="#FF423F3F"></Setter>
+            <Setter Property="Width" Value="58"></Setter>
+            <Setter Property="Height" Value="36"></Setter>
+            <Setter Property="BorderThickness" Value="1"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+            <Setter Property="Margin" Value="0"></Setter>
+            <Setter Property="Padding" Value="5"></Setter>
+            <Setter Property="BorderBrush" Value="#FF707070"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type my:NavigationButton}">
+                        <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <Path Margin="0" Data="{TemplateBinding Data}" x:Name="path" Width="20"  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"  Style="{StaticResource NavigationPath}" Fill="{TemplateBinding Foreground}"></Path>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF4C4C4C" />
+                                <Setter Property="BorderBrush" Value="#FF707070" />
+                                <Setter Property="Foreground" Value="#FF707070"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FF484848" />
+                                <Setter Property="BorderBrush" Value="#FF707070" />
+                                <Setter Property="Foreground" Value="#FF707070" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
 
     </Application.Resources>

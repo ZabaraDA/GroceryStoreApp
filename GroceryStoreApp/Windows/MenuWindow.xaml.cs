@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WpfCustomControlLibrary;
 using GroceryStoreApp.Pages;
+using System.Windows.Markup;
 
 namespace GroceryStoreApp.Windows
 {
@@ -30,6 +31,7 @@ namespace GroceryStoreApp.Windows
           (1,new DataUserPage(), "Сотрудники","ProfilePathData"),
           (1,new DataAddressPage(), "Адреса","ProfilePathData"),
           (3,new DataProductPage(), "Товары","ProfilePathData"),
+          (3,new AddProductPage(), "Добавить товар","AddProductPathData"),
         };
         public MenuWindow()
         {
@@ -84,17 +86,17 @@ namespace GroceryStoreApp.Windows
             WindowState = WindowState.Minimized;
         }
 
-        private void FullScreenButton_Click(object sender, RoutedEventArgs e)
+        private void StateScreenButton_Click(object sender, RoutedEventArgs e)
         {
             if (WindowState == WindowState.Normal)
             {
                 WindowState = WindowState.Maximized;
-                //WindowStatePath.Data = Geometry.Parse(PathDataClass.collapseData);
+                StateScreenButton.Data = (Geometry)Application.Current.FindResource("CollapsePathData");
             }
             else
             {
                 WindowState = WindowState.Normal;
-                //WindowStatePath.Data = Geometry.Parse(PathDataClass.fullScreenData);
+                StateScreenButton.Data = (Geometry)Application.Current.FindResource("FullScreenPathData");
             }
         }
         private void ControlPanel_MouseEnter(object sender, MouseEventArgs e)

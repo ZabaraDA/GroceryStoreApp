@@ -3,12 +3,76 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:GroceryStoreApp.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      xmlns:local="clr-namespace:GroceryStoreApp.Pages" xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
+      mc:Ignorable="d" FontSize="18"
+      
       Title="DataProductPage">
-
+    <Page.Resources>
+        <Style TargetType="GridViewColumnHeader">
+            <Setter Property="Padding" Value="5 0 5 0"></Setter>
+        </Style>
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource NavigationStyle}">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="5"></Setter>
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+    </Page.Resources>
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+
+        </Grid.ColumnDefinitions>
+        <ListView x:Name="ProductListView" Width="auto">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Код" DisplayMemberBinding="{Binding Код}"/>
+                    <!--<GridViewColumn Header="Фото"></GridViewColumn>-->
+                    <GridViewColumn Header="Наименование" DisplayMemberBinding="{Binding Наименование}"/>
+                    <GridViewColumn Header="Категория" DisplayMemberBinding="{Binding Категория.Наименование}"/>
+                    <GridViewColumn Header="Производитель" DisplayMemberBinding="{Binding Производитель.Наименование}"/>
+                    <GridViewColumn Header="Цена" DisplayMemberBinding="{Binding Цена}"/>
+                    <GridViewColumn Header="НДС" DisplayMemberBinding="{Binding НДС}"/>
+                    <GridViewColumn Header="Количество" DisplayMemberBinding="{Binding Количество}"/>
+                    <!--<GridViewColumn Header="Редактировать">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Click="Button_Click"></Button>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>-->
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <StackPanel Grid.Column="1" Name="UserEditStackPanel" Margin="0 0 5 0" >
+            <StackPanel>
+                <TextBlock Text="Фильтры" HorizontalAlignment="Center" TextAlignment="Center" ></TextBlock>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Выбрано " Width="auto"></TextBlock>
+                    <TextBlock Name="FilterNumberOfUserTextBlock" Width="auto"></TextBlock>
+                    <TextBlock Text=" из " Width="auto"></TextBlock>
+                    <TextBlock Name="NumberOfUsersTextBlock" Width="auto"></TextBlock>
+                    <TextBlock Text=" товаров" Width="auto"></TextBlock>
+                </StackPanel>
+                <TextBlock Text="Поиск по наименованию"></TextBlock>
+                <my:TextBoxWithRemoved Name="NameSearchTextBox" TextChanged="SearchTextBox_TextChanged"></my:TextBoxWithRemoved>
+                <TextBlock Text="Категория товара"></TextBlock>
+                <ComboBox Name="CategorySearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged"></ComboBox>
+                <TextBlock Text="Должность"></TextBlock>
+                <ComboBox Name="ManufacturerSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged"></ComboBox>
+                <Button  Content="Сбросить фильтры" x:Name="ClearFilterButton" Click="ClearFilterButton_Click"></Button>
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Text="Редактировать"></TextBlock>
+                <Button Content="Добавить &#xa;сотрудника &#xa;" x:Name="AddProductButton" Click="AddProductButton_Click"></Button>
+                <Button Content="Удалить"  x:Name="DeleteProductButton" Click="DeleteProductButton_Click" ></Button>
+
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>
