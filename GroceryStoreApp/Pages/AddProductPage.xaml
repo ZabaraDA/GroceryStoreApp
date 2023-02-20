@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:GroceryStoreApp.Pages" 
       xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
       mc:Ignorable="d" 
-      Title="AddProductPage">
+      Title="AddProductPage" Loaded="Page_Loaded">
     <Page.Resources>
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="TextWrapping" Value="NoWrap"/>
@@ -39,7 +39,7 @@
             <Setter Property="FontSize" Value="24"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="10 10 0 0"/>
+            <Setter Property="Margin" Value="10 20 0 0"/>
         </Style>
     </Page.Resources>
     <Grid>
@@ -48,54 +48,69 @@
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
         <ScrollViewer>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="#FFCCCCCC">
-            <StackPanel Margin="10">
-                <Border CornerRadius="10" Width="400" Height="400" HorizontalAlignment="Center" BorderBrush="Black" BorderThickness="1" VerticalAlignment="Top" Margin="0 0 0 20">
-                    <Border.Background>
-                        <ImageBrush Stretch="UniformToFill" x:Name="PhotoProductImageBrush">
-                            <ImageBrush.ImageSource>
-                                <Binding>
-                                    <Binding.TargetNullValue>
-                                        <ImageSource>/Images/ImageStub.png</ImageSource>
-                                    </Binding.TargetNullValue>
-                                    <Binding.FallbackValue>
-                                        <ImageSource>/Images/ImageStub.png</ImageSource>
-                                    </Binding.FallbackValue>
-                                </Binding>
-                            </ImageBrush.ImageSource>
-                        </ImageBrush>
-                    </Border.Background>
-                </Border>
-                <Button x:Name="AddPhotoButton" Content="Добавить фото" Width="200" Click="AddPhotoButton_Click"></Button>
-                <TextBlock Text="Штрих код"></TextBlock>
-                <my:TextBoxWithRemoved x:Name="BarcodeCodeTextBox"></my:TextBoxWithRemoved>
-                <TextBlock Text="Артикул товара"></TextBlock>
-                <my:TextBoxWithRemoved x:Name="VendorCodeTextBox"></my:TextBoxWithRemoved>
-                <TextBlock Text="Наименование товара"></TextBlock>
-                <my:TextBoxWithRemoved x:Name="NameTextBox"></my:TextBoxWithRemoved>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="#FFCCCCCC">
+                <StackPanel Margin="30">
+                    <Border CornerRadius="10" Width="400" Height="400" HorizontalAlignment="Center" BorderBrush="Black" BorderThickness="1" Margin="0 0 0 20">
+                        <Border.Background>
+                            <ImageBrush Stretch="UniformToFill" x:Name="PhotoProductImageBrush">
+                                <ImageBrush.ImageSource>
+                                    <Binding>
+                                        <Binding.TargetNullValue>
+                                            <ImageSource>/Images/ImageStub.png</ImageSource>
+                                        </Binding.TargetNullValue>
+                                        <Binding.FallbackValue>
+                                            <ImageSource>/Images/ImageStub.png</ImageSource>
+                                        </Binding.FallbackValue>
+                                    </Binding>
+                                </ImageBrush.ImageSource>
+                            </ImageBrush>
+                        </Border.Background>
+                    </Border>
+                    <Button x:Name="AddPhotoButton" Content="Добавить фото" Width="200" Click="AddPhotoButton_Click"></Button>
+                    <TextBlock Text="Штрих код"></TextBlock>
+                    <my:TextBoxWithRemoved Uid="Введите штрих код" x:Name="BarcodeCodeTextBox"></my:TextBoxWithRemoved>
+                    <TextBlock Text="Артикул товара"></TextBlock>
+                    <my:TextBoxWithRemoved Uid="Введите артикул товара" x:Name="VendorCodeTextBox"></my:TextBoxWithRemoved>
+                    <TextBlock Text="Наименование товара"></TextBlock>
+                    <my:TextBoxWithRemoved Uid="Введите наименование товара" x:Name="NameTextBox"></my:TextBoxWithRemoved>
+                </StackPanel>
+               
+                <StackPanel Margin="10 10 30 0">
+                    <TextBlock Text="Стоимость товара"></TextBlock>
+                    <my:TextBoxWithRemoved Uid="Введите стоимость" x:Name="CostTextBox"></my:TextBoxWithRemoved>
+                    <TextBlock Text="НДС к цене"></TextBlock>
+                    <my:TextBoxWithRemoved Uid="Введите НДС" x:Name="VATTextBox"></my:TextBoxWithRemoved>
+                    <TextBlock Text="Категория товара"></TextBlock>
+                    <ComboBox x:Name="CategoryComboBox"></ComboBox>
+                    <TextBlock Text="Производитель товара"></TextBlock>
+                    <ComboBox x:Name="ManufacturerComboBox"></ComboBox>
+                    <TextBlock Text="Срок годности товара(нед.)"></TextBlock>
+                    <my:TextBoxWithRemoved Uid="Введите срок годности" x:Name="ExpirationDateTextBox"></my:TextBoxWithRemoved>
+                    <TextBlock Text="Единица измерения"></TextBlock>
+                    <ComboBox x:Name="UnitComboBox"></ComboBox>
+                    <TextBlock Text="Вес единицы,кг"></TextBlock>
+                    <my:TextBoxWithRemoved Uid="Введите вес единицы товара" x:Name="WeightTextBox"></my:TextBoxWithRemoved>
+                    <TextBlock Text="Ширина при размещении"></TextBlock>
+                    <my:TextBoxWithRemoved Uid="Введите ширина товара" x:Name="WidthTextBox"></my:TextBoxWithRemoved>
+                    <TextBlock Text="Высота при размещении"></TextBlock>
+                    <my:TextBoxWithRemoved Uid="Введите высоту товара" x:Name="HeightTextBox"></my:TextBoxWithRemoved>
+                </StackPanel>
+
             </StackPanel>
-            <StackPanel Margin="10">
-                <TextBlock Text="Стоимость товара"></TextBlock>
-                <my:TextBoxWithRemoved x:Name="CostTextBox"></my:TextBoxWithRemoved>
-                <TextBlock Text="Категория товара"></TextBlock>
-                <ComboBox x:Name="CategoryComboBox"></ComboBox>
-                <TextBlock Text="Производитель товара"></TextBlock>
-                <ComboBox x:Name="ManufacturerComboBox"></ComboBox>
-                <TextBlock Text="Срок годности товара(нед.)"></TextBlock>
-                <my:TextBoxWithRemoved x:Name="ExpirationDateTextBox"></my:TextBoxWithRemoved>
-                <TextBlock Text="Единица измерения"></TextBlock>
-                <ComboBox x:Name="UnitComboBox"></ComboBox>
-                
-            </StackPanel>
-            
-        </StackPanel>
         </ScrollViewer>
-        <StackPanel Grid.Row="1" Background="#FFCCCCCC" VerticalAlignment="Bottom" Margin="10">
-            <TextBlock Text="Панель действий" HorizontalAlignment="Center"></TextBlock>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 20">
+        <StackPanel Grid.Row="1" Background="#FFC7C7C7" VerticalAlignment="Bottom">
+            <!--<TextBlock Text="Панель действий" HorizontalAlignment="Center"></TextBlock>-->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button x:Name="AddProductButton" Content="Добавить товар" Click="AddProductButton_Click"></Button>
+                <Button Content="Очистить все поля" x:Name="ClearInputFieldsButton" Click="ClearInputFieldsButton_Click"></Button>
+                <Button Content="Назад" x:Name="GoBackButton" Click="GoBackButton_Click"></Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 20">
                 
-                <Button Content="Очистить все поля" x:Name="ClearInputFields" Click="ClearInputFields_Click"></Button>
+                <Button Content="Категории" x:Name="AddCategoryButton" Click="AddCategoryButton_Click"></Button>
+                <Button Content="Производители" x:Name="AddManufacturerButton" Click="AddManufacturerButton_Click"></Button>
+                <Button Content="Единицы измерения" x:Name="AddUnitButton" Click="ClearInputFields_Click"></Button>
+
             </StackPanel>
         </StackPanel>
     </Grid>

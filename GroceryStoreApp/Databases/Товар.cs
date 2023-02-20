@@ -35,6 +35,9 @@ namespace GroceryStoreApp.Databases
         public int СрокГодности { get; set; }
         public int КодЕдиницыИзмерения { get; set; }
         public byte[] Фото { get; set; }
+        public Nullable<decimal> Вес { get; set; }
+        public Nullable<int> Высота { get; set; }
+        public Nullable<int> Ширина { get; set; }
     
         public virtual ЕдиницаИзмерения ЕдиницаИзмерения { get; set; }
         public virtual Категория Категория { get; set; }

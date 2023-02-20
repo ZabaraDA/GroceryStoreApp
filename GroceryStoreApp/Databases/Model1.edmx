@@ -41,7 +41,6 @@
           <Property Name="Наименование" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Аббревиатура" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="Формат" Type="bit" Nullable="false" />
-          <Property Name="Масса" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="Категория">
           <Key>
@@ -218,10 +217,13 @@
           <Property Name="КодКатегории" Type="int" Nullable="false" />
           <Property Name="Цена" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="НДС" Type="tinyint" Nullable="false" />
-          <Property Name="Количество" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Количество" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="СрокГодности" Type="int" Nullable="false" />
           <Property Name="КодЕдиницыИзмерения" Type="int" Nullable="false" />
           <Property Name="Фото" Type="image" />
+          <Property Name="Вес" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="Высота" Type="int" />
+          <Property Name="Ширина" Type="int" />
         </EntityType>
         <EntityType Name="ТоварПоставка">
           <Key>
@@ -278,7 +280,7 @@
           </Key>
           <Property Name="КодФилиала" Type="int" Nullable="false" />
           <Property Name="КодТовара" Type="int" Nullable="false" />
-          <Property Name="Количество" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Количество" Type="decimal" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="Элемент">
           <Key>
@@ -986,7 +988,6 @@
           <Property Name="Наименование" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Аббревиатура" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Формат" Type="Boolean" Nullable="false" />
-          <Property Name="Масса" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="Товар" Relationship="Self.FK_Товар_ЕдиницаИзмерения" FromRole="ЕдиницаИзмерения" ToRole="Товар" />
         </EntityType>
         <EntityType Name="Категория">
@@ -1202,7 +1203,7 @@
           <Property Name="КодКатегории" Type="Int32" Nullable="false" />
           <Property Name="Цена" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="НДС" Type="Byte" Nullable="false" />
-          <Property Name="Количество" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Количество" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="СрокГодности" Type="Int32" Nullable="false" />
           <Property Name="КодЕдиницыИзмерения" Type="Int32" Nullable="false" />
           <Property Name="Фото" Type="Binary" MaxLength="Max" FixedLength="false" />
@@ -1213,6 +1214,9 @@
           <NavigationProperty Name="СписаниеТовар" Relationship="Self.FK_СписаниеТовар_Товар" FromRole="Товар" ToRole="СписаниеТовар" />
           <NavigationProperty Name="ТоварПоставка" Relationship="Self.FK_ТоварПоставка_Товар" FromRole="Товар" ToRole="ТоварПоставка" />
           <NavigationProperty Name="ФилиалТовар" Relationship="Self.FK_ФилиалТовар_Товар" FromRole="Товар" ToRole="ФилиалТовар" />
+          <Property Name="Вес" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="Высота" Type="Int32" />
+          <Property Name="Ширина" Type="Int32" />
         </EntityType>
         <EntityType Name="ТоварПоставка">
           <Key>
@@ -1286,7 +1290,7 @@
           </Key>
           <Property Name="КодФилиала" Type="Int32" Nullable="false" />
           <Property Name="КодТовара" Type="Int32" Nullable="false" />
-          <Property Name="Количество" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Количество" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <NavigationProperty Name="Товар" Relationship="Self.FK_ФилиалТовар_Товар" FromRole="ФилиалТовар" ToRole="Товар" />
           <NavigationProperty Name="Филиал" Relationship="Self.FK_ФилиалТовар_Филиал" FromRole="ФилиалТовар" ToRole="Филиал" />
         </EntityType>
@@ -1995,7 +1999,6 @@
                 <ScalarProperty Name="Наименование" ColumnName="Наименование" />
                 <ScalarProperty Name="Аббревиатура" ColumnName="Аббревиатура" />
                 <ScalarProperty Name="Формат" ColumnName="Формат" />
-                <ScalarProperty Name="Масса" ColumnName="Масса" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2181,6 +2184,9 @@
           <EntitySetMapping Name="Товар">
             <EntityTypeMapping TypeName="GroceryStoreDatabasesModel.Товар">
               <MappingFragment StoreEntitySet="Товар">
+                <ScalarProperty Name="Ширина" ColumnName="Ширина" />
+                <ScalarProperty Name="Высота" ColumnName="Высота" />
+                <ScalarProperty Name="Вес" ColumnName="Вес" />
                 <ScalarProperty Name="Код" ColumnName="Код" />
                 <ScalarProperty Name="Актикул" ColumnName="Актикул" />
                 <ScalarProperty Name="ШтрихКод" ColumnName="ШтрихКод" />
