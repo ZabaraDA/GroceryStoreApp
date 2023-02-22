@@ -3,13 +3,51 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:GroceryStoreApp.Pages" xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
-      mc:Ignorable="d" FontSize="18"
+      xmlns:local="clr-namespace:GroceryStoreApp.Pages" 
+      xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
+      mc:Ignorable="d" FontSize="18" FontFamily="Arial Narrow"
       
       Title="DataProductPage">
     <Page.Resources>
-        <Style TargetType="GridViewColumnHeader">
+        <Style TargetType="ListViewItem">
+            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+
+            <Style.Triggers>
+                <Trigger Property="ItemsControl.AlternationIndex"  Value="0">
+                    <Setter Property="Background" Value="#FFE2E2E2" />
+                </Trigger>
+                <Trigger Property="ItemsControl.AlternationIndex"  Value="1">
+                    <Setter Property="Background" Value="#FFE2E2E2" />
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="Orange"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="Padding" Value="5 0 5 0"></Setter>
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontFamily" Value="Arial Narrow" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                        <Border BorderThickness="1" BorderBrush="#FFB5B5B5">
+                            <Border.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFE2E2E2"/>
+                                    <GradientStop Color="#FFCACACA" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <TextBlock x:Name="ContentHeader" Text="{TemplateBinding Content}" Padding="{TemplateBinding Padding}" Width="{TemplateBinding Width}" TextAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
         </Style>
         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource NavigationStyle}">
             <Setter Property="Height" Value="40"/>
@@ -25,26 +63,50 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition Width="200"></ColumnDefinition>
-
         </Grid.ColumnDefinitions>
-        <ListView x:Name="ProductListView" Width="auto">
+        
+        <ListView x:Name="ProductListView" Width="auto" Background="{x:Null}" BorderBrush="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Visible">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Код" DisplayMemberBinding="{Binding Код}"/>
-                    <!--<GridViewColumn Header="Фото"></GridViewColumn>-->
-                    <GridViewColumn Header="Наименование" DisplayMemberBinding="{Binding Наименование}"/>
-                    <GridViewColumn Header="Категория" DisplayMemberBinding="{Binding Категория.Наименование}"/>
-                    <GridViewColumn Header="Производитель" DisplayMemberBinding="{Binding Производитель.Наименование}"/>
-                    <GridViewColumn Header="Цена" DisplayMemberBinding="{Binding Цена}"/>
-                    <GridViewColumn Header="НДС" DisplayMemberBinding="{Binding НДС}"/>
-                    <GridViewColumn Header="Количество" DisplayMemberBinding="{Binding Количество}"/>
-                    <!--<GridViewColumn Header="Редактировать">
+                    <GridViewColumn Header="#" DisplayMemberBinding="{Binding Код}" Width="30"/>
+                    
+                    <GridViewColumn Header="Фото">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Click="Button_Click"></Button>
+                                <Border CornerRadius="10" Width="100" Height="100" HorizontalAlignment="Center" BorderBrush="Black" BorderThickness="1">
+                                    <Border.Background>
+                                        <ImageBrush Stretch="UniformToFill" >
+                                            <ImageBrush.ImageSource>
+                                                <Binding Path="Фото">
+                                                    <Binding.TargetNullValue>
+                                                        <ImageSource>/Images/ImageStub.png</ImageSource>
+                                                    </Binding.TargetNullValue>
+                                                    <Binding.FallbackValue>
+                                                        <ImageSource>/Images/ImageStub.png</ImageSource>
+                                                    </Binding.FallbackValue>
+                                                </Binding>
+                                            </ImageBrush.ImageSource>
+                                        </ImageBrush>
+                                    </Border.Background>
+                                </Border>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
-                    </GridViewColumn>-->
+                    </GridViewColumn>
+                    <GridViewColumn Header="Наименование" Width="200">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border BorderThickness="1 0" Padding="5" CornerRadius="10" Height="90" BorderBrush="#FF545454" Width="180">
+                                    <TextBlock Text="{Binding Наименование}" HorizontalAlignment="Center"></TextBlock>
+                                </Border>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Категория" DisplayMemberBinding="{Binding Категория.Наименование}" Width="200"/>
+                    <GridViewColumn Header="Производитель" DisplayMemberBinding="{Binding Производитель.Наименование}" Width="200"/>
+                    <GridViewColumn Header="Цена" DisplayMemberBinding="{Binding Цена}" Width="100"/>
+                    <GridViewColumn Header="НДС" DisplayMemberBinding="{Binding НДС}" Width="50"/>
+                    <GridViewColumn Header="Количество" DisplayMemberBinding="{Binding Количество}" Width="100"/>
+
 
                 </GridView>
             </ListView.View>

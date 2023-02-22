@@ -27,6 +27,7 @@ namespace GroceryStoreApp.Databases
         public string Актикул { get; set; }
         public string ШтрихКод { get; set; }
         public string Наименование { get; set; }
+        public string Описание { get; set; }
         public Nullable<int> КодПроизводителя { get; set; }
         public int КодКатегории { get; set; }
         public decimal Цена { get; set; }

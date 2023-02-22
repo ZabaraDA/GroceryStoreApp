@@ -4,12 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ad81acdc277c4930a4940fdffa683dde" Name="Diagram1" ZoomLevel="74">
+      <Diagram DiagramId="caf6a6dd6e9c4fbf9818b6dc5f035b40" Name="Diagram1">
         <EntityTypeShape EntityType="GroceryStoreDatabasesModel.Адрес" Width="1.5" PointX="5.25" PointY="14" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDatabasesModel.Аккаунт" Width="1.5" PointX="12" PointY="11.375" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDatabasesModel.Должность" Width="1.5" PointX="7.5" PointY="27.625" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDatabasesModel.ЕдиницаИзмерения" Width="1.5" PointX="10.5" PointY="2.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="GroceryStoreDatabasesModel.Категория" Width="1.5" PointX="10.5" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GroceryStoreDatabasesModel.Категория" Width="1.5" PointX="10.5" PointY="5.625" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDatabasesModel.МестоОтправки" Width="1.5" PointX="7.5" PointY="10.375" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDatabasesModel.МодификаторЦены" Width="1.5" PointX="9.75" PointY="24" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDatabasesModel.НаселённыйПункт" Width="1.5" PointX="8.25" PointY="14.375" IsExpanded="true" />
@@ -26,7 +26,7 @@
         <EntityTypeShape EntityType="GroceryStoreDatabasesModel.ТипНаселённогоПункта" Width="1.5" PointX="6" PointY="18.875" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDatabasesModel.ТипРегиона" Width="1.5" PointX="0.75" PointY="14.875" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDatabasesModel.ТипСтелажа" Width="1.5" PointX="10.5" PointY="33" IsExpanded="true" />
-        <EntityTypeShape EntityType="GroceryStoreDatabasesModel.Товар" Width="1.5" PointX="12.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GroceryStoreDatabasesModel.Товар" Width="1.5" PointX="12.75" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDatabasesModel.ТоварПоставка" Width="1.5" PointX="15" PointY="16.25" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDatabasesModel.ТорговыйЗал" Width="1.5" PointX="12.75" PointY="19.875" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDatabasesModel.ТорговыйЗалСтеллаж" Width="1.5" PointX="15" PointY="22.125" IsExpanded="true" />

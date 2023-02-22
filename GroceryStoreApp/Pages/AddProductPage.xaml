@@ -73,6 +73,8 @@
                     <my:TextBoxWithRemoved Uid="Введите артикул товара" x:Name="VendorCodeTextBox"></my:TextBoxWithRemoved>
                     <TextBlock Text="Наименование товара"></TextBlock>
                     <my:TextBoxWithRemoved Uid="Введите наименование товара" x:Name="NameTextBox"></my:TextBoxWithRemoved>
+                    <TextBlock Text="Описание товара"></TextBlock>
+                    <my:TextBoxWithRemoved Uid="Введите описание товара" x:Name="DescriptionTextBox"></my:TextBoxWithRemoved>
                 </StackPanel>
                
                 <StackPanel Margin="10 10 30 0">
@@ -89,7 +91,7 @@
                     <TextBlock Text="Единица измерения"></TextBlock>
                     <ComboBox x:Name="UnitComboBox"></ComboBox>
                     <TextBlock Text="Вес единицы,кг"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите вес единицы товара" x:Name="WeightTextBox"></my:TextBoxWithRemoved>
+                    <my:TextBoxWithRemoved Uid="Введите вес нестандартной единицы товара"  x:Name="WeightTextBox"></my:TextBoxWithRemoved>
                     <TextBlock Text="Ширина при размещении"></TextBlock>
                     <my:TextBoxWithRemoved Uid="Введите ширина товара" x:Name="WidthTextBox"></my:TextBoxWithRemoved>
                     <TextBlock Text="Высота при размещении"></TextBlock>

@@ -35,6 +35,8 @@ namespace GroceryStoreApp.Pages
         Адрес currentAddress = new Адрес();
         Аккаунт currentAccount = new Аккаунт();
 
+       
+
         //byte[] photoProfile;
 
         bool addWithAccount = false;
@@ -60,8 +62,8 @@ namespace GroceryStoreApp.Pages
                     LocalityComboBox.IsEnabled = true;
                     StreetComboBox.IsEnabled = true;
                 }
-                
-                
+
+
             }
             DataContext = currentUser;
 
@@ -178,7 +180,7 @@ namespace GroceryStoreApp.Pages
                     bitmapEncoder = new JpegBitmapEncoder();
                     bitmapEncoder.Frames.Add(BitmapFrame.Create(bitmapImage));
                     bitmapEncoder.Save(memory);
-                    
+
 
                     currentUser.Фото = memory.ToArray();
                     PhotoProfileImageBrush.ImageSource = bitmapImage;
@@ -378,7 +380,7 @@ namespace GroceryStoreApp.Pages
                     databasesEntities.SaveChanges();
                     //NavigationService.GoBack();
                     NavigationService.Refresh();
-                    
+
                 }
                 catch (Exception ex)
                 {

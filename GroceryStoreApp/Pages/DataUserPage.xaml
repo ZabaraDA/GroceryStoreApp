@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GroceryStoreApp.Pages" xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
-      mc:Ignorable="d" 
+      mc:Ignorable="d" FontSize="18" FontFamily="Arial Narrow"
       Title="DataUserPage" IsVisibleChanged="Page_IsVisibleChanged">
     <Page.Resources>
         <Style TargetType="{x:Type TextBlock}">
@@ -22,7 +22,7 @@
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
-            
+
         </Style>
         <Style TargetType="{x:Type ComboBox}">
             <Setter Property="Width" Value="auto"/>
@@ -30,7 +30,7 @@
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
-           
+
         </Style>
         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource NavigationStyle}">
             <Setter Property="Height" Value="40"/>
@@ -39,11 +39,15 @@
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
-           
+
         </Style>
     </Page.Resources>
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="229*"/>
+            <RowDefinition Height="323*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="auto"></ColumnDefinition>
@@ -52,7 +56,7 @@
 
         <ListView Name="UserListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   HorizontalAlignment="Center" HorizontalContentAlignment="Center" 
-                  BorderBrush="{x:Null}" Background="{x:Null}" SelectionChanged="UserListView_SelectionChanged">
+                  BorderBrush="{x:Null}" Background="{x:Null}" SelectionChanged="UserListView_SelectionChanged" Grid.RowSpan="2">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel></WrapPanel>
@@ -64,8 +68,8 @@
                         <Border CornerRadius="5">
                             <Border.Background >
                                 <LinearGradientBrush>
-                                    <GradientStop Color="{Binding color}" Offset="0"/>
-                                    <GradientStop Color="{Binding color}" Offset="1"/>
+                                    <GradientStop Color="{Binding Color}" Offset="0"/>
+                                    <GradientStop Color="Aquamarine" Offset="1"/>
                                 </LinearGradientBrush>
                             </Border.Background>
                             <StackPanel Orientation="Vertical">
@@ -97,19 +101,19 @@
                                                TextWrapping="WrapWithOverflow"></TextBlock>
                                     <TextBlock Text="{Binding Path=ДатаТрудоустройства, StringFormat='Дата трудоустройства: yyyy-MM-dd',Mode=OneWay}"
                                                TextWrapping="WrapWithOverflow"></TextBlock>-->
-                                </StackPanel> 
+                                </StackPanel>
                             </StackPanel>
                         </Border>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Grid Height="220" Name="UserGrid" VerticalAlignment="Bottom" Visibility="Collapsed" Width="1050"  HorizontalAlignment="Center">
+        <Grid Height="220" Name="UserGrid" VerticalAlignment="Top" Visibility="Collapsed" Width="1050"  HorizontalAlignment="Center" Margin="0,103,0,0" Grid.Row="1">
             <Border CornerRadius="5" BorderBrush="#FF3E3E3E" BorderThickness="1">
                 <Border.Background>
                     <LinearGradientBrush>
-                        <GradientStop Color="{Binding color}" Offset="0"/>
-                        <GradientStop Color="{Binding color}" Offset="1"/>
+                        <GradientStop Color="{Binding Color}" Offset="0"/>
+                        <GradientStop Color="{Binding Color}" Offset="1"/>
                     </LinearGradientBrush>
                 </Border.Background>
                 <StackPanel Orientation="Horizontal">
@@ -133,14 +137,14 @@
                         <TextBlock Text="{Binding Path=Должность.Наименование, StringFormat={}Должность: {0}}" TextWrapping="WrapWithOverflow" Height="45"></TextBlock>
                     </StackPanel>
                     <StackPanel Margin="10" TextBlock.FontSize="16" Orientation="Vertical">
-                        
-                                    <TextBlock Text="{Binding Path=Пол, StringFormat={}Пол: {0}}"></TextBlock>
-                                    <TextBlock Text="{Binding Path=Почта, StringFormat={}Почта: {0}}"></TextBlock>
+
+                        <TextBlock Text="{Binding Path=Пол, StringFormat={}Пол: {0}}"></TextBlock>
+                        <TextBlock Text="{Binding Path=Почта, StringFormat={}Почта: {0}}"></TextBlock>
                         <TextBlock Text="{Binding Path=ИНН, StringFormat={}ИНН: {0}}"></TextBlock>
-                                    <TextBlock Text="{Binding Path=ОМС, StringFormat={}ОМС: {0}}"></TextBlock>
-                                    <TextBlock Text="{Binding Path=СНИЛС, StringFormat={}СНИЛС: {0}}"></TextBlock>
-                      
-                        </StackPanel>
+                        <TextBlock Text="{Binding Path=ОМС, StringFormat={}ОМС: {0}}"></TextBlock>
+                        <TextBlock Text="{Binding Path=СНИЛС, StringFormat={}СНИЛС: {0}}"></TextBlock>
+
+                    </StackPanel>
                     <StackPanel Margin="10" TextBlock.FontSize="16" Orientation="Vertical">
                         <TextBlock Text="{Binding Path=Телефон, StringFormat={}Телефон: {0}}"></TextBlock>
                         <TextBlock Text="{Binding Path=ДатаРождения, StringFormat='Дата рождения: yyyy-MM-dd',Mode=OneWay}" 
@@ -153,7 +157,7 @@
                 </StackPanel>
             </Border>
         </Grid>
-        <StackPanel Grid.Column="1" Name="UserEditStackPanel" Margin="0 0 5 0" >
+        <StackPanel Grid.Column="1" Name="UserEditStackPanel" Margin="0 0 5 0" Grid.RowSpan="2" >
             <StackPanel>
                 <TextBlock Text="Фильтры" HorizontalAlignment="Center" TextAlignment="Center" ></TextBlock>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -191,7 +195,7 @@
                 <TextBlock Text="Редактировать"></TextBlock>
                 <Button Content="Добавить &#xa;сотрудника &#xa;" Height="50" x:Name="AddProductButton" Click="AddUserButton_Click"></Button>
                 <Button Content="Удалить"  x:Name="DeleteProductButton" Click="DeleteUserButton_Click" ></Button>
-                
+
             </StackPanel>
         </StackPanel>
 

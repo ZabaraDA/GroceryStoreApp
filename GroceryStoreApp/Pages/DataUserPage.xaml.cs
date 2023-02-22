@@ -1,6 +1,7 @@
 ﻿using GroceryStoreApp.Databases;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,19 @@ namespace GroceryStoreApp.Pages
     {
         GroceryStoreDatabasesEntities databasesEntities = new GroceryStoreDatabasesEntities();
 
+        private class User :Сотрудник
+        {
+            public Color Color
+            {
+                get
+                {
+                    return Фамилия.Length > 3 ? Colors.BlanchedAlmond : Colors.Chocolate;
+                }
+            }
+
+
+        }
+
         public DataUserPage()
         {
             InitializeComponent();
@@ -34,7 +48,7 @@ namespace GroceryStoreApp.Pages
             ProfessionSearchComboBox.SelectedIndex = 0;
 
             FamilyStatusSearchComboBox.SelectedIndex = 0;
-            
+
             GenderSearchComboBox.SelectedIndex = 0;
             AccountSearchComboBox.SelectedIndex = 0;
             SearchUserDataUpdate();
@@ -43,8 +57,10 @@ namespace GroceryStoreApp.Pages
 
         private void SearchUserDataUpdate()
         {
-            var itemUsers = databasesEntities.Сотрудник.ToList();
-            int numberOfUsers = databasesEntities.Сотрудник.Count();
+            List<Сотрудник> itemUsers = databasesEntities.Сотрудник.ToList();
+            
+
+            int numberOfUsers = itemUsers.Count();
             NumberOfUsersTextBlock.Text = numberOfUsers.ToString();
 
             if (NameSearchTextBox.Text != "" && NameSearchTextBox.Text != null)

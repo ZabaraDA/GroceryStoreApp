@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Хранилище GroceryStoreDatabasesModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище GroceryStoreDatabasesModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Адрес">
           <Key>
             <PropertyRef Name="Код" />
@@ -213,6 +213,7 @@
           <Property Name="Актикул" Type="nchar" MaxLength="50" Nullable="false" />
           <Property Name="ШтрихКод" Type="nchar" MaxLength="50" Nullable="false" />
           <Property Name="Наименование" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Описание" Type="nvarchar" MaxLength="350" />
           <Property Name="КодПроизводителя" Type="int" />
           <Property Name="КодКатегории" Type="int" Nullable="false" />
           <Property Name="Цена" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -940,7 +941,8 @@
             <End Role="ЭлементПланировка" EntitySet="ЭлементПланировка" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="GroceryStoreDatabasesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1199,6 +1201,7 @@
           <Property Name="Актикул" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="ШтрихКод" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="Наименование" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Описание" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
           <Property Name="КодПроизводителя" Type="Int32" />
           <Property Name="КодКатегории" Type="Int32" Nullable="false" />
           <Property Name="Цена" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
@@ -1207,6 +1210,9 @@
           <Property Name="СрокГодности" Type="Int32" Nullable="false" />
           <Property Name="КодЕдиницыИзмерения" Type="Int32" Nullable="false" />
           <Property Name="Фото" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Вес" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="Высота" Type="Int32" />
+          <Property Name="Ширина" Type="Int32" />
           <NavigationProperty Name="ЕдиницаИзмерения" Relationship="Self.FK_Товар_ЕдиницаИзмерения" FromRole="Товар" ToRole="ЕдиницаИзмерения" />
           <NavigationProperty Name="Категория" Relationship="Self.FK_Товар_Категория" FromRole="Товар" ToRole="Категория" />
           <NavigationProperty Name="МодификаторЦены" Relationship="Self.FK_МодификаторЦены_Товар" FromRole="Товар" ToRole="МодификаторЦены" />
@@ -1214,9 +1220,6 @@
           <NavigationProperty Name="СписаниеТовар" Relationship="Self.FK_СписаниеТовар_Товар" FromRole="Товар" ToRole="СписаниеТовар" />
           <NavigationProperty Name="ТоварПоставка" Relationship="Self.FK_ТоварПоставка_Товар" FromRole="Товар" ToRole="ТоварПоставка" />
           <NavigationProperty Name="ФилиалТовар" Relationship="Self.FK_ФилиалТовар_Товар" FromRole="Товар" ToRole="ФилиалТовар" />
-          <Property Name="Вес" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="Высота" Type="Int32" />
-          <Property Name="Ширина" Type="Int32" />
         </EntityType>
         <EntityType Name="ТоварПоставка">
           <Key>
@@ -2184,13 +2187,11 @@
           <EntitySetMapping Name="Товар">
             <EntityTypeMapping TypeName="GroceryStoreDatabasesModel.Товар">
               <MappingFragment StoreEntitySet="Товар">
-                <ScalarProperty Name="Ширина" ColumnName="Ширина" />
-                <ScalarProperty Name="Высота" ColumnName="Высота" />
-                <ScalarProperty Name="Вес" ColumnName="Вес" />
                 <ScalarProperty Name="Код" ColumnName="Код" />
                 <ScalarProperty Name="Актикул" ColumnName="Актикул" />
                 <ScalarProperty Name="ШтрихКод" ColumnName="ШтрихКод" />
                 <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+                <ScalarProperty Name="Описание" ColumnName="Описание" />
                 <ScalarProperty Name="КодПроизводителя" ColumnName="КодПроизводителя" />
                 <ScalarProperty Name="КодКатегории" ColumnName="КодКатегории" />
                 <ScalarProperty Name="Цена" ColumnName="Цена" />
@@ -2199,6 +2200,9 @@
                 <ScalarProperty Name="СрокГодности" ColumnName="СрокГодности" />
                 <ScalarProperty Name="КодЕдиницыИзмерения" ColumnName="КодЕдиницыИзмерения" />
                 <ScalarProperty Name="Фото" ColumnName="Фото" />
+                <ScalarProperty Name="Вес" ColumnName="Вес" />
+                <ScalarProperty Name="Высота" ColumnName="Высота" />
+                <ScalarProperty Name="Ширина" ColumnName="Ширина" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
