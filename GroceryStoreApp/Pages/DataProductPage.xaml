@@ -13,18 +13,38 @@
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#FFB3B3B3" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border x:Name="Border" Padding="2" SnapsToDevicePixels="true" Margin="1"
+                                BorderThickness="0 0 0 1" BorderBrush="{TemplateBinding BorderBrush}"
+                                Background="{TemplateBinding Background}">
+                            <Grid>
+                                <Border Name="LabelBorder" Height="20" Background="Orange" VerticalAlignment="Top" Visibility="Hidden"></Border>
+                                <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"  Value="True">
+                                <Setter Property="Background" Value="#FF929292" />
+                                <Setter TargetName="LabelBorder" Property="Visibility" Value="Visible"></Setter>
+                            </Trigger>
+                            <!--<Trigger Property="ItemsControl.AlternationIndex"  Value="0">
+                                <Setter Property="Background" Value="#FFE2E2E2" />
+                            </Trigger>
+                            <Trigger Property="ItemsControl.AlternationIndex"  Value="1">
+                                <Setter Property="Background" Value="#FFE2E2E2" />
+                            </Trigger>-->
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="Orange"/>
+                                <Setter Property="Background" Value="#FF7F7F7F"/>
 
-            <Style.Triggers>
-                <Trigger Property="ItemsControl.AlternationIndex"  Value="0">
-                    <Setter Property="Background" Value="#FFE2E2E2" />
-                </Trigger>
-                <Trigger Property="ItemsControl.AlternationIndex"  Value="1">
-                    <Setter Property="Background" Value="#FFE2E2E2" />
-                </Trigger>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="Orange"/>
-                </Trigger>
-            </Style.Triggers>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
         <Style TargetType="{x:Type GridViewColumnHeader}">
@@ -64,18 +84,21 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition Width="200"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        
+
         <ListView x:Name="ProductListView" Width="auto" Background="{x:Null}" BorderBrush="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Visible">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="#" DisplayMemberBinding="{Binding Код}" Width="30"/>
-                    
                     <GridViewColumn Header="Фото">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Border CornerRadius="10" Width="100" Height="100" HorizontalAlignment="Center" BorderBrush="Black" BorderThickness="1">
+                                <Border CornerRadius="10" Width="200" Height="200" HorizontalAlignment="Center"
+                                        BorderBrush="Black" BorderThickness="1">
                                     <Border.Background>
-                                        <ImageBrush Stretch="UniformToFill" >
+                                        <ImageBrush Stretch="Fill">
+                                            <!--<ImageBrush.Transform>
+                                                <ScaleTransform ScaleX="0.5" ScaleY="0.5" ></ScaleTransform>
+                                            </ImageBrush.Transform>-->
                                             <ImageBrush.ImageSource>
                                                 <Binding Path="Фото">
                                                     <Binding.TargetNullValue>
@@ -95,7 +118,7 @@
                     <GridViewColumn Header="Наименование" Width="200">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Border BorderThickness="1 0" Padding="5" CornerRadius="10" Height="90" BorderBrush="#FF545454" Width="180">
+                                <Border BorderThickness="1 0" Padding="5" CornerRadius="0" Height="90" BorderBrush="#FF545454" Width="180">
                                     <TextBlock Text="{Binding Наименование}" HorizontalAlignment="Center"></TextBlock>
                                 </Border>
                             </DataTemplate>
