@@ -19,10 +19,10 @@ namespace GroceryStoreApp.Pages
     /// <summary>
     /// Логика взаимодействия для DataProductPage.xaml
     /// </summary>
-    public partial class DataProductPage : Page
+    public partial class DataOfProductPage : Page
     {
         GroceryStoreDatabasesEntities databasesEntities = new GroceryStoreDatabasesEntities();
-        public DataProductPage()
+        public DataOfProductPage()
         {
             InitializeComponent();
             FilterProduct();
@@ -60,6 +60,12 @@ namespace GroceryStoreApp.Pages
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+
+        private void ViewProductButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            NavigationService.Navigate(new FormProductPage((sender as Button).DataContext as Товар));
         }
     }
 }

@@ -340,7 +340,11 @@ namespace GroceryStoreApp.Pages
 
         private void AddManufacturerButton_Click(object sender, RoutedEventArgs e)
         {
-
+            //List<Товар> product = databasesEntities.Товар.ToList();
+            //databasesEntities.Списание.Add(new Списание
+            //{
+            //    Товар = product,
+            //});
         }
 
         private void AddCategoryButton_Click(object sender, RoutedEventArgs e)

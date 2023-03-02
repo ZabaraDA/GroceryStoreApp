@@ -1,4 +1,4 @@
-﻿<Page x:Class="GroceryStoreApp.Pages.DataProductPage"
+﻿<Page x:Class="GroceryStoreApp.Pages.DataOfProductPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,8 +6,7 @@
       xmlns:local="clr-namespace:GroceryStoreApp.Pages" 
       xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
       mc:Ignorable="d" FontSize="18" FontFamily="Arial Narrow"
-      
-      Title="DataProductPage">
+      Title="DataProductPage" >
     <Page.Resources>
         <Style TargetType="ListViewItem">
             <Setter Property="Foreground" Value="Black"></Setter>
@@ -30,12 +29,6 @@
                                 <Setter Property="Background" Value="#FF929292" />
                                 <Setter TargetName="LabelBorder" Property="Visibility" Value="Visible"></Setter>
                             </Trigger>
-                            <!--<Trigger Property="ItemsControl.AlternationIndex"  Value="0">
-                                <Setter Property="Background" Value="#FFE2E2E2" />
-                            </Trigger>
-                            <Trigger Property="ItemsControl.AlternationIndex"  Value="1">
-                                <Setter Property="Background" Value="#FFE2E2E2" />
-                            </Trigger>-->
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter Property="Background" Value="Orange"/>
                                 <Setter Property="Background" Value="#FF7F7F7F"/>
@@ -118,6 +111,13 @@
                     <GridViewColumn Header="Наименование" Width="200">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
+                                <Button Name="ViewProductButton" Click="ViewProductButton_Click" Content="Подробнее"></Button>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Наименование" Width="200">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
                                 <Border BorderThickness="1 0" Padding="5" CornerRadius="0" Height="90" BorderBrush="#FF545454" Width="180">
                                     <TextBlock Text="{Binding Наименование}" HorizontalAlignment="Center"></TextBlock>
                                 </Border>
@@ -129,7 +129,7 @@
                     <GridViewColumn Header="Цена" DisplayMemberBinding="{Binding Цена}" Width="100"/>
                     <GridViewColumn Header="НДС" DisplayMemberBinding="{Binding НДС}" Width="50"/>
                     <GridViewColumn Header="Количество" DisplayMemberBinding="{Binding Количество}" Width="100"/>
-
+                  
 
                 </GridView>
             </ListView.View>

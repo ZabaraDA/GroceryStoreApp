@@ -93,6 +93,12 @@
     <Compile Include="Databases\ЕдиницаИзмерения.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Databases\Заказ.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Databases\ЗаказТовар.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Databases\Категория.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -174,17 +180,29 @@
     <Compile Include="Pages\AddProductPage.xaml.cs">
       <DependentUpon>AddProductPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\AddSupplyPage.xaml.cs">
+      <DependentUpon>AddSupplyPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\AddUserPage.xaml.cs">
       <DependentUpon>AddUserPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\DataAddressPage.xaml.cs">
-      <DependentUpon>DataAddressPage.xaml</DependentUpon>
+    <Compile Include="Pages\DataOfAddressPage.xaml.cs">
+      <DependentUpon>DataOfAddressPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\DataProductPage.xaml.cs">
-      <DependentUpon>DataProductPage.xaml</DependentUpon>
+    <Compile Include="Pages\DataOfCategoriesPage.xaml.cs">
+      <DependentUpon>DataOfCategoriesPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\DataUserPage.xaml.cs">
-      <DependentUpon>DataUserPage.xaml</DependentUpon>
+    <Compile Include="Pages\DataOfSupplyPage.xaml.cs">
+      <DependentUpon>DataOfSupplyPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DataOfProductPage.xaml.cs">
+      <DependentUpon>DataOfProductPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DataOfUserPage.xaml.cs">
+      <DependentUpon>DataOfUserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\FormProductPage.xaml.cs">
+      <DependentUpon>FormProductPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\WelcomePage.xaml.cs">
       <DependentUpon>WelcomePage.xaml</DependentUpon>
@@ -199,19 +217,35 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\AddSupplyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\AddUserPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\DataAddressPage.xaml">
+    <Page Include="Pages\DataOfAddressPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\DataProductPage.xaml">
+    <Page Include="Pages\DataOfCategoriesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\DataUserPage.xaml">
+    <Page Include="Pages\DataOfSupplyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\DataOfProductPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\DataOfUserPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\FormProductPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -300,6 +334,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="Images\Supply.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

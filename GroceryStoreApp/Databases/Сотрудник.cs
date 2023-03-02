@@ -11,8 +11,7 @@ namespace GroceryStoreApp.Databases
 {
     using System;
     using System.Collections.Generic;
-    using System.Windows.Media;
-
+    
     public partial class Сотрудник
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,14 +22,6 @@ namespace GroceryStoreApp.Databases
     
         public int Код { get; set; }
         public string Фамилия { get; set; }
-        public Color Color
-        {
-            get
-            {
-                return Фамилия.Length > 3 ? Colors.BlanchedAlmond : Colors.Chocolate;
-            }
-        }
-
         public string Имя { get; set; }
         public string Отчество { get; set; }
         public int КодДолжности { get; set; }

@@ -17,28 +17,28 @@ using System.Windows.Shapes;
 
 namespace GroceryStoreApp.Pages
 {
-    public partial class DataUserPage : Page
+    public partial class DataOfUserPage : Page
     {
-        GroceryStoreDatabasesEntities databasesEntities = new GroceryStoreDatabasesEntities();
+        readonly GroceryStoreDatabasesEntities databaseEntities = new GroceryStoreDatabasesEntities();
 
-        private class User :Сотрудник
+        private class User : Сотрудник
         {
-            public Color Color
-            {
-                get
-                {
-                    return Фамилия.Length > 3 ? Colors.BlanchedAlmond : Colors.Chocolate;
-                }
-            }
+            //public Color Color
+            //{
+            //    get
+            //    {
+            //        return Фамилия.Length > 3 ? Colors.BlanchedAlmond : Colors.Chocolate;
+            //    }
+            //}
 
 
         }
 
-        public DataUserPage()
+        public DataOfUserPage()
         {
             InitializeComponent();
 
-            var itemsProfessionList = databasesEntities.Должность.ToList();
+            var itemsProfessionList = databaseEntities.Должность.ToList();
             itemsProfessionList.Insert(0, new Должность
             {
                 Наименование = "Все должности"
@@ -57,8 +57,8 @@ namespace GroceryStoreApp.Pages
 
         private void SearchUserDataUpdate()
         {
-            List<Сотрудник> itemUsers = databasesEntities.Сотрудник.ToList();
-            
+            List<Сотрудник> itemUsers = databaseEntities.Сотрудник.ToList();
+
 
             int numberOfUsers = itemUsers.Count();
             NumberOfUsersTextBlock.Text = numberOfUsers.ToString();
@@ -95,7 +95,7 @@ namespace GroceryStoreApp.Pages
             }
             if (AccountSearchComboBox.SelectedIndex > 0)
             {
-                int[] idUsers = databasesEntities.Аккаунт.Select(x => x.КодСотрудника).ToArray();
+                int[] idUsers = databaseEntities.Аккаунт.Select(x => x.КодСотрудника).ToArray();
                 List<Сотрудник> r = new List<Сотрудник>();
                 for (int i = 0; i < idUsers.Length; i++)
                 {
@@ -136,11 +136,11 @@ namespace GroceryStoreApp.Pages
         {
             if (UserListView.SelectedItem is Сотрудник userItem)
             {
-                var lp = databasesEntities.Аккаунт.Where(x => x.КодСотрудника.Equals(userItem.Код)).FirstOrDefault();
+                var lp = databaseEntities.Аккаунт.Where(x => x.КодСотрудника.Equals(userItem.Код)).FirstOrDefault();
                 if (lp == null)
                 {
-                    databasesEntities.Сотрудник.Remove(userItem);
-                    databasesEntities.SaveChanges();
+                    databaseEntities.Сотрудник.Remove(userItem);
+                    databaseEntities.SaveChanges();
                     SearchUserDataUpdate();
                 }
                 else

@@ -17,6 +17,7 @@ namespace GroceryStoreApp.Databases
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Филиал()
         {
+            this.Заказ = new HashSet<Заказ>();
             this.МодификаторЦены = new HashSet<МодификаторЦены>();
             this.Поставка = new HashSet<Поставка>();
             this.Сотрудник = new HashSet<Сотрудник>();
@@ -31,6 +32,8 @@ namespace GroceryStoreApp.Databases
         public string Наименование { get; set; }
     
         public virtual Адрес Адрес { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Заказ> Заказ { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<МодификаторЦены> МодификаторЦены { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace GroceryStoreApp.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для DataAddressPage.xaml
+    /// Логика взаимодействия для DataOfSupplyPage.xaml
     /// </summary>
-    public partial class DataAddressPage : Page
+    public partial class DataOfSupplyPage : Page
     {
-        public DataAddressPage()
+        public DataOfSupplyPage()
         {
             InitializeComponent();
         }

@@ -18,20 +18,22 @@ using System.Windows.Markup;
 
 namespace GroceryStoreApp.Windows
 {
-
     public partial class MenuWindow : Window
     {
         DoubleAnimation doubleAnimation = new DoubleAnimation();
 
         int quantity = 0;
-        readonly List<(int access,Page page, string content, string data)> navigationButtonList = new List<(int access, Page page, string content, string data)>()
+
+        readonly List<(int access,Page page, string content, string geometryName)> navigationButtonList = new List<(int access, Page page, string content, string data)>()
         {
-          
           (1,new AddUserPage(null), "Аккаунты","ProfilePathData"),
-          (1,new DataUserPage(), "Сотрудники","ProfilePathData"),
-          (1,new DataAddressPage(), "Адреса","ProfilePathData"),
-          (3,new DataProductPage(), "Товары","ProfilePathData"),
+          (1,new DataOfUserPage(), "Сотрудники","ProfilePathData"),
+          (1,new DataOfAddressPage(), "Адреса","ProfilePathData"),
+          (3,new DataOfProductPage(), "Товары","ProductPathData"),
           (3,new AddProductPage(), "Добавить товар","AddProductPathData"),
+          (3,new DataOfCategoriesPage(), "Категории","ProductPathData"),
+          (3,new DataOfSupplyPage(), "Поставки","SupplyPathData"),
+
         };
         public MenuWindow()
         {
@@ -55,7 +57,7 @@ namespace GroceryStoreApp.Windows
                 NavigationButton navigationButton = new NavigationButton()
                 {
                     Content = navigationButtonList[i].content,
-                    Data = (Geometry)Application.Current.FindResource(navigationButtonList[i].data),
+                    Data = (Geometry)Application.Current.FindResource(navigationButtonList[i].geometryName),
                     Tag = quantity++,
 
                 };

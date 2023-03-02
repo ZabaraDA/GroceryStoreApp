@@ -29,6 +29,8 @@ namespace GroceryStoreApp.Databases
         public virtual DbSet<Аккаунт> Аккаунт { get; set; }
         public virtual DbSet<Должность> Должность { get; set; }
         public virtual DbSet<ЕдиницаИзмерения> ЕдиницаИзмерения { get; set; }
+        public virtual DbSet<Заказ> Заказ { get; set; }
+        public virtual DbSet<ЗаказТовар> ЗаказТовар { get; set; }
         public virtual DbSet<Категория> Категория { get; set; }
         public virtual DbSet<МестоОтправки> МестоОтправки { get; set; }
         public virtual DbSet<МодификаторЦены> МодификаторЦены { get; set; }
