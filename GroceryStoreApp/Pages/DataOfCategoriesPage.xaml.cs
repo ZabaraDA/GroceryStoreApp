@@ -17,9 +17,6 @@ using System.Windows.Shapes;
 
 namespace GroceryStoreApp.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для DataOfCategoriesPage.xaml
-    /// </summary>
     public partial class DataOfCategoriesPage : Page
     {
         GroceryStoreDatabasesEntities databasesEntities = new GroceryStoreDatabasesEntities();
@@ -30,23 +27,53 @@ namespace GroceryStoreApp.Pages
             //categoryItems.Insert(databasesEntities.Категория.Count(), new Категория
             //{
             //    Наименование = "Добавить категорию",
-                
-                
-            //});
-            Категория категория = new Категория();
-            категория.Наименование = "Добавить категорию";
-            
-            ListViewItem item = new ListViewItem();
-            item.DataContext = категория;
-            item.MouseDown += Page_MouseDown;
 
-            CategoryListView.ItemsSource = categoryItems.ToList();
+
+            //});
+
+            Image image = new Image()
+            {
+                Source = new BitmapImage(new Uri("/Images/plus.png", UriKind.Relative)),
+            };
+            TextBlock textBlock = new TextBlock()
+            {
+                Text = "Добавить категорию"
+            };
+            StackPanel stackPanel = new StackPanel();
+            stackPanel.Children.Add(image);
+            stackPanel.Children.Add(textBlock); 
+
+            ListViewItem item = new ListViewItem();
+            item.MouseDoubleClick += Page_MouseDown;
+            item.Width = 200;
+            item.Content = stackPanel;
+
+            CompositeCollection compositeCollection = new CompositeCollection();
+            compositeCollection.Add(categoryItems);
+            //compositeCollection.Add(item);
+
+            CategoryListView.Items.Add(categoryItems);
             CategoryListView.Items.Add(item);
         }
 
         private void Page_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            NavigationService.Navigate(new AddCategoryPage(null, null, false));
+        }
 
+        private void AddGroupButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new AddCategoryPage(null,null,true));
+        }
+
+        private void AddCategoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new AddCategoryPage(null,null,false));
+        }
+
+        private void ChangeCateryButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new AddCategoryPage(null, null, false));
         }
     }
 }

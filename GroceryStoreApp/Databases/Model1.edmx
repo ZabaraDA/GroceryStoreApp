@@ -26,6 +26,14 @@
           <Property Name="УровеньДоступа" Type="tinyint" Nullable="false" />
           <Property Name="КодСотрудника" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Группа">
+          <Key>
+            <PropertyRef Name="Код" />
+          </Key>
+          <Property Name="Код" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Наименование" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Фото" Type="image" />
+        </EntityType>
         <EntityType Name="Должность">
           <Key>
             <PropertyRef Name="Код" />
@@ -66,8 +74,7 @@
           <Property Name="Код" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Наименование" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Фото" Type="image" />
-          <Property Name="Подкатегория" Type="bit" Nullable="false" />
-          <Property Name="КодКатегории" Type="int" />
+          <Property Name="КодГруппы" Type="int" />
         </EntityType>
         <EntityType Name="МестоОтправки">
           <Key>
@@ -403,6 +410,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Категория_Группа">
+          <End Role="Группа" Type="Self.Группа" Multiplicity="0..1" />
+          <End Role="Категория" Type="Self.Категория" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Группа">
+              <PropertyRef Name="Код" />
+            </Principal>
+            <Dependent Role="Категория">
+              <PropertyRef Name="КодГруппы" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_МестоОтправки_Адрес">
           <End Role="Адрес" Type="Self.Адрес" Multiplicity="1" />
           <End Role="МестоОтправки" Type="Self.МестоОтправки" Multiplicity="*" />
@@ -643,7 +662,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Товар_Категория">
+        <Association Name="FK_Товар_Категория1">
           <End Role="Категория" Type="Self.Категория" Multiplicity="1" />
           <End Role="Товар" Type="Self.Товар" Multiplicity="*" />
           <ReferentialConstraint>
@@ -814,6 +833,7 @@
         <EntityContainer Name="Хранилище GroceryStoreDatabasesModelContainer">
           <EntitySet Name="Адрес" EntityType="Self.Адрес" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Аккаунт" EntityType="Self.Аккаунт" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Группа" EntityType="Self.Группа" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Должность" EntityType="Self.Должность" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ЕдиницаИзмерения" EntityType="Self.ЕдиницаИзмерения" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Заказ" EntityType="Self.Заказ" Schema="dbo" store:Type="Tables" />
@@ -871,6 +891,10 @@
           <AssociationSet Name="FK_ЗаказТовар_Товар" Association="Self.FK_ЗаказТовар_Товар">
             <End Role="Товар" EntitySet="Товар" />
             <End Role="ЗаказТовар" EntitySet="ЗаказТовар" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Категория_Группа" Association="Self.FK_Категория_Группа">
+            <End Role="Группа" EntitySet="Группа" />
+            <End Role="Категория" EntitySet="Категория" />
           </AssociationSet>
           <AssociationSet Name="FK_МестоОтправки_Адрес" Association="Self.FK_МестоОтправки_Адрес">
             <End Role="Адрес" EntitySet="Адрес" />
@@ -952,7 +976,7 @@
             <End Role="ЕдиницаИзмерения" EntitySet="ЕдиницаИзмерения" />
             <End Role="Товар" EntitySet="Товар" />
           </AssociationSet>
-          <AssociationSet Name="FK_Товар_Категория" Association="Self.FK_Товар_Категория">
+          <AssociationSet Name="FK_Товар_Категория1" Association="Self.FK_Товар_Категория1">
             <End Role="Категория" EntitySet="Категория" />
             <End Role="Товар" EntitySet="Товар" />
           </AssociationSet>
@@ -1042,6 +1066,15 @@
           <Property Name="КодСотрудника" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Сотрудник" Relationship="Self.FK_Аккаунт_Сотрудник" FromRole="Аккаунт" ToRole="Сотрудник" />
         </EntityType>
+        <EntityType Name="Группа">
+          <Key>
+            <PropertyRef Name="Код" />
+          </Key>
+          <Property Name="Код" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Наименование" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Фото" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Категория" Relationship="Self.FK_Категория_Группа" FromRole="Группа" ToRole="Категория" />
+        </EntityType>
         <EntityType Name="Должность">
           <Key>
             <PropertyRef Name="Код" />
@@ -1088,9 +1121,9 @@
           <Property Name="Код" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Наименование" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Фото" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="Подкатегория" Type="Boolean" Nullable="false" />
-          <Property Name="КодКатегории" Type="Int32" />
-          <NavigationProperty Name="Товар" Relationship="Self.FK_Товар_Категория" FromRole="Категория" ToRole="Товар" />
+          <Property Name="КодГруппы" Type="Int32" />
+          <NavigationProperty Name="Группа" Relationship="Self.FK_Категория_Группа" FromRole="Категория" ToRole="Группа" />
+          <NavigationProperty Name="Товар" Relationship="Self.FK_Товар_Категория1" FromRole="Категория" ToRole="Товар" />
         </EntityType>
         <EntityType Name="МестоОтправки">
           <Key>
@@ -1305,7 +1338,7 @@
           <Property Name="Статус" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ЕдиницаИзмерения" Relationship="Self.FK_Товар_ЕдиницаИзмерения" FromRole="Товар" ToRole="ЕдиницаИзмерения" />
           <NavigationProperty Name="ЗаказТовар" Relationship="Self.FK_ЗаказТовар_Товар" FromRole="Товар" ToRole="ЗаказТовар" />
-          <NavigationProperty Name="Категория" Relationship="Self.FK_Товар_Категория" FromRole="Товар" ToRole="Категория" />
+          <NavigationProperty Name="Категория" Relationship="Self.FK_Товар_Категория1" FromRole="Товар" ToRole="Категория" />
           <NavigationProperty Name="МодификаторЦены" Relationship="Self.FK_МодификаторЦены_Товар" FromRole="Товар" ToRole="МодификаторЦены" />
           <NavigationProperty Name="Производитель" Relationship="Self.FK_Товар_Производитель" FromRole="Товар" ToRole="Производитель" />
           <NavigationProperty Name="СписаниеТовар" Relationship="Self.FK_СписаниеТовар_Товар" FromRole="Товар" ToRole="СписаниеТовар" />
@@ -1494,6 +1527,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Категория_Группа">
+          <End Role="Группа" Type="Self.Группа" Multiplicity="0..1" />
+          <End Role="Категория" Type="Self.Категория" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Группа">
+              <PropertyRef Name="Код" />
+            </Principal>
+            <Dependent Role="Категория">
+              <PropertyRef Name="КодГруппы" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Сотрудник_Должность">
           <End Role="Должность" Type="Self.Должность" Multiplicity="1" />
           <End Role="Сотрудник" Type="Self.Сотрудник" Multiplicity="*" />
@@ -1554,7 +1599,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Товар_Категория">
+        <Association Name="FK_Товар_Категория1">
           <End Role="Категория" Type="Self.Категория" Multiplicity="1" />
           <End Role="Товар" Type="Self.Товар" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1905,6 +1950,7 @@
         <EntityContainer Name="GroceryStoreDatabasesEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Адрес" EntityType="Self.Адрес" />
           <EntitySet Name="Аккаунт" EntityType="Self.Аккаунт" />
+          <EntitySet Name="Группа" EntityType="Self.Группа" />
           <EntitySet Name="Должность" EntityType="Self.Должность" />
           <EntitySet Name="ЕдиницаИзмерения" EntityType="Self.ЕдиницаИзмерения" />
           <EntitySet Name="Заказ" EntityType="Self.Заказ" />
@@ -1963,6 +2009,10 @@
             <End Role="Сотрудник" EntitySet="Сотрудник" />
             <End Role="Аккаунт" EntitySet="Аккаунт" />
           </AssociationSet>
+          <AssociationSet Name="FK_Категория_Группа" Association="Self.FK_Категория_Группа">
+            <End Role="Группа" EntitySet="Группа" />
+            <End Role="Категория" EntitySet="Категория" />
+          </AssociationSet>
           <AssociationSet Name="FK_Сотрудник_Должность" Association="Self.FK_Сотрудник_Должность">
             <End Role="Должность" EntitySet="Должность" />
             <End Role="Сотрудник" EntitySet="Сотрудник" />
@@ -1983,7 +2033,7 @@
             <End Role="Товар" EntitySet="Товар" />
             <End Role="ЗаказТовар" EntitySet="ЗаказТовар" />
           </AssociationSet>
-          <AssociationSet Name="FK_Товар_Категория" Association="Self.FK_Товар_Категория">
+          <AssociationSet Name="FK_Товар_Категория1" Association="Self.FK_Товар_Категория1">
             <End Role="Категория" EntitySet="Категория" />
             <End Role="Товар" EntitySet="Товар" />
           </AssociationSet>
@@ -2129,6 +2179,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Группа">
+            <EntityTypeMapping TypeName="GroceryStoreDatabasesModel.Группа">
+              <MappingFragment StoreEntitySet="Группа">
+                <ScalarProperty Name="Код" ColumnName="Код" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+                <ScalarProperty Name="Фото" ColumnName="Фото" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Должность">
             <EntityTypeMapping TypeName="GroceryStoreDatabasesModel.Должность">
               <MappingFragment StoreEntitySet="Должность">
@@ -2171,8 +2230,7 @@
                 <ScalarProperty Name="Код" ColumnName="Код" />
                 <ScalarProperty Name="Наименование" ColumnName="Наименование" />
                 <ScalarProperty Name="Фото" ColumnName="Фото" />
-                <ScalarProperty Name="Подкатегория" ColumnName="Подкатегория" />
-                <ScalarProperty Name="КодКатегории" ColumnName="КодКатегории" />
+                <ScalarProperty Name="КодГруппы" ColumnName="КодГруппы" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

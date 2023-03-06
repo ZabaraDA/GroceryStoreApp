@@ -5,53 +5,93 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GroceryStoreApp.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
       Title="DataOfCategoriesPage">
+    <Page.Resources>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
+            <Setter Property="TextTrimming" Value="None"/>
+            <Setter Property="Height" Value="auto"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+        </Style>
+        <Style TargetType="{x:Type ComboBox}">
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
 
+        </Style>
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource NavigationStyle}">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+    </Page.Resources>
     <Grid>
-        <!--<Button Content="Добавить"></Button>-->
-        <ListView Name="CategoryListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button Content="+ Категория" x:Name="AddCategoryButton" Click="AddCategoryButton_Click"></Button>
+            <Button Content="+ Группa" x:Name="AddGroupButton" Click="AddGroupButton_Click"></Button>
+        </StackPanel>
+        <ScrollViewer Grid.Row="1">
+            <ListView Name="CategoryListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   HorizontalAlignment="Center" HorizontalContentAlignment="Center" 
-                  BorderBrush="{x:Null}" Background="{x:Null}">
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel></WrapPanel>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Width="320">
-                        <Border CornerRadius="5">
-                            <Border.Background >
-                                <LinearGradientBrush>
-                                    <GradientStop Color="AliceBlue" Offset="0"/>
-                                    <GradientStop Color="Aquamarine" Offset="1"/>
-                                </LinearGradientBrush>
-                            </Border.Background>
-                            <StackPanel Orientation="Vertical">
-                                <Border  CornerRadius="10" HorizontalAlignment="Left" Height="190" Width="190" Margin="15 15 0 15" >
-                                    <Border.Background>
-                                        <ImageBrush Stretch="UniformToFill">
-                                            <ImageBrush.ImageSource>
-                                                <Binding Path="Фото">
-                                                    <Binding.TargetNullValue>
-                                                        <ImageSource>/Images/ImageStub.png</ImageSource>
-                                                    </Binding.TargetNullValue>
-                                                </Binding>
-                                            </ImageBrush.ImageSource>
-                                        </ImageBrush>
-                                    </Border.Background>
-                                </Border>
-                                <StackPanel Margin="10 0 10 10" TextBlock.FontSize="16">
-                                    <TextBlock Text="{Binding Path=Наименование}" TextWrapping="WrapWithOverflow" Height="45"  TextAlignment="Right"></TextBlock>
-                                    <TextBlock Text="{Binding Path=Подкатегория}" FontSize="20"></TextBlock>
+                  BorderBrush="{x:Null}" Background="{x:Null}" d:ItemsSource="{d:SampleData ItemCount=3}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel></WrapPanel>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Width="320">
+                            <Border CornerRadius="5">
+                                <Border.Background >
+                                    <LinearGradientBrush>
+                                        <GradientStop Color="AliceBlue" Offset="0"/>
+                                        <GradientStop Color="Aquamarine" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <StackPanel Orientation="Vertical">
+                                    <StackPanel Orientation="Horizontal">
+                                       
+                                        <Border  CornerRadius="10" HorizontalAlignment="Left" Height="190" Width="190" Margin="15 15 0 15" >
+                                        <Border.Background>
+                                            <ImageBrush Stretch="UniformToFill">
+                                                <ImageBrush.ImageSource>
+                                                    <Binding Path="Фото">
+                                                        <Binding.TargetNullValue>
+                                                            <ImageSource>/Images/ImageStub.png</ImageSource>
+                                                        </Binding.TargetNullValue>
+                                                        <Binding.FallbackValue>
+                                                            <ImageSource>/Images/ImageStub.png</ImageSource>
+                                                        </Binding.FallbackValue>
+                                                    </Binding>
+                                                </ImageBrush.ImageSource>
+                                            </ImageBrush>
+                                        </Border.Background>
+                                    </Border>
+                                        <Button Width="40" Name="ChangeCateryButton" Click="ChangeCateryButton_Click"></Button>
+                                    </StackPanel>
+                                    <StackPanel Margin="10 0 10 10" TextBlock.FontSize="16">
+                                       
+                                        <TextBlock Text="{Binding Path=Наименование}" TextWrapping="WrapWithOverflow" Height="45"  TextAlignment="Right"></TextBlock>
+                                        <TextBlock Text="{Binding Path=Подкатегория}" FontSize="20"></TextBlock>
+                                    </StackPanel>
                                 </StackPanel>
-                            </StackPanel>
-                        </Border>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
     </Grid>
 </Page>

@@ -307,7 +307,7 @@ namespace GroceryStoreApp.Pages
             categoryItems.Insert(0, new Категория
             {
                 Наименование = "Выберите категорию",
-                Подкатегория = false,
+                //Подкатегория = false,
             });
 
             CategoryComboBox.ItemsSource = categoryItems.ToList();

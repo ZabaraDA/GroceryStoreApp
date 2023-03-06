@@ -12,21 +12,19 @@ namespace GroceryStoreApp.Databases
     using System;
     using System.Collections.Generic;
     
-    public partial class Категория
+    public partial class Группа
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Категория()
+        public Группа()
         {
-            this.Товар = new HashSet<Товар>();
+            this.Категория = new HashSet<Категория>();
         }
     
         public int Код { get; set; }
         public string Наименование { get; set; }
         public byte[] Фото { get; set; }
-        public Nullable<int> КодГруппы { get; set; }
     
-        public virtual Группа Группа { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Товар> Товар { get; set; }
+        public virtual ICollection<Категория> Категория { get; set; }
     }
 }
