@@ -93,7 +93,7 @@
     </Style>
 
     <Style TargetType="local:NavigationButton" BasedOn="{StaticResource NavigationStyle}" >
-        <Setter Property="Background" Value="#FF9A9A9A" />
+        <Setter Property="Background" Value="#767676"/>
         <Setter Property="Foreground" Value="#FF423F3F" />
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -114,7 +114,7 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Background" Value="#FF5A5A5A" />
                             <Setter Property="Foreground" Value="White"/>
-                            <Setter TargetName="path" Property="Fill" Value="Green"></Setter>
+                            <!--<Setter TargetName="path" Property="Fill" Value="Green"></Setter>-->
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Background" Value="#FF5D5D5D" />
@@ -122,7 +122,7 @@
                             <Setter TargetName="ColorBackground" Property="Background" Value="#FF3E3D3D"></Setter>
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="true">
-                            <Setter Property="Background" TargetName="ColorBackground" Value="Green"/>
+                            <!--<Setter Property="Background" TargetName="ColorBackground" Value="Green"/>-->
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

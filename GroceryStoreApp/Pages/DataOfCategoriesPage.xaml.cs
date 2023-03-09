@@ -30,23 +30,35 @@ namespace GroceryStoreApp.Pages
 
 
             //});
-
+            Border border = new Border()
+            {
+                CornerRadius = new CornerRadius(10),
+                Background = Brushes.Orange,
+                Height = 320,
+                Width = 310
+            };
+            StackPanel stackPanel = new StackPanel();
             Image image = new Image()
             {
+                Width = 190,
+                Height = 190,
                 Source = new BitmapImage(new Uri("/Images/plus.png", UriKind.Relative)),
             };
             TextBlock textBlock = new TextBlock()
             {
                 Text = "Добавить категорию"
             };
-            StackPanel stackPanel = new StackPanel();
-            stackPanel.Children.Add(image);
-            stackPanel.Children.Add(textBlock); 
+           
 
+            stackPanel.Children.Add(image);
+            stackPanel.Children.Add(textBlock);
+            border.Child = stackPanel;
             ListViewItem item = new ListViewItem();
             item.MouseDoubleClick += Page_MouseDown;
-            item.Width = 200;
-            item.Content = stackPanel;
+
+            item.Width = 320;
+            //item.Height = 400;
+            item.Content = border;
 
             CompositeCollection compositeCollection = new CompositeCollection();
             compositeCollection.Add(categoryItems);

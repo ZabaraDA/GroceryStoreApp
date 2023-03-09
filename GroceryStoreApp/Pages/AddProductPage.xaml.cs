@@ -227,6 +227,7 @@ namespace GroceryStoreApp.Pages
                 Цена = Convert.ToInt16(CostTextBox.Text),
                 СрокГодности = Convert.ToInt16(ExpirationDateTextBox.Text),
                 Вес = Convert.ToInt32(WeightTextBox.Text),
+                Статус = true
             });
             try
             {

@@ -33,13 +33,7 @@
                 </LinearGradientBrush>
             </Border.Background>
         </Border>
-        <Border Grid.Row="0" Margin="1">
-            <Border.Background >
-                <LinearGradientBrush>
-                    <GradientStop Color="#FF636363" Offset="0"/>
-                    <GradientStop Color="#FF5A5A5A" Offset="1"/>
-                </LinearGradientBrush>
-            </Border.Background>
+        <Border Grid.Row="0" Margin="1" Background="{StaticResource Window.NavigationBar.Background}">
         </Border>
         <TextBlock Text="Окно авторизации" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"></TextBlock>
         <StackPanel  HorizontalAlignment="Right" Margin="2" Orientation="Horizontal">
@@ -55,8 +49,6 @@
             <TextBlock Text="Введите пароль"></TextBlock>
 
             <PasswordBox x:Name="PasswordBox" PasswordChanged="PasswordBox_PasswordChanged" Style="{StaticResource AuthorizationPasswordBoxStyle}"/>
-            <Button Content="Забыли пароль?"  Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF636363" 
-                    HorizontalAlignment="Right" FontFamily="Segoe UI Light" FontSize="20" Cursor="Hand" Focusable="False"></Button>
         </StackPanel>
         <Border VerticalAlignment="Bottom" Visibility="Collapsed" Name="border2" Height="1" Background="Black" Grid.Row="1" Margin="0 0 0 132" Width="300"/>
 

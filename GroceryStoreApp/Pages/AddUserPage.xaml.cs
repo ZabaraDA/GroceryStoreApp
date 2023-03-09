@@ -192,6 +192,9 @@ namespace GroceryStoreApp.Pages
 
         private void AddUserButton_Click(object sender, RoutedEventArgs e)
         {
+           
+
+
             #region validation
             StringBuilder errors = new StringBuilder();
             if (NameTextBox.Text == "" || NameTextBox.Text == null)
@@ -308,6 +311,7 @@ namespace GroceryStoreApp.Pages
             {
                 errors.AppendLine("Введите номер дома");
             }
+            
             #endregion 
 
             if (addWithAccount == true)

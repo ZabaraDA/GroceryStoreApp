@@ -21,22 +21,15 @@
             <ColumnDefinition Width="70"></ColumnDefinition>
             <ColumnDefinition ></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Border Grid.Row="0" Grid.ColumnSpan="2">
-            <Border.Background >
-                <LinearGradientBrush>
-                    <GradientStop Color="#FF585858" Offset="0"/>
-                    <GradientStop Color="#FF5A5A5A" Offset="1"/>
-                </LinearGradientBrush>
-            </Border.Background>
+        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="{StaticResource Window.NavigationBar.Background}">
         </Border>
 
-
-        <Frame NavigationUIVisibility="Hidden" x:Name="MenuFrame" Grid.Row="1" Grid.Column="1" Margin="5" Width="auto"/>
-
+        <Frame NavigationUIVisibility="Hidden" Background="{StaticResource Frame.Static.Background}" 
+               x:Name="MenuFrame" Grid.Row="1" Grid.Column="1"/>
         <TextBlock Width="auto" Margin="0 5 0 0"
                Foreground="White" Grid.ColumnSpan="2" Name="StatusBarTextBlock"
-               HorizontalAlignment="Center" 
-               />
+               HorizontalAlignment="Center"/>
+        
         <StackPanel  HorizontalAlignment="Right" Margin="2" Orientation="Horizontal" Grid.Column="1">
             <my:NavigationButton Data="{StaticResource HidePathData}"  Style="{StaticResource StateNavigationButtonStyle}" VerticalContentAlignment="Bottom"
                                  HorizontalAlignment="Left" x:Name="CollapseButton" Click="CollapseButton_Click"></my:NavigationButton>
@@ -44,7 +37,9 @@
                                  HorizontalAlignment="Left" x:Name="StateScreenButton" Click="StateScreenButton_Click"></my:NavigationButton>
             <my:NavigationButton Data="{StaticResource ExitPathData}" Style="{StaticResource StateNavigationButtonStyle}" x:Name="ExitButton" Click="ExitButton_Click"></my:NavigationButton>
         </StackPanel>
-        <Grid Width="70" Grid.Row="1" HorizontalAlignment="Left" Name="ControlGrid" Grid.ColumnSpan="2"  Background="#FF9A9A9A" MouseEnter="ControlPanel_MouseEnter" MouseLeave="ControlPanel_MouseLeave">
+        <Grid Width="70" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" 
+              Name="ControlGrid" Background="{StaticResource Window.NavigationBar.Border}" 
+              MouseEnter="ControlPanel_MouseEnter" MouseLeave="ControlPanel_MouseLeave">
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.15" BlurRadius="5" Direction="360"/>
             </Grid.Effect>

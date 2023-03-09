@@ -89,9 +89,6 @@
                                         BorderBrush="Black" BorderThickness="1">
                                     <Border.Background>
                                         <ImageBrush Stretch="Fill">
-                                            <!--<ImageBrush.Transform>
-                                                <ScaleTransform ScaleX="0.5" ScaleY="0.5" ></ScaleTransform>
-                                            </ImageBrush.Transform>-->
                                             <ImageBrush.ImageSource>
                                                 <Binding Path="Фото">
                                                     <Binding.TargetNullValue>

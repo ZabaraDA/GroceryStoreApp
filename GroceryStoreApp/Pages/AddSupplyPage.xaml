@@ -4,11 +4,332 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GroceryStoreApp.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="AddSupplyPage">
-
+      mc:Ignorable="d" xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
+      Title="AddSupplyPage" FontFamily="Bahnschrift Light" Loaded="Page_Loaded">
+    <Page.Resources>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="TextWrapping" Value="NoWrap"/>
+            <Setter Property="TextTrimming" Value="None"/>
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+            <Setter Property="Margin" Value="10 0 10 0"/>
+        </Style>
+        <Style TargetType="{x:Type DatePicker}" BasedOn="{StaticResource DatePickerBaseStyle}">
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+            <Setter Property="Margin" Value="0 10 10 0"/>
+        </Style>
+        <Style TargetType="{x:Type my:TextBoxWithRemoved}">
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0 5 0 0"/>
+        </Style>
+        <Style TargetType="{x:Type ComboBox}">
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0 5 0 0"/>
+        </Style>
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource NavigationStyle}">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10 0 0 0"/>
+        </Style>
+        <Style TargetType="ListViewItem">
+            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Background" Value="{StaticResource ListViewItem.Static.Background}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border x:Name="Border" Padding="2" SnapsToDevicePixels="true" Margin="1"
+                                BorderThickness="0 0 0 1" BorderBrush="{TemplateBinding BorderBrush}"
+                                Background="{TemplateBinding Background}">
+                            <Grid Width="auto" >
+                                <Border Name="LabelBorder" Height="auto" Width="3" Background="{StaticResource ListViewItem.MouseOver.Border}" HorizontalAlignment="Left" Visibility="Hidden"></Border>
+                                <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"  Value="True">
+                                <Setter Property="Background" Value="{StaticResource ListViewItem.MouseOver.Background}" />
+                                <Setter TargetName="LabelBorder" Property="Visibility" Value="Visible"></Setter>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="{StaticResource ListViewItem.Pressed.Background}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Padding" Value="5 0 5 0"></Setter>
+            <Setter Property="Width" Value="auto"></Setter>
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontFamily" Value="Arial Narrow" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                        <Border BorderThickness="1" BorderBrush="#FFB5B5B5">
+                            <Border.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFE2E2E2"/>
+                                    <GradientStop Color="#FFCACACA" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <TextBlock x:Name="ContentHeader" FontSize="{TemplateBinding FontSize}" Text="{TemplateBinding Content}" Padding="{TemplateBinding Padding}" Width="{TemplateBinding Width}" TextAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Border Background="#FFD6D6D6" Grid.ColumnSpan="2"></Border>
+        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+            <Button Content="Назад"></Button>
+            <TextBlock Text="Заказ поставщику №" Margin="10"
+                           Width="auto" FontSize="24" FontWeight="Bold" ></TextBlock>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.ColumnSpan="2">
+            <Button Content="Отменить"></Button>
+            <Button Content="Сохранить" Background="#FF23C523" Foreground="White"></Button>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="10" Grid.ColumnSpan="2">
+            <StackPanel>
+                <TextBlock Text="Дата заявки" ></TextBlock>
+                <TextBlock Text="Дата поставки"></TextBlock>
+            </StackPanel>
+            <StackPanel>
+                <DatePicker></DatePicker>
+                <DatePicker></DatePicker>
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Text="Поставщик" ></TextBlock>
+                <TextBlock Text="Склад"></TextBlock>
+            </StackPanel>
+            <StackPanel>
+                <ComboBox></ComboBox>
+                <ComboBox></ComboBox>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+            <Button Content="Поставка" Name="ViewProductInDeliveryButton" Click="ViewProductInDeliveryButton_Click"
+                    Style="{StaticResource PanelButtonStyleStyle}"></Button>
+            <Button Content="Список товаров" Name="ViewProductListButton" Click="ViewProductListButton_Click"
+                    Style="{StaticResource PanelButtonStyleStyle}"></Button>
+        </StackPanel>
+        <Border Background="White" Grid.Row="2"></Border>
+        <ListView x:Name="ProductListView" Style="{StaticResource ProductListViewStyle}" Grid.Row="2" Visibility="Collapsed">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="#" DisplayMemberBinding="{Binding Код}" Width="30"/>
+                    <GridViewColumn Header="Фото">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border CornerRadius="10" Width="60" Height="60" HorizontalAlignment="Center"
+                                        BorderBrush="Black" BorderThickness="1">
+                                    <Border.Background>
+                                        <ImageBrush Stretch="Fill">
+                                            <ImageBrush.ImageSource>
+                                                <Binding Path="Фото">
+                                                    <Binding.TargetNullValue>
+                                                        <ImageSource>/Images/ImageStub.png</ImageSource>
+                                                    </Binding.TargetNullValue>
+                                                    <Binding.FallbackValue>
+                                                        <ImageSource>/Images/ImageStub.png</ImageSource>
+                                                    </Binding.FallbackValue>
+                                                </Binding>
+                                            </ImageBrush.ImageSource>
+                                        </ImageBrush>
+                                    </Border.Background>
+                                </Border>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Наименование" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Name="AddProductToDeliveryButton" Click="AddProductToDeliveryButton_Click" Content="Добавить" MaxWidth="300"></Button>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Наименование">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Наименование}" FontSize="18" TextWrapping="Wrap" MaxHeight="60" Margin="5" HorizontalAlignment="Center" MaxWidth="300"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Категория" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Категория.Наименование}" HorizontalAlignment="Center" MaxWidth="300"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Производитель" DisplayMemberBinding="{Binding Производитель.Наименование}"/>
+                    <GridViewColumn Header="Цена" DisplayMemberBinding="{Binding Цена}"/>
+                    <GridViewColumn Header="НДС" DisplayMemberBinding="{Binding НДС}"/>
+                    <GridViewColumn Header="Количество" DisplayMemberBinding="{Binding Количество}"/>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <ListView x:Name="SupplyOfProductListView" Style="{StaticResource ProductListViewStyle}" Grid.Row="2">
+
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="#" DisplayMemberBinding="{Binding Код}" Width="30" />
+                    <GridViewColumn Header="Фото">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border CornerRadius="10" Width="60" Height="60" HorizontalAlignment="Center"
+                                        BorderBrush="Black" BorderThickness="1">
+                                    <Border.Background>
+                                        <ImageBrush Stretch="Fill">
+                                            <ImageBrush.ImageSource>
+                                                <Binding Path="Фото">
+                                                    <Binding.TargetNullValue>
+                                                        <ImageSource>/Images/ImageStub.png</ImageSource>
+                                                    </Binding.TargetNullValue>
+                                                    <Binding.FallbackValue>
+                                                        <ImageSource>/Images/ImageStub.png</ImageSource>
+                                                    </Binding.FallbackValue>
+                                                </Binding>
+                                            </ImageBrush.ImageSource>
+                                        </ImageBrush>
+                                    </Border.Background>
+                                </Border>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Наименование" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Name="ViewProductButton" Content="Подробнее" MaxWidth="300"></Button>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Наименование">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Наименование}" FontSize="18" MaxHeight="60" Margin="5" HorizontalAlignment="Center" MaxWidth="300"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Категория" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Категория.Наименование}" HorizontalAlignment="Center" MaxWidth="300"></TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Производитель" DisplayMemberBinding="{Binding Производитель.Наименование}"/>
+                    <GridViewColumn Header="Цена" DisplayMemberBinding="{Binding Цена}"/>
+                    <GridViewColumn Header="НДС" DisplayMemberBinding="{Binding НДС}"/>
+                    <GridViewColumn Header="Количество" DisplayMemberBinding="{Binding Количество}"/>
+
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Grid.Column="1" Grid.Row="2" Grid.RowSpan="2"  Background="#FFD6D6D6" >
+            <StackPanel Margin="10" Name="ProductEditStackPanel">
+                <TextBlock Text="Фильтры" HorizontalAlignment="Center" TextAlignment="Center" ></TextBlock>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Выбрано "></TextBlock>
+                    <TextBlock Name="FilterNumberOfProductTextBlock"></TextBlock>
+                    <TextBlock Text=" из "></TextBlock>
+                    <TextBlock Name="NumberOfProductTextBlock"></TextBlock>
+                    <TextBlock Text=" товаров"></TextBlock>
+                </StackPanel>
+                <TextBlock Text="Поиск по наименованию"></TextBlock>
+                <my:TextBoxWithRemoved Name="NameSearchTextBox" TextChanged="SearchTextBox_TextChanged"></my:TextBoxWithRemoved>
+                <TextBlock Text="Группа товара"></TextBlock>
+                <ComboBox Name="GroupSearchComboBox" SelectionChanged="GroupSearchComboBox_SelectionChanged"></ComboBox>
+                <TextBlock Text="Категория товара"></TextBlock>
+                <ComboBox Name="CategorySearchComboBox"  SelectionChanged="SearchComboBox_SelectionChanged"></ComboBox>
+                <TextBlock Text="Производитель"></TextBlock>
+                <ComboBox Name="ManufacturerSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged"></ComboBox>
+                <TextBlock Text="Статус товара"></TextBlock>
+                <ComboBox Name="StatusSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged">
+                    <ComboBoxItem Content="Все товары"></ComboBoxItem>
+                    <ComboBoxItem Content="Доступны к продаже"></ComboBoxItem>
+                    <ComboBoxItem Content="Надоступны к продаже"></ComboBoxItem>
+                </ComboBox>
+                <TextBlock Text="Фото товара"></TextBlock>
+                <ComboBox Name="PhotoSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged">
+                    <ComboBoxItem Content="Все товары"></ComboBoxItem>
+                    <ComboBoxItem Content="Товары с фото"></ComboBoxItem>
+                    <ComboBoxItem Content="Товары без фото"></ComboBoxItem>
+                </ComboBox>
+                <TextBlock Text="Тип сортировки"></TextBlock>
+                <ComboBox Name="TypeSortComboBox" SelectionChanged="TypeSortComboBox_SelectionChanged">
+                    <ComboBoxItem Content="Произвольно"></ComboBoxItem>
+                    <ComboBoxItem Content="Сортировать по весу"></ComboBoxItem>
+                    <ComboBoxItem Content="Сортировать по цене"></ComboBoxItem>
+                </ComboBox>
+                <StackPanel Name="WeightSortStackPanel" Visibility="Collapsed">
+                    <TextBlock Text="Сортировать по весу"></TextBlock>
+                    <ComboBox Name="WeightSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged">
+                        <ComboBoxItem Content="Произвольно"></ComboBoxItem>
+                        <ComboBoxItem Content="По возрастанию"></ComboBoxItem>
+                        <ComboBoxItem Content="По убыванию"></ComboBoxItem>
+                    </ComboBox>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="От"></TextBlock>
+                        <my:TextBoxWithRemoved Width="110" Name="MinimumWeightTextBox" TextChanged="SearchTextBox_TextChanged"></my:TextBoxWithRemoved>
+                        <TextBlock Text="До"></TextBlock>
+                        <my:TextBoxWithRemoved Width="110" Name="MaximumWeightTextBox" TextChanged="SearchTextBox_TextChanged"></my:TextBoxWithRemoved>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Name="CostSortStackPanel" Visibility="Collapsed">
+                    <TextBlock Text="Сортировать по цене"></TextBlock>
+                    <ComboBox Name="CostSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged">
+                        <ComboBoxItem Content="Произвольно"></ComboBoxItem>
+                        <ComboBoxItem Content="По возрастанию"></ComboBoxItem>
+                        <ComboBoxItem Content="По убыванию"></ComboBoxItem>
+                    </ComboBox>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="От"></TextBlock>
+                        <my:TextBoxWithRemoved Width="110" Name="MinimumCostTextBox" TextChanged="SearchTextBox_TextChanged"></my:TextBoxWithRemoved>
+                        <TextBlock Text="До"></TextBlock>
+                        <my:TextBoxWithRemoved Width="110" Name="MaximumCostTextBox" TextChanged="SearchTextBox_TextChanged"></my:TextBoxWithRemoved>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+            <Button  Content="Сбросить фильтры" x:Name="ClearFilterButton" Click="ClearFilterButton_Click"></Button>
+        </StackPanel>
     </Grid>
 </Page>

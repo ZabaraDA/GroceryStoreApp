@@ -36,7 +36,6 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
             <Button Content="+ Категория" x:Name="AddCategoryButton" Click="AddCategoryButton_Click"></Button>
             <Button Content="+ Группa" x:Name="AddGroupButton" Click="AddGroupButton_Click"></Button>
@@ -44,7 +43,7 @@
         <ScrollViewer Grid.Row="1">
             <ListView Name="CategoryListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   HorizontalAlignment="Center" HorizontalContentAlignment="Center" 
-                  BorderBrush="{x:Null}" Background="{x:Null}" d:ItemsSource="{d:SampleData ItemCount=3}">
+                  BorderBrush="{x:Null}" Background="{x:Null}">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel></WrapPanel>
