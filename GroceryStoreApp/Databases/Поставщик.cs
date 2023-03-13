@@ -17,17 +17,17 @@ namespace GroceryStoreApp.Databases
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Поставщик()
         {
-            this.МестоОтправки = new HashSet<МестоОтправки>();
+            this.Поставка = new HashSet<Поставка>();
             this.Склад = new HashSet<Склад>();
         }
     
         public int Код { get; set; }
-        public string НаименованиеЮридическогоЛица { get; set; }
+        public string Наименование { get; set; }
         public string КонтактноеЛицо { get; set; }
         public string Телефон { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<МестоОтправки> МестоОтправки { get; set; }
+        public virtual ICollection<Поставка> Поставка { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Склад> Склад { get; set; }
     }

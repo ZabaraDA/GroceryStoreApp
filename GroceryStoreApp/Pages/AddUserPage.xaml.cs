@@ -375,7 +375,7 @@ namespace GroceryStoreApp.Pages
                     //НаселённыйПункт = LocalityComboBox.SelectedItem as НаселённыйПункт,
                     //Улица = StreetComboBox.SelectedItem is Улица,
                 });
-                currentUser.КодАдресаСотрудника = databasesEntities.Адрес.Count();
+                currentUser.КодАдреса = databasesEntities.Адрес.Count();
                 databasesEntities.Сотрудник.AddOrUpdate(currentUser);
 
 

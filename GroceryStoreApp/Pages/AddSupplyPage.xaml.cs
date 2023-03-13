@@ -143,7 +143,6 @@ namespace GroceryStoreApp.Pages
 
         private void ClearFilterButton_Click(object sender, RoutedEventArgs e)
         {
-
             List<Control> children = ProductEditStackPanel.Children.OfType<Control>().ToList();
             foreach (Control control in children)
             {
@@ -158,7 +157,6 @@ namespace GroceryStoreApp.Pages
                     comboBox.SelectedIndex = 0;
                 }
             }
-
         }
 
         private void SearchComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -241,14 +239,38 @@ namespace GroceryStoreApp.Pages
         {
             SupplyOfProductListView.Visibility = Visibility.Visible;
             ProductListView.Visibility = Visibility.Collapsed;
-            ViewProductListButton.BorderThickness = new Thickness(0);
+
+            Panel.SetZIndex(ViewProductInDeliveryButton, 1);
+            Panel.SetZIndex(ViewProductListButton,0);
+            ViewProductInDeliveryButton.BorderThickness = new Thickness(3, 3, 3, 0);
+            ViewProductInDeliveryButton.BorderBrush = Brushes.Gray;
+            ViewProductInDeliveryButton.Background = Brushes.White;
+
+            ViewProductListButton.BorderThickness = new Thickness(0, 0, 0, 3);
+            ViewProductListButton.BorderBrush = null;
+            ViewProductListButton.Background = Brushes.Gray;
         }
 
         private void ViewProductListButton_Click(object sender, RoutedEventArgs e)
         {
             ProductListView.Visibility = Visibility.Visible;
             SupplyOfProductListView.Visibility = Visibility.Collapsed;
-            ViewProductInDeliveryButton.BorderThickness = new Thickness(0);
+
+            Panel.SetZIndex(ViewProductListButton, 1);
+            Panel.SetZIndex(ViewProductInDeliveryButton, 0);
+
+            ViewProductListButton.BorderThickness = new Thickness(3, 3, 3, 0);
+            ViewProductListButton.BorderBrush = Brushes.Gray;
+            ViewProductListButton.Background = Brushes.White;
+
+            ViewProductInDeliveryButton.BorderThickness = new Thickness(0, 0, 0, 3);
+            ViewProductInDeliveryButton.BorderBrush = null;
+            ViewProductInDeliveryButton.Background = Brushes.Gray;
+        }
+
+        private void AddSupplyButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

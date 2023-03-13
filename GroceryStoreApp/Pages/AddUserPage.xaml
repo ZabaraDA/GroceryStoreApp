@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GroceryStoreApp.Pages" xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
       mc:Ignorable="d" 
-      Title="AddUserPage" FontSize="24">
+      Title="AddUserPage" FontSize="24" FontFamily="{StaticResource Blogger Sans}">
     <Page.Resources>
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="TextWrapping" Value="NoWrap"/>
@@ -19,7 +19,7 @@
         <Style TargetType="{x:Type my:TextBoxWithRemoved}">
             <Setter Property="Width" Value="500"/>
             <Setter Property="Height" Value="40"/>
-            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontSize" Value="18"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Margin" Value="0 10 0 0"/>
@@ -32,7 +32,7 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Margin" Value="0 10 0 0"/>
         </Style>
-        <Style TargetType="{x:Type ComboBox}">
+        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource ComboBoxBaseStyle}">
             <!--<Setter Property="IsEditable" Value="True"></Setter>
             <Setter Property="IsReadOnly" Value="False"></Setter>-->
             <Setter Property="Width" Value="500"/>
@@ -100,7 +100,7 @@
                                         <my:TextBoxWithRemoved Text="{Binding Path= Фамилия}" Uid="Введите фамилию" Width="300" Name="SurnameTextBox" MaxLength="50"/>
                                         <my:TextBoxWithRemoved Text="{Binding Path= Имя}" Uid="Введите имя"  Width="300" Name="NameTextBox" MaxLength="30"/>
                                         <my:TextBoxWithRemoved Text="{Binding Path= Отчество}" Uid="Введите отчество" Width="300" Name="PatronymicTextBox" MaxLength="50"/>
-                                        <ComboBox x:Name="GenderComboBox" Width="300" SelectedItem="{Binding Path=Пол,FallbackValue=0,TargetNullValue=0}">
+                                        <ComboBox x:Name="GenderComboBox" Width="300" SelectedIndex="{Binding Path=Пол,FallbackValue=0,TargetNullValue=0}">
                                             <ComboBoxItem Content="Не выбрано"></ComboBoxItem>
                                             <ComboBoxItem Content="Мужской"></ComboBoxItem>
                                             <ComboBoxItem Content="Женский"></ComboBoxItem>

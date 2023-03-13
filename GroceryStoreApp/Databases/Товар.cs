@@ -22,6 +22,7 @@ namespace GroceryStoreApp.Databases
             this.СписаниеТовар = new HashSet<СписаниеТовар>();
             this.ТоварПоставка = new HashSet<ТоварПоставка>();
             this.ФилиалТовар = new HashSet<ФилиалТовар>();
+            this.Склад = new HashSet<Склад>();
         }
     
         public int Код { get; set; }
@@ -55,5 +56,7 @@ namespace GroceryStoreApp.Databases
         public virtual ICollection<ТоварПоставка> ТоварПоставка { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ФилиалТовар> ФилиалТовар { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Склад> Склад { get; set; }
     }
 }

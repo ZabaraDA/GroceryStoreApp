@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Windows;
 using System.Windows.Media.Media3D;
+using System.Globalization;
+using System.Windows.Data;
 
 namespace GroceryStoreApp.CsClasses
 {
@@ -64,18 +66,14 @@ namespace GroceryStoreApp.CsClasses
                     bitmapEncoder.Frames.Add(BitmapFrame.Create(bitmapImage));
                     bitmapEncoder.Save(memory);
 
-                    //currentUser.Фото = memory.ToArray();
+                    memory.Dispose();
                     return bitmapImage;
                     //byte[] bytes = memory.ToArray();
-                    memory.Dispose();
                     //return bytes;
                 }
             }
             return null;
         }
-        //private byte[] Import(int heightInPixels, int widthInPixels)
-        //{
-        //    return null;
-        //}
     }
+    
 }

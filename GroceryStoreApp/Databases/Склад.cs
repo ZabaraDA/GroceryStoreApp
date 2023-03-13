@@ -17,15 +17,24 @@ namespace GroceryStoreApp.Databases
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Склад()
         {
-            this.МестоОтправки = new HashSet<МестоОтправки>();
+            this.Поставка = new HashSet<Поставка>();
+            this.Поставщик = new HashSet<Поставщик>();
+            this.Товар = new HashSet<Товар>();
+            this.Филиал = new HashSet<Филиал>();
         }
     
         public int Код { get; set; }
         public string Наименование { get; set; }
-        public int КодПоставщика { get; set; }
+        public int КодАдреса { get; set; }
     
+        public virtual Адрес Адрес { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<МестоОтправки> МестоОтправки { get; set; }
-        public virtual Поставщик Поставщик { get; set; }
+        public virtual ICollection<Поставка> Поставка { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Поставщик> Поставщик { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Товар> Товар { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Филиал> Филиал { get; set; }
     }
 }

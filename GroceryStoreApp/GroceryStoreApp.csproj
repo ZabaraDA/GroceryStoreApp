@@ -65,6 +65,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CsClasses\ConverterClass.cs" />
     <Compile Include="CsClasses\ParametersClass.cs" />
     <Compile Include="CsClasses\PhotoImportClass.cs" />
     <Compile Include="Databases\Model1.Context.cs">
@@ -104,9 +105,6 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Databases\Категория.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Databases\МестоОтправки.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Databases\МодификаторЦены.cs">
@@ -310,6 +308,21 @@
     <None Include="Databases\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </None>
+    <Resource Include="Fonts\Kelson Sans Bold RU.otf" />
+    <Resource Include="Fonts\Kelson Sans Light RU.otf" />
+    <Resource Include="Fonts\Kelson Sans Regular RU.otf" />
+    <Resource Include="Fonts\Blogger Sans-Bold Italic.ttf" />
+    <Resource Include="Fonts\Blogger Sans-Bold.ttf" />
+    <Resource Include="Fonts\Blogger Sans-Italic.ttf" />
+    <Resource Include="Fonts\Blogger Sans-Light Italic.ttf" />
+    <Resource Include="Fonts\Blogger Sans-Light.ttf" />
+    <Resource Include="Fonts\Blogger Sans-Medium Italic.ttf" />
+    <Resource Include="Fonts\Blogger Sans-Medium.ttf" />
+    <Resource Include="Fonts\Blogger Sans.ttf.ttf" />
+    <Resource Include="Fonts\CaviarDreams.ttf" />
+    <Resource Include="Fonts\CaviarDreams_Bold.ttf" />
+    <Resource Include="Fonts\CaviarDreams_BoldItalic.ttf" />
+    <Resource Include="Fonts\CaviarDreams_Italic.ttf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -335,6 +348,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\plus.png" />
     <Content Include="Databases\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -345,8 +359,8 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
-    <Resource Include="Images\plus.png" />
     <Content Include="Images\Supply.svg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
