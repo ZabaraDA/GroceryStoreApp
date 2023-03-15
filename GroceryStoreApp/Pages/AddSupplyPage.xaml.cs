@@ -1,6 +1,7 @@
 ﻿using GroceryStoreApp.Databases;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,23 +14,70 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
+using WpfCustomControlLibrary;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace GroceryStoreApp.Pages
 {
+    public class Product
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public int Quantity { get; set; }
+        public decimal Cost { get; set; }
+        public decimal Price { get; set; }
+        public ЕдиницаИзмерения Unit { get; set; }
+        public Product(int id, string name, int quantity, ЕдиницаИзмерения unit, decimal cost, decimal price)
+        {
+            ID = id;
+            Name = name;
+            Quantity = quantity;
+            Unit = unit;
+            Cost = cost;
+            Price = cost * quantity;
+        }
+        public void PriceUpdate()
+        {
+            Price = Cost * Quantity;
+
+        }
+        public void AddOneProduct()
+        {
+            Quantity += 1;
+            //PriceUpdate();
+        }
+        public void RemoveOneProduct()
+        {
+            if (Quantity > 1)
+            {
+                Quantity -= 1;
+                //PriceUpdate();
+            }
+        }
+        public Product()
+        {
+
+        }
+    }
+
+
     public partial class AddSupplyPage : Page
     {
+        public ObservableCollection<Product> productList { get; set; } = new ObservableCollection<Product>();
         readonly GroceryStoreDatabasesEntities databaseEntities = new GroceryStoreDatabasesEntities();
 
+        //List<Product> productList = new List<Product>();
         List<Товар> supplyProductList = new List<Товар>();
         public AddSupplyPage()
         {
+
             InitializeComponent();
-            
+            this.DataContext = this;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-
             List<Группа> groupList = databaseEntities.Группа.ToList();
             groupList.Insert(0, new Группа
             {
@@ -91,7 +139,7 @@ namespace GroceryStoreApp.Pages
                 {
                     productList = productList.Where(x => x.Статус.Equals(true)).ToList();
                 }
-                else if(StatusSearchComboBox.SelectedIndex == 2)
+                else if (StatusSearchComboBox.SelectedIndex == 2)
                 {
                     productList = productList.Where(x => x.Статус.Equals(false)).ToList();
                 }
@@ -110,7 +158,7 @@ namespace GroceryStoreApp.Pages
             if (MinimumCostTextBox.Text != null && MinimumCostTextBox.Text != "")
             {
                 productList = productList.Where(x => x.Цена > Convert.ToDecimal(MinimumCostTextBox.Text)).ToList();
-            }    
+            }
             if (MaximumCostTextBox.Text != null && MaximumCostTextBox.Text != "")
             {
                 productList = productList.Where(x => x.Цена < Convert.ToDecimal(MaximumCostTextBox.Text)).ToList();
@@ -136,7 +184,17 @@ namespace GroceryStoreApp.Pages
             if ((sender as Button).DataContext is Товар selectedProduct)
             {
                 supplyProductList.Add(selectedProduct);
-                SupplyOfProductListView.ItemsSource = supplyProductList.ToList();
+                productList.Add(new Product
+                {
+                    ID = selectedProduct.Код,
+                    Name = selectedProduct.Наименование,
+                    Quantity = 1,
+                    Cost = selectedProduct.Цена,
+                    Unit = selectedProduct.ЕдиницаИзмерения,
+                    Price = 1 * selectedProduct.Цена
+                });
+                //SupplyOfProductListView.ItemsSource = supplyProductList.ToList();
+                //SupplyOfProductListView.ItemsSource = productList1.ToList();
                 UpdateProductList();
             }
         }
@@ -158,24 +216,20 @@ namespace GroceryStoreApp.Pages
                 }
             }
         }
-
         private void SearchComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateProductList();
         }
-
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             UpdateProductList();
         }
-
         private void GroupSearchComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
             UpdateCategoryList();
             UpdateProductList();
         }
-
         private void UpdateCategoryList()
         {
             List<Категория> categoryList = new List<Категория>();
@@ -202,18 +256,18 @@ namespace GroceryStoreApp.Pages
         }
         private void TypeSortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(TypeSortComboBox.SelectedIndex < 1)
+            if (TypeSortComboBox.SelectedIndex < 1)
             {
                 DeactivateSortingByCost();
                 DeactivateSortingByWeight();
             }
-            else if(TypeSortComboBox.SelectedIndex == 1)
+            else if (TypeSortComboBox.SelectedIndex == 1)
             {
                 DeactivateSortingByCost();
                 WeightSearchComboBox.SelectedIndex = 0;
                 WeightSortStackPanel.Visibility = Visibility.Visible;
             }
-            else if(TypeSortComboBox.SelectedIndex == 2)
+            else if (TypeSortComboBox.SelectedIndex == 2)
             {
                 DeactivateSortingByWeight();
                 CostSearchComboBox.SelectedIndex = 0;
@@ -234,14 +288,13 @@ namespace GroceryStoreApp.Pages
             MaximumWeightTextBox.Text = null;
             MinimumWeightTextBox.Text = null;
         }
-
         private void ViewProductInDeliveryButton_Click(object sender, RoutedEventArgs e)
         {
             SupplyOfProductListView.Visibility = Visibility.Visible;
             ProductListView.Visibility = Visibility.Collapsed;
 
             Panel.SetZIndex(ViewProductInDeliveryButton, 1);
-            Panel.SetZIndex(ViewProductListButton,0);
+            Panel.SetZIndex(ViewProductListButton, 0);
             ViewProductInDeliveryButton.BorderThickness = new Thickness(3, 3, 3, 0);
             ViewProductInDeliveryButton.BorderBrush = Brushes.Gray;
             ViewProductInDeliveryButton.Background = Brushes.White;
@@ -250,7 +303,6 @@ namespace GroceryStoreApp.Pages
             ViewProductListButton.BorderBrush = null;
             ViewProductListButton.Background = Brushes.Gray;
         }
-
         private void ViewProductListButton_Click(object sender, RoutedEventArgs e)
         {
             ProductListView.Visibility = Visibility.Visible;
@@ -267,10 +319,96 @@ namespace GroceryStoreApp.Pages
             ViewProductInDeliveryButton.BorderBrush = null;
             ViewProductInDeliveryButton.Background = Brushes.Gray;
         }
-
         private void AddSupplyButton_Click(object sender, RoutedEventArgs e)
         {
+            databaseEntities.Поставка.Add(new Поставка
+            {
+                Код = databaseEntities.Поставка.Count(),
+                ДатаЗаявки = DateTime.Now,
+                ДатаПоставки = DateTime.Now,
+                КодПоставщика = 1,
+                Статус = 0,
+                Шаблон = false,
+                КодСклада = 4,
+                КодФилиала = 2,
 
+            });
+            for (int i = 0; i < productList.Count; i++)
+            {
+                productList[i].PriceUpdate();
+                databaseEntities.ТоварПоставка.Add(new ТоварПоставка
+                {
+                    КодПоставки = databaseEntities.Поставка.Count(),
+                    КодТовара = productList[i].ID,
+                    Количество = productList[i].Quantity,
+                    Цена = productList[i].Price,
+                    Остаток = productList[i].Quantity,
+
+                });
+            }
+            try
+            {
+                databaseEntities.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private void AddOneProductButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            Product product = button.DataContext as Product;
+            product.AddOneProduct();
+            //product.PriceUpdate();
+            //button.DataContext = product;
+
+            SupplyOfProductListView.Items.Refresh();
+
+        }
+
+        private void RemoveOneProductButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            Product product = button.DataContext as Product;
+            product.RemoveOneProduct();
+            SupplyOfProductListView.Items.Refresh();
+        }
+
+        private void QuantityProductTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key >= Key.D0 && e.Key <= Key.D9 || e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9 || e.Key == Key.Back)
+            {
+                e.Handled = false;
+            }
+            else if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control && e.Key == Key.V)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void QuantityProductTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (sender as TextBox);
+            if (textBox.Text == null || textBox.Text == "" || Convert.ToDecimal(textBox.Text) < 1)
+            {
+                textBox.Text = "1";
+            }
+            if (textBox.DataContext is Product selectedProduct)
+            {
+                selectedProduct.PriceUpdate();
+            }
+        }
+        protected void SelectCurrentItem(object sender, KeyboardFocusChangedEventArgs e) //event
+        {
+            ListViewItem item = (ListViewItem)sender;
+            item.IsSelected = true;
         }
     }
 }

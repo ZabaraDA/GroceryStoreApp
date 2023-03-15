@@ -28,7 +28,6 @@ namespace GroceryStoreApp.Databases
         public int КодПоставщика { get; set; }
         public Nullable<byte> Статус { get; set; }
         public Nullable<bool> Шаблон { get; set; }
-    
         public virtual Склад Склад { get; set; }
         public virtual Поставщик Поставщик { get; set; }
         public virtual Филиал Филиал { get; set; }

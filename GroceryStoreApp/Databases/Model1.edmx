@@ -271,6 +271,7 @@
           <Property Name="Остаток" Type="int" Nullable="false" />
           <Property Name="ДатаСписания" Type="date" Nullable="false" />
           <Property Name="ДатаОповещения" Type="date" Nullable="false" />
+          <Property Name="Цена" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="ТорговыйЗал">
           <Key>
@@ -484,42 +485,6 @@
             </Principal>
             <Dependent Role="НаселённыйПункт">
               <PropertyRef Name="Тип" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Поставка_МестоОтправки">
-          <End Role="Склад" Type="Self.Склад" Multiplicity="1" />
-          <End Role="Поставка" Type="Self.Поставка" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Склад">
-              <PropertyRef Name="Код" />
-            </Principal>
-            <Dependent Role="Поставка">
-              <PropertyRef Name="КодСклада" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Поставка_Поставщик">
-          <End Role="Поставщик" Type="Self.Поставщик" Multiplicity="1" />
-          <End Role="Поставка" Type="Self.Поставка" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Поставщик">
-              <PropertyRef Name="Код" />
-            </Principal>
-            <Dependent Role="Поставка">
-              <PropertyRef Name="КодПоставщика" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Поставка_Филиал">
-          <End Role="Филиал" Type="Self.Филиал" Multiplicity="1" />
-          <End Role="Поставка" Type="Self.Поставка" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Филиал">
-              <PropertyRef Name="Код" />
-            </Principal>
-            <Dependent Role="Поставка">
-              <PropertyRef Name="КодФилиала" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -979,18 +944,6 @@
             <End Role="ТипНаселённогоПункта" EntitySet="ТипНаселённогоПункта" />
             <End Role="НаселённыйПункт" EntitySet="НаселённыйПункт" />
           </AssociationSet>
-          <AssociationSet Name="FK_Поставка_МестоОтправки" Association="Self.FK_Поставка_МестоОтправки">
-            <End Role="Склад" EntitySet="Склад" />
-            <End Role="Поставка" EntitySet="Поставка" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Поставка_Поставщик" Association="Self.FK_Поставка_Поставщик">
-            <End Role="Поставщик" EntitySet="Поставщик" />
-            <End Role="Поставка" EntitySet="Поставка" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Поставка_Филиал" Association="Self.FK_Поставка_Филиал">
-            <End Role="Филиал" EntitySet="Филиал" />
-            <End Role="Поставка" EntitySet="Поставка" />
-          </AssociationSet>
           <AssociationSet Name="FK_Регион_ТипРегиона" Association="Self.FK_Регион_ТипРегиона">
             <End Role="ТипРегиона" EntitySet="ТипРегиона" />
             <End Role="Регион" EntitySet="Регион" />
@@ -1434,6 +1387,7 @@
           <Property Name="ДатаОповещения" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Поставка" Relationship="Self.FK_ТоварПоставка_Поставка" FromRole="ТоварПоставка" ToRole="Поставка" />
           <NavigationProperty Name="Товар" Relationship="Self.FK_ТоварПоставка_Товар" FromRole="ТоварПоставка" ToRole="Товар" />
+          <Property Name="Цена" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="ТорговыйЗал">
           <Key>
@@ -2488,6 +2442,7 @@
           <EntitySetMapping Name="ТоварПоставка">
             <EntityTypeMapping TypeName="GroceryStoreDatabasesModel.ТоварПоставка">
               <MappingFragment StoreEntitySet="ТоварПоставка">
+                <ScalarProperty Name="Цена" ColumnName="Цена" />
                 <ScalarProperty Name="КодПоставки" ColumnName="КодПоставки" />
                 <ScalarProperty Name="КодТовара" ColumnName="КодТовара" />
                 <ScalarProperty Name="Количество" ColumnName="Количество" />

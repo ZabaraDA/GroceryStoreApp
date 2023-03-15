@@ -8,7 +8,7 @@
     <!--StartupUri="Windows/MenuWindow.xaml">-->
     <Application.Resources>
         <local:RectangleConverter x:Key="RectangleConverter"/>
-
+        <local:PriceConverter x:Key="PriceConverter"></local:PriceConverter>
         <FontFamily x:Key="Blogger Sans">/Fonts/#Blogger Sans</FontFamily>
         <FontFamily x:Key="Caviar Dreams">/Fonts/#Caviar Dreams</FontFamily>
         <FontFamily x:Key="Kelson Sans RU">/Fonts/#Kelson Sans RU</FontFamily>
@@ -85,6 +85,8 @@
             646.088,607L578.613,490.561a11.955,11.955,0,0,1,4.4-16.365l7.758-4.462A12.048,12.048,0,0,1,607.2,474.119Zm162.218-35.687L671.9,
             606.715a12.049,12.049,0,0,1-16.426,4.386l-7.765-4.467a11.955,11.955,0,0,1-4.4-16.365l97.517-168.283a12.048,12.048,0,0,1,
             16.425-4.386l7.765,4.467A11.956,11.956,0,0,1,769.414,438.432Z</Geometry>
+        <Geometry x:Key="MinusPathData">M0,5 H10</Geometry>
+        <Geometry x:Key="PlusPathData">M0,5 H10 M5,5 V10Z</Geometry>
         <!--#endregion-->
         <!--#region  brush-->
 
@@ -845,5 +847,10 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <ContextMenu x:Key="TextBoxContextMenu" Background="White">
+            <MenuItem Command="ApplicationCommands.Copy" />
+            <MenuItem Command="ApplicationCommands.Cut" />
+            <!--<MenuItem Command="ApplicationCommands.Paste" />-->
+        </ContextMenu>
     </Application.Resources>
 </Application>

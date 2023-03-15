@@ -20,6 +20,7 @@ namespace GroceryStoreApp.Databases
         public int Остаток { get; set; }
         public System.DateTime ДатаСписания { get; set; }
         public System.DateTime ДатаОповещения { get; set; }
+        public Nullable<decimal> Цена { get; set; }
     
         public virtual Поставка Поставка { get; set; }
         public virtual Товар Товар { get; set; }

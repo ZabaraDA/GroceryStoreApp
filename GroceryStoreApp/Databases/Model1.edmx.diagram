@@ -29,7 +29,7 @@
         <EntityTypeShape EntityType="GroceryStoreDatabasesModel.ТипРегиона" Width="1.5" PointX="1.5" PointY="4.125" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDatabasesModel.ТипСтелажа" Width="1.5" PointX="11.25" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDatabasesModel.Товар" Width="1.5" PointX="11.25" PointY="15.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="GroceryStoreDatabasesModel.ТоварПоставка" Width="1.5" PointX="8.25" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GroceryStoreDatabasesModel.ТоварПоставка" Width="1.5" PointX="8.375" PointY="16.625" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDatabasesModel.ТорговыйЗал" Width="1.5" PointX="13.5" PointY="18.25" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDatabasesModel.ТорговыйЗалСтеллаж" Width="1.5" PointX="18.75" PointY="13.5" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDatabasesModel.Улица" Width="1.5" PointX="1.5" PointY="21.125" IsExpanded="true" />
