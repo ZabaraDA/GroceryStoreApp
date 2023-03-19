@@ -22,14 +22,26 @@ namespace GroceryStoreApp.Pages
 
         DateTime month = DateTime.Now;
 
-        int[] year;
+        
         public DataOfSupplyPage()
         {
             InitializeComponent();
             CreateRangeYears();
-            SupplyListView.ItemsSource = databaseEntities.Поставка.ToList();
+            TypeSortComboBox.SelectedIndex = 0;
+            UpdateSupplyList();
         }
 
+        private void UpdateSupplyList()
+        {
+            var supplyList = databaseEntities.Поставка.OrderByDescending(x=> x.ДатаПоставки).ToList();
+
+            if(YearSearchComboBox.SelectedIndex > 0)
+            {
+                supplyList = supplyList.Where(x => x.ДатаПоставки.Year.Equals(Convert.ToInt16(YearSearchComboBox.SelectedItem))).ToList();
+            }
+
+            SupplyListView.ItemsSource = supplyList.ToList();
+        }
         private void ClearFilterButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -83,23 +95,25 @@ namespace GroceryStoreApp.Pages
         {
             DateTime firstDeliveryDate = databaseEntities.Поставка.Min(x => x.ДатаПоставки);
             int timeRange = month.Year - firstDeliveryDate.Year;
-            year = new int[timeRange + 1];
-            for (int i = 0; i < year.Length; i++)
+            List<string> year = new List<string>();
+            for (int i = 0; i < timeRange + 1; i++)
             {
-                year[i] = firstDeliveryDate.Year + i;
+                year.Add((firstDeliveryDate.Year + i).ToString());
             }
-            YearSearchComboBox.ItemsSource = year;
+            year.Insert(0, "Все года");
+            
+            YearSearchComboBox.ItemsSource = year.ToList();
             YearSearchComboBox.SelectedIndex = 0;
         }
 
         private void SearchComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            UpdateSupplyList();
         }
 
         private void ViewSupplyButton_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void DeleteSupplyButton_Click(object sender, RoutedEventArgs e)
@@ -110,6 +124,16 @@ namespace GroceryStoreApp.Pages
         private void ChangeSupplyButton_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+
+        }
+
+        private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateSupplyList();
         }
     }
 }

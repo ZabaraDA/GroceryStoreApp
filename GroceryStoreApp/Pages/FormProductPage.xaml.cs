@@ -59,7 +59,7 @@ namespace GroceryStoreApp.Pages
             ChartCanvas.Children.Clear();
             GenerateCanvas();
 
-            int max = deliverySelectedProductList.Max(x => x.Количество);
+            int max = (int)deliverySelectedProductList.Max(x => x.Количество);
             int step = 1;
 
             while (max > 10)
@@ -111,7 +111,7 @@ namespace GroceryStoreApp.Pages
                     Orientation = Orientation.Horizontal,
                     RenderTransform = new TranslateTransform
                     (_indient * 2 + _indient * 2 * (_quantity - deliverySelectedProductList[i].Поставка.ДатаПоставки.Month),
-                    ((_indient * _quantity) - deliveryProduct.Количество * _indient / quantityInSegment) * 0 + _indient),
+                    (double)(((_indient * _quantity) - deliveryProduct.Количество * _indient / quantityInSegment) * 0 + _indient)),
 
                     //ToolTip = $"{deliveryProduct.Поставка.ДатаПоставки} доставлен {_selectedProduct.Наименование}" +
                     //$"\n в количестве {deliveryProduct.Количество} {_selectedProduct.ЕдиницаИзмерения.Аббревиатура} " +
@@ -122,7 +122,7 @@ namespace GroceryStoreApp.Pages
                 Rectangle deliveryRectangle = new Rectangle()
                 {
                     Width = _indient,
-                    Height = deliveryProduct.Количество * _indient / quantityInSegment,
+                    Height = (double)(deliveryProduct.Количество * _indient / quantityInSegment),
                     Fill = Brushes.Violet,
                     VerticalAlignment = VerticalAlignment.Bottom,
                 };
@@ -130,7 +130,7 @@ namespace GroceryStoreApp.Pages
                 Rectangle remainderRectangle = new Rectangle()
                 {
                     Width = _indient,
-                    Height = deliveryProduct.Остаток * _indient / quantityInSegment,
+                    Height = (double)(deliveryProduct.Остаток * _indient / quantityInSegment),
                     Fill = Brushes.DarkCyan,
                     VerticalAlignment = VerticalAlignment.Top,
                 };
@@ -139,11 +139,11 @@ namespace GroceryStoreApp.Pages
 
                 DoubleAnimation buttonAnimation = new DoubleAnimation();
                 buttonAnimation.From = 0;
-                buttonAnimation.To = deliveryProduct.Количество * _indient / quantityInSegment;
+                buttonAnimation.To = (double)(deliveryProduct.Количество * _indient / quantityInSegment);
                 buttonAnimation.Duration = TimeSpan.FromSeconds(1);
 
                 deliveryRectangle.BeginAnimation(HeightProperty, buttonAnimation);
-                buttonAnimation.To = deliveryProduct.Остаток * _indient / quantityInSegment;
+                buttonAnimation.To = (double)(deliveryProduct.Остаток * _indient / quantityInSegment);
                 remainderRectangle.BeginAnimation(HeightProperty, buttonAnimation);
 
                 stackPanel.Children.Add(deliveryRectangle);

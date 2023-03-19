@@ -19,10 +19,10 @@
         </Style>
         <Style TargetType="{x:Type DatePicker}" BasedOn="{StaticResource DatePickerBaseStyle}">
             <Setter Property="Width" Value="200"/>
-            <Setter Property="Height" Value="40"/>
+            <Setter Property="Height" Value="30"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="HorizontalAlignment" Value="Left"></Setter>
-            <Setter Property="Margin" Value="0 10 10 0"/>
+            <Setter Property="Margin" Value="0 5 10 0"/>
         </Style>
         <Style TargetType="{x:Type my:TextBoxWithRemoved}">
             <Setter Property="Width" Value="300"/>
@@ -53,7 +53,6 @@
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <!--<EventSetter Event="PreviewGotKeyboardFocus" Handler="SelectCurrentItem"/>-->
             <Setter Property="Background" Value="{StaticResource ListViewItem.Static.Background}" />
             <Setter Property="Template">
                 <Setter.Value>
@@ -74,9 +73,9 @@
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter Property="Background" Value="{StaticResource ListViewItem.Pressed.Background}"/>
                             </Trigger>
-                            <Trigger Property="IsKeyboardFocusWithin" Value="true">
+                            <!--<Trigger Property="IsKeyboardFocusWithin" Value="true">
                                 <Setter Property="IsSelected" Value="true" />
-                            </Trigger>
+                            </Trigger>-->
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -121,6 +120,7 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -129,7 +129,7 @@
         <Border Background="#FFD6D6D6" Grid.ColumnSpan="2"></Border>
         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
             <Button Content="Назад"></Button>
-            <TextBlock Text="Заказ поставщику № rrew" Margin="10" FontFamily="{StaticResource Blogger Sans}"
+            <TextBlock Text="Заказ поставщику №" Margin="10" FontFamily="{StaticResource Blogger Sans}"
                            Width="auto" FontSize="24"  />
         </StackPanel>
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.ColumnSpan="2">
@@ -140,20 +140,35 @@
 
         <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="10" Grid.ColumnSpan="2">
             <StackPanel>
-                <TextBlock Text="Дата заявки" ></TextBlock>
+                <TextBlock Margin="10" Text="Дата заявки" ></TextBlock>
                 <TextBlock Text="Дата поставки"></TextBlock>
             </StackPanel>
             <StackPanel>
-                <DatePicker></DatePicker>
-                <DatePicker></DatePicker>
+                <DatePicker Name="DateOfCreationDatePicker"></DatePicker>
+                <DatePicker Name="DateOfArrivalDatePicker"></DatePicker>
             </StackPanel>
             <StackPanel>
-                <TextBlock Text="Поставщик" ></TextBlock>
-                <TextBlock Text="Склад"></TextBlock>
+                <TextBlock Margin="10" Text="Филиал"></TextBlock>
+                <TextBlock Text="Склад" ></TextBlock>
             </StackPanel>
             <StackPanel>
-                <ComboBox FontWeight="Bold"></ComboBox>
-                <ComboBox></ComboBox>
+                <ComboBox Name="SubsidiaryComboBox" SelectionChanged="SubsidiaryComboBox_SelectionChanged" Cursor="Hand">
+                    <!--<ComboBox.ItemContainerStyle>
+                        <Style>
+                            <EventSetter Event="ComboBoxItem.PreviewMouseDown" Handler="ComboBox_PreviewMouseDown"/>
+                        </Style>
+                    </ComboBox.ItemContainerStyle>-->
+                </ComboBox>
+                <ComboBox Name="WarehouseComboBox" SelectionChanged="WarehouseComboBox_SelectionChanged" 
+                          ItemsSource="{Binding WarehouseList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
+                    
+                </ComboBox>
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Text="Поставщик" Margin="10"></TextBlock>
+            </StackPanel>
+            <StackPanel>
+                <ComboBox Name="SupplierComboBox"></ComboBox>
             </StackPanel>
         </StackPanel>
 
@@ -170,7 +185,7 @@
         <Border Grid.Column="0" Grid.Row="1" VerticalAlignment="Bottom" Width="auto"
                 Height="3" Background="{StaticResource ListViewItem.MouseOver.Background}"></Border>
         <Border Background="White" Grid.Row="2"></Border>
-        <ListView x:Name="ProductListView" Style="{StaticResource ProductListViewStyle}" Grid.Row="2" Visibility="Collapsed">
+        <ListView x:Name="ProductListView" Style="{StaticResource ProductListViewStyle}" Grid.Row="2" Visibility="Collapsed" IsEnabled="False">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="#" DisplayMemberBinding="{Binding Код}" Width="30"/>
@@ -197,13 +212,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Наименование" >
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Name="AddProductToDeliveryButton" Click="AddProductToDeliveryButton_Click" Content="Добавить" MaxWidth="300"></Button>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+
                     <GridViewColumn Header="Наименование">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -221,18 +230,24 @@
                     <GridViewColumn Header="Производитель" DisplayMemberBinding="{Binding Производитель.Наименование}"/>
                     <GridViewColumn Header="Цена" DisplayMemberBinding="{Binding Цена}"/>
                     <GridViewColumn Header="НДС" DisplayMemberBinding="{Binding НДС}"/>
-                    <GridViewColumn Header="Количество" DisplayMemberBinding="{Binding Количество}"/>
+                    <GridViewColumn Header="Наименование" Width="50">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <my:NavigationButton Data="{StaticResource ExitPathData}" Name="AddProductToDeliveryButton"
+                                                     Click="AddProductToDeliveryButton_Click"></my:NavigationButton>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
 
                 </GridView>
             </ListView.View>
         </ListView>
 
-        <ListView x:Name="SupplyOfProductListView" 
-                  ItemsSource="{Binding Path=productList,Mode=TwoWay,
+        <ListView x:Name="SupplyOfProductListView"
+                  ItemsSource="{Binding Path= ProductList,Mode=TwoWay,
                   UpdateSourceTrigger=PropertyChanged}"
                   Style="{StaticResource ProductListViewStyle}" Grid.Row="2">
             <ListView.View>
-                
                 <GridView>
                     <GridViewColumn Header="#" DisplayMemberBinding="{Binding ID}" Width="60" />
                     <!--<GridViewColumn Header="Фото" Width="80">
@@ -266,16 +281,15 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Количество" Width="280">
+                    <GridViewColumn Header="Количество" Width="230">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <my:NavigationButton Data="{StaticResource  HidePathData}" Name="RemoveOneProductButton"
                                                          Click="RemoveOneProductButton_Click"></my:NavigationButton>
-                                    <my:TextBoxWithRemoved Uid="Введите количество" Width="200" Margin="0 5 0 5"
+                                    <my:TextBoxWithRemoved Uid="Введите количество" Width="150" Margin="0 5 0 5"
                                                            ContextMenu="{StaticResource TextBoxContextMenu}" 
-                                                           Text="{Binding Path=Quantity, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay,
-                                                           NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"
+                                                           Text="{Binding Path=Quantity, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                                            PreviewKeyDown="QuantityProductTextBox_PreviewKeyDown"
                                                            x:Name="QuantityProductTextBox" VerticalAlignment="Center" 
                                                            TextChanged="QuantityProductTextBox_TextChanged"></my:TextBoxWithRemoved>
@@ -296,19 +310,16 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Цена" Width="150">
+                    <GridViewColumn Header="Цена" Width="130">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Cost, StringFormat={}{0} РУБ}" HorizontalAlignment="Left" FontSize="18"></TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Сумма" Width="150">
+                    <GridViewColumn Header="Сумма" Width="170">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <!--<TextBlock Text="{Binding Path=Price, StringFormat={}{0} РУБ, 
-                                           UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" 
-                                           Name="PriceTextBlock" HorizontalAlignment="Left" FontSize="18"></TextBlock>-->
                                 <TextBlock Name="PriceTextBlock" HorizontalAlignment="Left" FontSize="18">
                                     <TextBlock.Text>
                                         <MultiBinding Converter="{StaticResource PriceConverter}">
@@ -320,13 +331,20 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+                    <GridViewColumn Header="Back" Width="50">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <my:NavigationButton Data="{StaticResource ExitPathData}" Name="ExcludeProductButton" 
+                                                         Click="ExcludeProductButton_Click"></my:NavigationButton>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
-           
         </ListView>
 
-        <StackPanel Grid.Column="1" Grid.Row="2" Grid.RowSpan="2"  Background="#FFD6D6D6" >
-            <StackPanel Margin="10" Name="ProductEditStackPanel" Cursor="Hand">
+        <StackPanel Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Background="#FFD6D6D6" >
+            <StackPanel Margin="10" Name="ProductEditStackPanel" IsEnabled="False">
                 <TextBlock Text="Фильтры" HorizontalAlignment="Center" TextAlignment="Center" ></TextBlock>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock Text="Выбрано "></TextBlock>
@@ -392,5 +410,24 @@
             </StackPanel>
             <Button  Content="Сбросить фильтры" x:Name="ClearFilterButton" Click="ClearFilterButton_Click"></Button>
         </StackPanel>
+        <Border Grid.Row="3" DataContext="{Binding TotalSupplyValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Padding="5" Background="{StaticResource Window.NavigationBar.Background2}">
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" >
+                <TextBlock Text="Итого" FontWeight="Medium" HorizontalAlignment="Left"></TextBlock>
+                <TextBlock Width="200"  Name="WeightTextBlock" Text="{Binding Weight,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0} КГ}"></TextBlock>
+                <TextBlock Width="200" Name="AmountTextBlock" Text="{Binding Amount,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0} РУБ}"></TextBlock>
+            </StackPanel>
+        </Border>
+        <TextBlock Text="" Grid.Column="0" HorizontalAlignment="Center" Grid.Row="2" 
+                   TextAlignment="Center" Name="SupplyReminderTextBlock">
+            <Run FontSize="24" Text="Добавьте товары из списка товаров"></Run>
+            <LineBreak></LineBreak>
+            <Run Text="Добавленные товары будут представлены в списке поставки"></Run>
+        </TextBlock>
+        <TextBlock Grid.Column="0" HorizontalAlignment="Center" Grid.Row="2" 
+                   TextAlignment="Center" Name="ProductReminderTextBlock" Visibility="Collapsed">
+            <Run FontSize="24" Text="Укажите филиал и склад чтобы получить список доступных к поставке товаров"></Run>
+            <LineBreak></LineBreak>
+            <Run Text="Выбранные товары будут добавлены в список товаров поставки"></Run>
+        </TextBlock>
     </Grid>
 </Page>

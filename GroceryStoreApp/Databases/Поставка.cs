@@ -26,10 +26,13 @@ namespace GroceryStoreApp.Databases
         public System.DateTime ДатаЗаявки { get; set; }
         public System.DateTime ДатаПоставки { get; set; }
         public int КодПоставщика { get; set; }
-        public Nullable<byte> Статус { get; set; }
-        public Nullable<bool> Шаблон { get; set; }
-        public virtual Склад Склад { get; set; }
+        public byte Статус { get; set; }
+        public bool Шаблон { get; set; }
+        public decimal Цена { get; set; }
+        public decimal Вес { get; set; }
+    
         public virtual Поставщик Поставщик { get; set; }
+        public virtual Склад Склад { get; set; }
         public virtual Филиал Филиал { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ТоварПоставка> ТоварПоставка { get; set; }

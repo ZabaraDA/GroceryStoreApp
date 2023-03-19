@@ -23,7 +23,7 @@ namespace GroceryStoreApp.Databases
         public int Код { get; set; }
         public string Наименование { get; set; }
         public byte[] Фото { get; set; }
-        public Nullable<int> КодГруппы { get; set; }
+        public int КодГруппы { get; set; }
     
         public virtual Группа Группа { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

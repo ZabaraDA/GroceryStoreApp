@@ -5,8 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GroceryStoreApp.Pages"
       mc:Ignorable="d" xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="DataOfSupplyPage" FontFamily="{StaticResource Blogger Sans}">
+      Title="DataOfSupplyPage" FontFamily="{StaticResource Blogger Sans}" IsVisibleChanged="Page_IsVisibleChanged">
 
     <Page.Resources>
         <Style TargetType="{x:Type TextBlock}">
@@ -142,10 +141,10 @@
         <ListView x:Name="SupplyListView" Style="{StaticResource ProductListViewStyle}" Grid.Row="2">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="# поставки">
+                    <GridViewColumn Header="# поставки" Width="90">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Код}" Style="{StaticResource GridViewTextBlockStyle}" Width="100"></TextBlock>
+                                <TextBlock Text="{Binding Код}" Style="{StaticResource GridViewTextBlockStyle}" ></TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -163,14 +162,14 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Филиал">
+                    <GridViewColumn Header="Филиал" Width="160">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Филиал.Наименование}" Style="{StaticResource GridViewTextBlockStyle}"></TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Поставщик">
+                    <GridViewColumn Header="Поставщик" Width="150">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Поставщик.Наименование}" Style="{StaticResource GridViewTextBlockStyle}"></TextBlock>
@@ -206,8 +205,10 @@
 
         <StackPanel Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Background="#FFD6D6D6">
             <StackPanel Margin="10">
-                <ComboBox Name="YearSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged"></ComboBox>
-                <ComboBox Name="TypeSortComboBox" SelectionChanged="TypeSortComboBox_SelectionChanged">
+                <TextBlock Text="Фильтр по году поставки"></TextBlock>
+                <ComboBox Name="YearSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged" Cursor="Hand"></ComboBox>
+                <TextBlock Text="Тип сортировки"></TextBlock>
+                <ComboBox Name="TypeSortComboBox" SelectionChanged="TypeSortComboBox_SelectionChanged" Cursor="Hand">
                     <ComboBoxItem Content="Не сортировать"></ComboBoxItem>
                     <ComboBoxItem Content="Сортировать по дате заявки"></ComboBoxItem>
                     <ComboBoxItem Content="Сортировать по дате поставки"></ComboBoxItem>
@@ -222,9 +223,9 @@
                     </ComboBox>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="От"></TextBlock>
-                        <DatePicker Name="MinimumDateOfCreationDatePicker" Width="150"></DatePicker>
+                        <DatePicker Name="MinimumDateOfCreationDatePicker" Width="150" SelectedDateChanged="DatePicker_SelectedDateChanged"></DatePicker>
                         <TextBlock Text="До"></TextBlock>
-                        <DatePicker Name="MaximumDateOfCreationDatePicker" Width="150"></DatePicker>
+                        <DatePicker Name="MaximumDateOfCreationDatePicker" Width="150" SelectedDateChanged="DatePicker_SelectedDateChanged"></DatePicker>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Name="DateOfSupplySortStackPanel" Visibility="Collapsed">
@@ -236,9 +237,9 @@
                     </ComboBox>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="От"></TextBlock>
-                        <DatePicker Name="MinimumDateOfDeliveryDatePicker" Width="150"></DatePicker>
+                        <DatePicker Name="MinimumDateOfDeliveryDatePicker" Width="150" SelectedDateChanged="DatePicker_SelectedDateChanged"></DatePicker>
                         <TextBlock Text="До"></TextBlock>
-                        <DatePicker Name="MaximumDateOfDeliveryDatePicker" Width="150"></DatePicker>
+                        <DatePicker Name="MaximumDateOfDeliveryDatePicker" Width="150" SelectedDateChanged="DatePicker_SelectedDateChanged"></DatePicker>
                     </StackPanel>
                 </StackPanel>
                 <Button Content="Сбросить фильтры" x:Name="ClearFilterButton" Click="ClearFilterButton_Click"></Button>

@@ -7,12 +7,15 @@
              StartupUri="Windows/AuthorizationWindow.xaml">
     <!--StartupUri="Windows/MenuWindow.xaml">-->
     <Application.Resources>
+        <!--#region converter-->
         <local:RectangleConverter x:Key="RectangleConverter"/>
         <local:PriceConverter x:Key="PriceConverter"></local:PriceConverter>
+        <!--#endregion-->
+        <!--#region fonts-->
         <FontFamily x:Key="Blogger Sans">/Fonts/#Blogger Sans</FontFamily>
         <FontFamily x:Key="Caviar Dreams">/Fonts/#Caviar Dreams</FontFamily>
         <FontFamily x:Key="Kelson Sans RU">/Fonts/#Kelson Sans RU</FontFamily>
-
+        <!--#endregion-->
         <!--#region geometry-->
         <Geometry x:Key="ProfilePathData">M48.6,49.318A82.867,82.867,0,0,1,35,50.681a82.868,82.868,0,0,1-13.6-1.362c-2.833-.633-1.957-7.542-1.957-7.542s0.667-2.869,
             3.884-7.588a42.34,42.34,0,0,1,4.041-4.834,9.154,9.154,0,1,1,15.269.074,42.163,42.163,0,0,1,3.97,4.76,27.321,27.321,0,0,1,3.942,7.588S51.429,48.686,48.6,
@@ -87,6 +90,50 @@
             16.425-4.386l7.765,4.467A11.956,11.956,0,0,1,769.414,438.432Z</Geometry>
         <Geometry x:Key="MinusPathData">M0,5 H10</Geometry>
         <Geometry x:Key="PlusPathData">M0,5 H10 M5,5 V10Z</Geometry>
+        <Geometry x:Key="DatePickerPathData">M335.999,53.999 L27.0,53.999 C12.88,53.999 0.0,41.911 0.0,27.0 C0.0,25.289 0.177,
+            23.622 0.481,22.0 L138.446,22.0 C146.23,22.0 152.479,12.836 154.938,0.0 L335.999,0.0 C350.911,0.0 362.999,12.88 362.999,
+            27.0 C362.999,41.911 350.911,53.999 335.999,53.999 ZM21.302,82.751 L104.238,82.751 C109.964,82.751 114.605,87.395 114.605,
+            93.123 L114.605,176.98 C114.605,181.826 109.964,186.469 104.238,186.469 L21.302,186.469 C15.577,186.469 10.936,
+            181.826 10.936,176.98 L10.936,93.123 C10.936,87.395 15.577,82.751 21.302,82.751 ZM21.311,200.300 L104.246,
+            200.245 C109.972,200.241 114.616,204.882 114.620,210.610 L114.675,293.584 C114.679,299.313 110.41,303.959 104.315,
+            303.963 L21.380,304.18 C15.654,304.22 11.9,299.381 11.6,293.653 L10.951,210.679 C10.947,204.951 15.585,200.304 21.311,
+            200.300 ZM21.345,318.292 L104.281,318.292 C110.6,318.292 114.648,322.936 114.648,328.664 L114.648,411.638 C114.648,
+            417.367 110.6,422.10 104.281,422.10 L21.345,422.10 C15.620,422.10 10.978,417.367 10.978,411.638 L10.978,
+            328.664 C10.978,322.936 15.620,318.292 21.345,318.292 ZM140.503,83.7 L223.438,83.7 C229.164,83.7 233.805,87.651 233.805,
+            93.379 L233.805,176.353 C233.805,182.82 229.164,186.725 223.438,186.725 L140.503,186.725 C134.777,186.725 130.136,
+            182.82 130.136,176.353 L130.136,93.379 C130.136,87.651 134.777,83.7 140.503,83.7 ZM140.511,200.556 L223.447,
+            200.501 C229.172,200.497 233.817,205.138 233.820,210.866 L233.875,293.840 C233.879,299.568 229.241,304.215 223.515,
+            304.219 L140.580,304.274 C134.854,304.278 130.210,299.637 130.206,293.909 L130.151,210.935 C130.147,205.206 134.785,
+            200.560 140.511,200.556 ZM140.545,318.548 L223.481,318.548 C229.206,318.548 233.848,323.192 233.848,328.920 L233.848,
+            411.894 C233.848,417.622 229.206,422.266 223.481,422.266 L140.545,422.266 C134.820,422.266 130.178,417.622 130.178,
+            411.894 L130.178,328.920 C130.178,323.192 134.820,318.548 140.545,318.548 ZM259.703,83.7 L342.638,83.7 C348.364,
+            83.7 353.5,87.651 353.5,93.379 L353.5,176.353 C353.5,182.82 348.364,186.725 342.638,186.725 L259.703,186.725 C253.977,
+            186.725 249.336,182.82 249.336,176.353 L249.336,93.379 C249.336,87.651 253.977,83.7 259.703,83.7 ZM259.711,
+            200.556 L342.647,200.501 C348.372,200.497 353.17,205.138 353.21,210.866 L353.76,293.840 C353.79,299.568 348.441,
+            304.215 342.715,304.219 L259.780,304.274 C254.54,304.278 249.410,299.637 249.406,293.909 L249.351,210.935 C249.347,
+            205.206 253.986,200.560 259.711,200.556 ZM259.745,318.548 L342.681,318.548 C348.407,318.548 353.48,323.192 353.48,
+            328.920 L353.48,411.894 C353.48,417.622 348.407,422.266 342.681,422.266 L259.745,422.266 C254.20,422.266 249.378,
+            417.622 249.378,411.894 L249.378,328.920 C249.378,323.192 254.20,318.548 259.745,318.548 Z</Geometry>
+        <Geometry x:Key="DatePicker1PathData">M300,250H700a50,50,0,0,1,50,50V700a50,50,0,0,1-50,50H300a50,50,0,0,1-50-50V300A50,
+            50,0,0,1,300,250Zm22.21,19.532H677.79c24.547,0,44.447,20.637,44.447,46.094V684.374c0,25.457-19.9,46.094-44.447,
+            46.094H322.21c-24.547,0-44.447-20.637-44.447-46.094V315.626C277.763,290.169,297.663,269.532,322.21,269.532Zm328.507,
+            77.72H350.283A26.177,26.177,0,0,1,324.5,316.147H458.64c7.367,0,13.644-8.907,16.035-21.385H650.717A26.245,26.245,0,1,
+            1,650.717,347.252ZM344.744,375.2h80.637a10.08,10.08,0,0,1,10.079,10.081v80.654a10.081,10.081,0,0,1-10.079,
+            10.082H344.744a10.081,10.081,0,0,1-10.079-10.082V385.281A10.08,10.08,0,0,1,344.744,375.2Zm0.008,114.261,
+            80.637-.054a10.082,10.082,0,0,1,10.086,10.075l0.053,80.654a10.081,10.081,0,0,1-10.072,10.089l-80.637.053A10.08,
+            10.08,0,0,1,334.733,580.2l-0.053-80.654A10.08,10.08,0,0,1,344.752,489.461Zm0.034,114.692h80.636a10.081,10.081,
+            0,0,1,10.08,10.082v80.653a10.081,10.081,0,0,1-10.08,10.082H344.786a10.081,10.081,0,0,1-10.08-10.082V614.235A10.081,
+            10.081,0,0,1,344.786,604.153ZM460.64,375.448h80.636a10.081,10.081,0,0,1,10.08,10.082v80.654a10.081,10.081,0,0,
+            1-10.08,10.082H460.64a10.081,10.081,0,0,1-10.08-10.082V385.53A10.081,10.081,0,0,1,460.64,375.448Zm0.008,114.262,
+            80.636-.054a10.08,10.08,0,0,1,10.086,10.075l0.054,80.654a10.08,10.08,0,0,1-10.073,10.088l-80.636.054a10.081,
+            10.081,0,0,1-10.087-10.075L450.575,499.8A10.08,10.08,0,0,1,460.648,489.71ZM460.681,604.4h80.637A10.08,10.08,0,
+            0,1,551.4,614.483v80.654a10.081,10.081,0,0,1-10.079,10.082H460.681A10.08,10.08,0,0,1,450.6,695.137V614.483A10.079,
+            10.079,0,0,1,460.681,604.4ZM576.535,375.448h80.636a10.081,10.081,0,0,1,10.08,10.082v80.654a10.081,10.081,0,0,
+            1-10.08,10.082H576.535a10.08,10.08,0,0,1-10.079-10.082V385.53A10.08,10.08,0,0,1,576.535,375.448Zm0.008,114.262,
+            80.637-.054a10.081,10.081,0,0,1,10.086,10.075l0.053,80.654a10.08,10.08,0,0,1-10.073,10.088l-80.636.054a10.08,
+            10.08,0,0,1-10.086-10.075L566.47,499.8A10.08,10.08,0,0,1,576.543,489.71ZM576.577,604.4h80.636a10.079,10.079,0,
+            0,1,10.079,10.081v80.654a10.08,10.08,0,0,1-10.079,10.082H576.577a10.081,10.081,0,0,1-10.08-10.082V614.483A10.08,
+            10.08,0,0,1,576.577,604.4Z</Geometry>
         <!--#endregion-->
         <!--#region  brush-->
 
@@ -109,6 +156,12 @@
 
         <SolidColorBrush x:Key="ComboBox.Static.Background" Color="#F2EFF1"/>
         <SolidColorBrush x:Key="ComboBox.Static.Border" Color="#3B3839"/>
+
+        <SolidColorBrush x:Key="DatePicker.Static.Background" Color="#F2EFF1"/>
+        <SolidColorBrush x:Key="DatePicker.Static.Border" Color="#9E9FA3"/>
+
+        <SolidColorBrush x:Key="DatePickerButton.Static.Background" Color="#3B3839"/>
+        <SolidColorBrush x:Key="DatePickerButton.Static.Border" Color="#9E9FA3"/>
 
         <SolidColorBrush x:Key="ToggleButton.Static.Background" Color="#9E9FA3"/>
 
@@ -218,163 +271,61 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="CalendarStyle" Value="{StaticResource CalendarSizeStyle}"></Setter>
             <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-            <Setter Property="BorderBrush">
-                <Setter.Value>
-                    <LinearGradientBrush EndPoint=".5,0" StartPoint=".5,1">
-                        <GradientStop Color="#FFA3AEB9" Offset="0"/>
-                        <GradientStop Color="#FF8399A9" Offset="0.375"/>
-                        <GradientStop Color="#FF718597" Offset="0.375"/>
-                        <GradientStop Color="#FF617584" Offset="1"/>
-                    </LinearGradientBrush>
-                </Setter.Value>
-            </Setter>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="MinWidth" Value="60"></Setter>
+            <Setter Property="MinHeight" Value="30"></Setter>
+            <Setter Property="Padding" Value="0"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type DatePicker}">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal"/>
-                                    <VisualState x:Name="Disabled">
-                                        <Storyboard>
-                                            <DoubleAnimation Duration="0" Storyboard.TargetName="PART_DisabledVisual" To="1" Storyboard.TargetProperty="Opacity"/>
-                                        </Storyboard>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <Grid x:Name="PART_Root" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                                <Grid.Resources>
-                                    <SolidColorBrush x:Key="DisabledBrush" Color="#A5FFFFFF"/>
-                                    <ControlTemplate x:Key="DropDownButtonTemplate" TargetType="{x:Type Button}">
+                        <Grid x:Name="PART_Root" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                  MinWidth="{TemplateBinding MinWidth}" Width="{TemplateBinding Width}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="{TemplateBinding Height}"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.ColumnSpan="2" CornerRadius="5" Background="White" 
+                                    BorderBrush="{StaticResource DatePickerButton.Static.Border}"
+                                    BorderThickness="{TemplateBinding BorderThickness}" Width="{TemplateBinding Width}"/>
+                            <Button x:Name="PART_Button" Grid.Column="1" Focusable="False" HorizontalAlignment="Right" 
+                                    Width="{TemplateBinding Height}" Height="{TemplateBinding Height}">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="{x:Type Button}">
                                         <Grid>
-                                            <VisualStateManager.VisualStateGroups>
-                                                <VisualStateGroup x:Name="CommonStates">
-                                                    <VisualStateGroup.Transitions>
-                                                        <VisualTransition GeneratedDuration="0"/>
-                                                        <VisualTransition GeneratedDuration="0:0:0.1" To="MouseOver"/>
-                                                        <VisualTransition GeneratedDuration="0:0:0.1" To="Pressed"/>
-                                                    </VisualStateGroup.Transitions>
-                                                    <VisualState x:Name="Normal"/>
-                                                    <VisualState x:Name="MouseOver">
-                                                        <Storyboard>
-                                                            <ColorAnimation Duration="0" Storyboard.TargetName="Background" To="#FF448DCA" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"/>
-                                                            <ColorAnimationUsingKeyFrames BeginTime="0" Duration="00:00:00.001" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Border.Background).(GradientBrush.GradientStops)[3].(GradientStop.Color)">
-                                                                <SplineColorKeyFrame KeyTime="0" Value="#7FFFFFFF"/>
-                                                            </ColorAnimationUsingKeyFrames>
-                                                            <ColorAnimationUsingKeyFrames BeginTime="0" Duration="00:00:00.001" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Border.Background).(GradientBrush.GradientStops)[2].(GradientStop.Color)">
-                                                                <SplineColorKeyFrame KeyTime="0" Value="#CCFFFFFF"/>
-                                                            </ColorAnimationUsingKeyFrames>
-                                                            <ColorAnimationUsingKeyFrames BeginTime="0" Duration="00:00:00.001" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Border.Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)">
-                                                                <SplineColorKeyFrame KeyTime="0" Value="#F2FFFFFF"/>
-                                                            </ColorAnimationUsingKeyFrames>
-                                                        </Storyboard>
-                                                    </VisualState>
-                                                    <VisualState x:Name="Pressed">
-                                                        <Storyboard>
-                                                            <ColorAnimationUsingKeyFrames BeginTime="0" Duration="00:00:00.001" Storyboard.TargetName="Background" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
-                                                                <SplineColorKeyFrame KeyTime="0" Value="#FF448DCA"/>
-                                                            </ColorAnimationUsingKeyFrames>
-                                                            <DoubleAnimationUsingKeyFrames BeginTime="0" Duration="00:00:00.001" Storyboard.TargetName="Highlight" Storyboard.TargetProperty="(UIElement.Opacity)">
-                                                                <SplineDoubleKeyFrame KeyTime="0" Value="1"/>
-                                                            </DoubleAnimationUsingKeyFrames>
-                                                            <ColorAnimationUsingKeyFrames BeginTime="0" Duration="00:00:00.001" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Border.Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)">
-                                                                <SplineColorKeyFrame KeyTime="0" Value="#EAFFFFFF"/>
-                                                            </ColorAnimationUsingKeyFrames>
-                                                            <ColorAnimationUsingKeyFrames BeginTime="0" Duration="00:00:00.001" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Border.Background).(GradientBrush.GradientStops)[2].(GradientStop.Color)">
-                                                                <SplineColorKeyFrame KeyTime="0" Value="#C6FFFFFF"/>
-                                                            </ColorAnimationUsingKeyFrames>
-                                                            <ColorAnimationUsingKeyFrames BeginTime="0" Duration="00:00:00.001" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Border.Background).(GradientBrush.GradientStops)[3].(GradientStop.Color)">
-                                                                <SplineColorKeyFrame KeyTime="0" Value="#6BFFFFFF"/>
-                                                            </ColorAnimationUsingKeyFrames>
-                                                            <ColorAnimationUsingKeyFrames BeginTime="0" Duration="00:00:00.001" Storyboard.TargetName="BackgroundGradient" Storyboard.TargetProperty="(Border.Background).(GradientBrush.GradientStops)[0].(GradientStop.Color)">
-                                                                <SplineColorKeyFrame KeyTime="0" Value="#F4FFFFFF"/>
-                                                            </ColorAnimationUsingKeyFrames>
-                                                        </Storyboard>
-                                                    </VisualState>
-                                                    <VisualState x:Name="Disabled"/>
-                                                </VisualStateGroup>
-                                            </VisualStateManager.VisualStateGroups>
-                                            <!--#region  кнопка-->
-                                            <Grid Background="#11FFFFFF" FlowDirection="LeftToRight" HorizontalAlignment="Right" Height="{TemplateBinding Height}" Margin="0" VerticalAlignment="Center" Width="{TemplateBinding Height}">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="10*"/>
-                                                    <ColumnDefinition Width="20*"/>
-                                                    <ColumnDefinition Width="20*"/>
-                                                    <ColumnDefinition Width="20*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="25*"/>
-                                                    <RowDefinition Height="19*"/>
-                                                    <RowDefinition Height="19*"/>
-                                                    <RowDefinition Height="25*"/>
-                                                </Grid.RowDefinitions>
-                                                <Border x:Name="Highlight" BorderBrush="#FF45D6FA" BorderThickness="1" CornerRadius="0,0,1,1" Grid.ColumnSpan="4" Margin="-1" Opacity="0" Grid.RowSpan="4" Grid.Row="0"/>
-                                                <Border x:Name="Background" Background="#FF1F3B53" BorderBrush="#FFFFFFFF" BorderThickness="1" CornerRadius=".5" Grid.ColumnSpan="4" Margin="0,-1,0,0" Opacity="1" Grid.RowSpan="3" Grid.Row="1"/>
-                                                <Border x:Name="BackgroundGradient" BorderBrush="#BF000000" BorderThickness="1" CornerRadius=".5" Grid.ColumnSpan="4" Margin="0,-1,0,0" Opacity="1" Grid.RowSpan="3" Grid.Row="1">
-                                                    <Border.Background>
-                                                        <LinearGradientBrush EndPoint=".7,1" StartPoint=".7,0">
-                                                            <GradientStop Color="#FFFFFFFF" Offset="0"/>
-                                                            <GradientStop Color="#F9FFFFFF" Offset="0.375"/>
-                                                            <GradientStop Color="#E5C311B4" Offset="0.625"/>
-                                                            <GradientStop Color="#C6FFFFFF" Offset="1"/>
-                                                        </LinearGradientBrush>
-                                                    </Border.Background>
-                                                </Border>
-                                                <Rectangle Grid.ColumnSpan="4" Grid.RowSpan="1" StrokeThickness="1" Height="auto">
-                                                    <Rectangle.Fill>
-                                                        <LinearGradientBrush EndPoint="0.3,-1.1" StartPoint="0.46,1.6">
-                                                            <GradientStop Color="#FF4084BD"/>
-                                                            <GradientStop Color="#FFAFCFEA" Offset="1"/>
-                                                        </LinearGradientBrush>
-                                                    </Rectangle.Fill>
-                                                    <Rectangle.Stroke>
-                                                        <LinearGradientBrush EndPoint="0.48,-1" StartPoint="0.48,1.25">
-                                                            <GradientStop Color="#FFABD83A"/>
-                                                            <GradientStop Color="#FF9F9F9F" Offset="1"/>
-                                                        </LinearGradientBrush>
-                                                    </Rectangle.Stroke>
-                                                </Rectangle>
-                                                <Path Grid.Column="0" Grid.ColumnSpan="4" Data="M11.426758,8.4305077 L11.749023,8.4305077 L11.749023,
-                                                      16.331387 L10.674805,16.331387 L10.674805,10.299648 L9.0742188,11.298672 L9.0742188,
-                                                      10.294277 C9.4788408,10.090176 9.9094238,9.8090878 10.365967,9.4510155 C10.82251,
-                                                      9.0929432 11.176106,8.7527733 11.426758,8.4305077 z M14.65086,8.4305077 L18.566387,
-                                                      8.4305077 L18.566387,9.3435936 L15.671368,9.3435936 L15.671368,11.255703 C15.936341,
-                                                      11.058764 16.27293,10.960293 16.681133,10.960293 C17.411602,10.960293 17.969301,
-                                                      11.178717 18.354229,11.615566 C18.739157,12.052416 18.931622,12.673672 18.931622,
-                                                      13.479336 C18.931622,15.452317 18.052553,16.438808 16.294415,16.438808 C15.560365,
-                                                      16.438808 14.951641,16.234707 14.468243,15.826504 L14.881817,14.929531 C15.368796,
-                                                      15.326992 15.837872,15.525723 16.289043,15.525723 C17.298809,15.525723 17.803692,
-                                                      14.895514 17.803692,13.635098 C17.803692,12.460618 17.305971,11.873379 16.310528,
-                                                      11.873379 C15.83071,11.873379 15.399232,12.079271 15.016094,12.491055 L14.65086,
-                                                      12.238613 z" Fill="Black" HorizontalAlignment="Center" Margin="4,3,4,3"
-                                                      RenderTransformOrigin="0.5,0.5" Grid.RowSpan="3" Grid.Row="1" Stretch="Fill" VerticalAlignment="Center" />
-                                                <Ellipse Grid.ColumnSpan="4" Fill="#FFFFFFFF" HorizontalAlignment="Center" Height="10" StrokeThickness="3" VerticalAlignment="Center" Width="10" Stroke="#FFC52929"/>
-                                                <Border x:Name="DisabledVisual" BorderBrush="#B2FFFFFF" BorderThickness="1" CornerRadius="0,0,.5,.5" Grid.ColumnSpan="4" Opacity="0" Grid.RowSpan="4" Grid.Row="0"/>
-                                            </Grid>
-                                            <!--#endregion-->
+                                            <Border CornerRadius="0 5 5 0" Background="{StaticResource DatePicker.Static.Border}" 
+                                                    BorderBrush="{StaticResource ComboBox.Static.Border}"
+                                                    BorderThickness="1" Name="Border"/>
+                                            <Path x:Name="Arrow"  Grid.Column="1" Fill="White" Stretch="Fill" Margin="5"
+                                                  HorizontalAlignment="Center" VerticalAlignment="Center"  Data="{StaticResource DatePickerPathData}"/>
                                         </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                                                <Setter TargetName="Border" Property="Background" Value="#808080" />
+                                            </Trigger>
+                                            <Trigger Property="ToggleButton.IsChecked" Value="true">
+                                                <Setter TargetName="Border" Property="Background" Value="#E0E0E0" />
+                                            </Trigger>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter TargetName="Border" Property="Background" Value="#EEEEEE" />
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#AAAAAA" />
+                                                <Setter Property="Foreground" Value="#888888"/>
+                                                <Setter TargetName="Arrow" Property="Fill" Value="#888888" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
                                     </ControlTemplate>
-                                </Grid.Resources>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Button x:Name="PART_Button" Grid.Column="1" Foreground="{TemplateBinding Foreground}" Focusable="False" HorizontalAlignment="Left" Margin="3,0,3,0" Grid.Row="0" Template="{StaticResource DropDownButtonTemplate}" VerticalAlignment="Top" Width="auto"/>
-                                <DatePickerTextBox x:Name="PART_TextBox" Grid.Column="0" Focusable="{TemplateBinding Focusable}" Grid.Row="0" VerticalContentAlignment="Stretch" Width="{TemplateBinding Width}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"/>
-                                <Grid x:Name="PART_DisabledVisual" Grid.Column="0" Grid.ColumnSpan="2" IsHitTestVisible="False" Opacity="0" Grid.Row="0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Rectangle Grid.Column="0" Fill="#FF4128B9" Grid.Row="0" RadiusX="1" RadiusY="1"/>
-                                    <Rectangle Grid.Column="1" Fill="#A5A41DE6" Height="18" Margin="3,0,3,0" Grid.Row="0" RadiusX="1" RadiusY="1" Width="19"/>
-                                    <Popup x:Name="PART_Popup" AllowsTransparency="True" Placement="Bottom" PlacementTarget="{Binding ElementName=PART_TextBox}"
-                                           StaysOpen="False" PopupAnimation ="Fade"/>
-                                </Grid>
+                                </Button.Template>
+                            </Button>
+                            <DatePickerTextBox Background="{x:Null}" BorderBrush="{x:Null}" x:Name="PART_TextBox" 
+                                               Focusable="{TemplateBinding Focusable}" HorizontalAlignment="Center"
+                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                            <Grid x:Name="PART_DisabledVisual" IsHitTestVisible="False">
+                                <Popup x:Name="PART_Popup" AllowsTransparency="True" Placement="Bottom" PlacementTarget="{Binding ElementName=PART_TextBox}"
+                                       StaysOpen="False" PopupAnimation ="Fade"/>
                             </Grid>
-                        </Border>
+                        </Grid>
                         <ControlTemplate.Triggers>
                             <DataTrigger Binding="{Binding Source={x:Static SystemParameters.HighContrast}}" Value="false">
                                 <Setter Property="Foreground" TargetName="PART_TextBox" Value="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}"/>
@@ -702,25 +653,16 @@
                     <ColumnDefinition />
                     <ColumnDefinition Width="30"/>
                 </Grid.ColumnDefinitions>
-                <Border
-                  x:Name="Border" 
-                  Grid.ColumnSpan="2"
-                  CornerRadius="5" 
+                <Border x:Name="Border"  Grid.ColumnSpan="2" CornerRadius="5" 
                   Background="{StaticResource ToggleButton.Static.Background}"
                   BorderBrush="{StaticResource ComboBox.Static.Border}"
                   BorderThickness="1" />
-                <Border 
-                  Grid.Column="0"
-                  CornerRadius="5 0 0 5"  
-                  Background="White" 
+                <Border  Grid.Column="0" CornerRadius="5 0 0 5"  
                   BorderBrush="{StaticResource ComboBox.Static.Border}"
-                  BorderThickness="1"/>
-                <Path 
-                  x:Name="Arrow"
-                  Grid.Column="1"     
+                  BorderThickness="1" Background="White"/>
+                <Path x:Name="Arrow" Grid.Column="1"     
                   Fill="{StaticResource ComboBox.Static.Border}" Stretch="Fill" Margin="10"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Center" 
+                  HorizontalAlignment="Center" VerticalAlignment="Center" 
                   Data="{StaticResource ExpandPathData}"
                 />
             </Grid>
@@ -757,7 +699,7 @@
                     <ControlTemplate TargetType="{x:Type ComboBox}">
                         <Grid>
                             <Grid.Clip>
-                                <RectangleGeometry RadiusX="5" RadiusY="5" >
+                                <RectangleGeometry RadiusX="5" RadiusY="5">
                                     <RectangleGeometry.Rect>
                                         <MultiBinding Converter="{StaticResource RectangleConverter}">
                                             <Binding Path="ActualWidth" RelativeSource="{RelativeSource AncestorType={x:Type Grid}}" />
@@ -852,5 +794,6 @@
             <MenuItem Command="ApplicationCommands.Cut" />
             <!--<MenuItem Command="ApplicationCommands.Paste" />-->
         </ContextMenu>
+
     </Application.Resources>
 </Application>

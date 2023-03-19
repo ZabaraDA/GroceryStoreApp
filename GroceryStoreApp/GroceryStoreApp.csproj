@@ -301,13 +301,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="Databases\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Databases\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </None>
     <Resource Include="Fonts\Kelson Sans Bold RU.otf" />
     <Resource Include="Fonts\Kelson Sans Light RU.otf" />
     <Resource Include="Fonts\Kelson Sans Regular RU.otf" />
@@ -323,6 +316,13 @@
     <Resource Include="Fonts\CaviarDreams_Bold.ttf" />
     <Resource Include="Fonts\CaviarDreams_BoldItalic.ttf" />
     <Resource Include="Fonts\CaviarDreams_Italic.ttf" />
+    <EntityDeploy Include="Databases\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Databases\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -348,7 +348,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\plus.png" />
     <Content Include="Databases\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -359,6 +358,9 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="Images\Фигура 347 1.svg" />
+    <Resource Include="Images\plus.png" />
+    <Content Include="Images\DatePickerData.svg" />
     <Content Include="Images\Supply.svg" />
   </ItemGroup>
   <ItemGroup />

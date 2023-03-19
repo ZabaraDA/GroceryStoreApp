@@ -39,8 +39,8 @@ namespace GroceryStoreApp.Databases
         public int КодЕдиницыИзмерения { get; set; }
         public byte[] Фото { get; set; }
         public Nullable<decimal> Вес { get; set; }
-        public Nullable<int> Высота { get; set; }
-        public Nullable<int> Ширина { get; set; }
+        public int Высота { get; set; }
+        public int Ширина { get; set; }
         public bool Статус { get; set; }
     
         public virtual ЕдиницаИзмерения ЕдиницаИзмерения { get; set; }

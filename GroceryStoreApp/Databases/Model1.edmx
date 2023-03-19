@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Хранилище GroceryStoreDatabasesModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище GroceryStoreDatabasesModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Адрес">
           <Key>
             <PropertyRef Name="Код" />
@@ -74,7 +74,7 @@
           <Property Name="Код" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Наименование" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Фото" Type="image" />
-          <Property Name="КодГруппы" Type="int" />
+          <Property Name="КодГруппы" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="МодификаторЦены">
           <Key>
@@ -113,8 +113,10 @@
           <Property Name="ДатаЗаявки" Type="datetime" Nullable="false" />
           <Property Name="ДатаПоставки" Type="datetime" Nullable="false" />
           <Property Name="КодПоставщика" Type="int" Nullable="false" />
-          <Property Name="Статус" Type="tinyint" />
-          <Property Name="Шаблон" Type="bit" />
+          <Property Name="Статус" Type="tinyint" Nullable="false" />
+          <Property Name="Шаблон" Type="bit" Nullable="false" />
+          <Property Name="Цена" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Вес" Type="decimal" Precision="18" Scale="3" Nullable="false" />
         </EntityType>
         <EntityType Name="Поставщик">
           <Key>
@@ -251,13 +253,13 @@
           <Property Name="КодКатегории" Type="int" Nullable="false" />
           <Property Name="Цена" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="НДС" Type="tinyint" Nullable="false" />
-          <Property Name="Количество" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Количество" Type="decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="СрокГодности" Type="int" Nullable="false" />
           <Property Name="КодЕдиницыИзмерения" Type="int" Nullable="false" />
           <Property Name="Фото" Type="image" />
           <Property Name="Вес" Type="decimal" Precision="18" Scale="3" />
-          <Property Name="Высота" Type="int" />
-          <Property Name="Ширина" Type="int" />
+          <Property Name="Высота" Type="int" Nullable="false" />
+          <Property Name="Ширина" Type="int" Nullable="false" />
           <Property Name="Статус" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ТоварПоставка">
@@ -267,11 +269,12 @@
           </Key>
           <Property Name="КодПоставки" Type="int" Nullable="false" />
           <Property Name="КодТовара" Type="int" Nullable="false" />
-          <Property Name="Количество" Type="int" Nullable="false" />
-          <Property Name="Остаток" Type="int" Nullable="false" />
+          <Property Name="Количество" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="Остаток" Type="decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="ДатаСписания" Type="date" Nullable="false" />
           <Property Name="ДатаОповещения" Type="date" Nullable="false" />
-          <Property Name="Цена" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Цена" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Вес" Type="decimal" Precision="18" Scale="3" Nullable="false" />
         </EntityType>
         <EntityType Name="ТорговыйЗал">
           <Key>
@@ -324,7 +327,7 @@
           </Key>
           <Property Name="КодФилиала" Type="int" Nullable="false" />
           <Property Name="КодТовара" Type="int" Nullable="false" />
-          <Property Name="Количество" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Количество" Type="decimal" Precision="18" Scale="3" Nullable="false" />
         </EntityType>
         <EntityType Name="Элемент">
           <Key>
@@ -429,7 +432,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Категория_Группа">
-          <End Role="Группа" Type="Self.Группа" Multiplicity="0..1" />
+          <End Role="Группа" Type="Self.Группа" Multiplicity="1" />
           <End Role="Категория" Type="Self.Категория" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Группа">
@@ -485,6 +488,42 @@
             </Principal>
             <Dependent Role="НаселённыйПункт">
               <PropertyRef Name="Тип" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Поставка_Поставщик">
+          <End Role="Поставщик" Type="Self.Поставщик" Multiplicity="1" />
+          <End Role="Поставка" Type="Self.Поставка" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Поставщик">
+              <PropertyRef Name="Код" />
+            </Principal>
+            <Dependent Role="Поставка">
+              <PropertyRef Name="КодПоставщика" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Поставка_Склад">
+          <End Role="Склад" Type="Self.Склад" Multiplicity="1" />
+          <End Role="Поставка" Type="Self.Поставка" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Склад">
+              <PropertyRef Name="Код" />
+            </Principal>
+            <Dependent Role="Поставка">
+              <PropertyRef Name="КодСклада" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Поставка_Филиал">
+          <End Role="Филиал" Type="Self.Филиал" Multiplicity="1" />
+          <End Role="Поставка" Type="Self.Поставка" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Филиал">
+              <PropertyRef Name="Код" />
+            </Principal>
+            <Dependent Role="Поставка">
+              <PropertyRef Name="КодФилиала" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -944,6 +983,18 @@
             <End Role="ТипНаселённогоПункта" EntitySet="ТипНаселённогоПункта" />
             <End Role="НаселённыйПункт" EntitySet="НаселённыйПункт" />
           </AssociationSet>
+          <AssociationSet Name="FK_Поставка_Поставщик" Association="Self.FK_Поставка_Поставщик">
+            <End Role="Поставщик" EntitySet="Поставщик" />
+            <End Role="Поставка" EntitySet="Поставка" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Поставка_Склад" Association="Self.FK_Поставка_Склад">
+            <End Role="Склад" EntitySet="Склад" />
+            <End Role="Поставка" EntitySet="Поставка" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Поставка_Филиал" Association="Self.FK_Поставка_Филиал">
+            <End Role="Филиал" EntitySet="Филиал" />
+            <End Role="Поставка" EntitySet="Поставка" />
+          </AssociationSet>
           <AssociationSet Name="FK_Регион_ТипРегиона" Association="Self.FK_Регион_ТипРегиона">
             <End Role="ТипРегиона" EntitySet="ТипРегиона" />
             <End Role="Регион" EntitySet="Регион" />
@@ -1069,7 +1120,8 @@
             <End Role="ЭлементПланировка" EntitySet="ЭлементПланировка" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="GroceryStoreDatabasesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1156,7 +1208,7 @@
           <Property Name="Код" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Наименование" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Фото" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="КодГруппы" Type="Int32" />
+          <Property Name="КодГруппы" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Группа" Relationship="Self.FK_Категория_Группа" FromRole="Категория" ToRole="Группа" />
           <NavigationProperty Name="Товар" Relationship="Self.FK_Товар_Категория1" FromRole="Категория" ToRole="Товар" />
         </EntityType>
@@ -1205,12 +1257,14 @@
           <Property Name="ДатаЗаявки" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ДатаПоставки" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="КодПоставщика" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Склад" Relationship="Self.FK_Поставка_МестоОтправки" FromRole="Поставка" ToRole="Склад" />
+          <Property Name="Статус" Type="Byte" Nullable="false" />
+          <Property Name="Шаблон" Type="Boolean" Nullable="false" />
+          <Property Name="Цена" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Вес" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
           <NavigationProperty Name="Поставщик" Relationship="Self.FK_Поставка_Поставщик" FromRole="Поставка" ToRole="Поставщик" />
+          <NavigationProperty Name="Склад" Relationship="Self.FK_Поставка_Склад" FromRole="Поставка" ToRole="Склад" />
           <NavigationProperty Name="Филиал" Relationship="Self.FK_Поставка_Филиал" FromRole="Поставка" ToRole="Филиал" />
           <NavigationProperty Name="ТоварПоставка" Relationship="Self.FK_ТоварПоставка_Поставка" FromRole="Поставка" ToRole="ТоварПоставка" />
-          <Property Name="Статус" Type="Byte" />
-          <Property Name="Шаблон" Type="Boolean" />
         </EntityType>
         <EntityType Name="Поставщик">
           <Key>
@@ -1250,7 +1304,7 @@
           <Property Name="Наименование" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="КодАдреса" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Адрес" Relationship="Self.FK_Склад_Адрес1" FromRole="Склад" ToRole="Адрес" />
-          <NavigationProperty Name="Поставка" Relationship="Self.FK_Поставка_МестоОтправки" FromRole="Склад" ToRole="Поставка" />
+          <NavigationProperty Name="Поставка" Relationship="Self.FK_Поставка_Склад" FromRole="Склад" ToRole="Поставка" />
           <NavigationProperty Name="Поставщик" Relationship="Self.СкладПоставщик" FromRole="Склад" ToRole="Поставщик" />
           <NavigationProperty Name="Товар" Relationship="Self.СкладТовар" FromRole="Склад" ToRole="Товар" />
           <NavigationProperty Name="Филиал" Relationship="Self.ФилиалСклад" FromRole="Склад" ToRole="Филиал" />
@@ -1356,13 +1410,13 @@
           <Property Name="КодКатегории" Type="Int32" Nullable="false" />
           <Property Name="Цена" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="НДС" Type="Byte" Nullable="false" />
-          <Property Name="Количество" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Количество" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="СрокГодности" Type="Int32" Nullable="false" />
           <Property Name="КодЕдиницыИзмерения" Type="Int32" Nullable="false" />
           <Property Name="Фото" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Вес" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="Высота" Type="Int32" />
-          <Property Name="Ширина" Type="Int32" />
+          <Property Name="Высота" Type="Int32" Nullable="false" />
+          <Property Name="Ширина" Type="Int32" Nullable="false" />
           <Property Name="Статус" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ЕдиницаИзмерения" Relationship="Self.FK_Товар_ЕдиницаИзмерения" FromRole="Товар" ToRole="ЕдиницаИзмерения" />
           <NavigationProperty Name="ЗаказТовар" Relationship="Self.FK_ЗаказТовар_Товар" FromRole="Товар" ToRole="ЗаказТовар" />
@@ -1381,13 +1435,14 @@
           </Key>
           <Property Name="КодПоставки" Type="Int32" Nullable="false" />
           <Property Name="КодТовара" Type="Int32" Nullable="false" />
-          <Property Name="Количество" Type="Int32" Nullable="false" />
-          <Property Name="Остаток" Type="Int32" Nullable="false" />
+          <Property Name="Количество" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="Остаток" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="ДатаСписания" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ДатаОповещения" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Цена" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Вес" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
           <NavigationProperty Name="Поставка" Relationship="Self.FK_ТоварПоставка_Поставка" FromRole="ТоварПоставка" ToRole="Поставка" />
           <NavigationProperty Name="Товар" Relationship="Self.FK_ТоварПоставка_Товар" FromRole="ТоварПоставка" ToRole="Товар" />
-          <Property Name="Цена" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="ТорговыйЗал">
           <Key>
@@ -1449,7 +1504,7 @@
           </Key>
           <Property Name="КодФилиала" Type="Int32" Nullable="false" />
           <Property Name="КодТовара" Type="Int32" Nullable="false" />
-          <Property Name="Количество" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Количество" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
           <NavigationProperty Name="Товар" Relationship="Self.FK_ФилиалТовар_Товар" FromRole="ФилиалТовар" ToRole="Товар" />
           <NavigationProperty Name="Филиал" Relationship="Self.FK_ФилиалТовар_Филиал" FromRole="ФилиалТовар" ToRole="Филиал" />
         </EntityType>
@@ -1559,7 +1614,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Категория_Группа">
-          <End Role="Группа" Type="Self.Группа" Multiplicity="0..1" />
+          <End Role="Группа" Type="Self.Группа" Multiplicity="1" />
           <End Role="Категория" Type="Self.Категория" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Группа">
@@ -1726,18 +1781,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Поставка_МестоОтправки">
-          <End Role="Склад" Type="Self.Склад" Multiplicity="1" />
-          <End Role="Поставка" Type="Self.Поставка" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Склад">
-              <PropertyRef Name="Код" />
-            </Principal>
-            <Dependent Role="Поставка">
-              <PropertyRef Name="КодСклада" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Поставка_Поставщик">
           <End Role="Поставщик" Type="Self.Поставщик" Multiplicity="1" />
           <End Role="Поставка" Type="Self.Поставка" Multiplicity="*" />
@@ -1747,6 +1790,18 @@
             </Principal>
             <Dependent Role="Поставка">
               <PropertyRef Name="КодПоставщика" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Поставка_Склад">
+          <End Role="Склад" Type="Self.Склад" Multiplicity="1" />
+          <End Role="Поставка" Type="Self.Поставка" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Склад">
+              <PropertyRef Name="Код" />
+            </Principal>
+            <Dependent Role="Поставка">
+              <PropertyRef Name="КодСклада" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2083,12 +2138,12 @@
             <End Role="Планировка" EntitySet="Планировка" />
             <End Role="ЭлементПланировка" EntitySet="ЭлементПланировка" />
           </AssociationSet>
-          <AssociationSet Name="FK_Поставка_МестоОтправки" Association="Self.FK_Поставка_МестоОтправки">
-            <End Role="Склад" EntitySet="Склад" />
-            <End Role="Поставка" EntitySet="Поставка" />
-          </AssociationSet>
           <AssociationSet Name="FK_Поставка_Поставщик" Association="Self.FK_Поставка_Поставщик">
             <End Role="Поставщик" EntitySet="Поставщик" />
+            <End Role="Поставка" EntitySet="Поставка" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Поставка_Склад" Association="Self.FK_Поставка_Склад">
+            <End Role="Склад" EntitySet="Склад" />
             <End Role="Поставка" EntitySet="Поставка" />
           </AssociationSet>
           <AssociationSet Name="FK_Поставка_Филиал" Association="Self.FK_Поставка_Филиал">
@@ -2289,14 +2344,16 @@
           <EntitySetMapping Name="Поставка">
             <EntityTypeMapping TypeName="GroceryStoreDatabasesModel.Поставка">
               <MappingFragment StoreEntitySet="Поставка">
-                <ScalarProperty Name="Шаблон" ColumnName="Шаблон" />
-                <ScalarProperty Name="Статус" ColumnName="Статус" />
                 <ScalarProperty Name="Код" ColumnName="Код" />
                 <ScalarProperty Name="КодСклада" ColumnName="КодСклада" />
                 <ScalarProperty Name="КодФилиала" ColumnName="КодФилиала" />
                 <ScalarProperty Name="ДатаЗаявки" ColumnName="ДатаЗаявки" />
                 <ScalarProperty Name="ДатаПоставки" ColumnName="ДатаПоставки" />
                 <ScalarProperty Name="КодПоставщика" ColumnName="КодПоставщика" />
+                <ScalarProperty Name="Статус" ColumnName="Статус" />
+                <ScalarProperty Name="Шаблон" ColumnName="Шаблон" />
+                <ScalarProperty Name="Цена" ColumnName="Цена" />
+                <ScalarProperty Name="Вес" ColumnName="Вес" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2442,13 +2499,14 @@
           <EntitySetMapping Name="ТоварПоставка">
             <EntityTypeMapping TypeName="GroceryStoreDatabasesModel.ТоварПоставка">
               <MappingFragment StoreEntitySet="ТоварПоставка">
-                <ScalarProperty Name="Цена" ColumnName="Цена" />
                 <ScalarProperty Name="КодПоставки" ColumnName="КодПоставки" />
                 <ScalarProperty Name="КодТовара" ColumnName="КодТовара" />
                 <ScalarProperty Name="Количество" ColumnName="Количество" />
                 <ScalarProperty Name="Остаток" ColumnName="Остаток" />
                 <ScalarProperty Name="ДатаСписания" ColumnName="ДатаСписания" />
                 <ScalarProperty Name="ДатаОповещения" ColumnName="ДатаОповещения" />
+                <ScalarProperty Name="Цена" ColumnName="Цена" />
+                <ScalarProperty Name="Вес" ColumnName="Вес" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

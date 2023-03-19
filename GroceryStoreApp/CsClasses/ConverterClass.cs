@@ -22,7 +22,7 @@ namespace GroceryStoreApp.CsClasses
         }
     }
 
-    //[ValueConversion(typeof(int), typeof(decimal))]
+    [ValueConversion(typeof(decimal), typeof(int))]
     public class PriceConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
