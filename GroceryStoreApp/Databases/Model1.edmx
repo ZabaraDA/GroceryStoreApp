@@ -275,6 +275,7 @@
           <Property Name="ДатаОповещения" Type="date" Nullable="false" />
           <Property Name="Цена" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Вес" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="ДатаИзготовления" Type="date" />
         </EntityType>
         <EntityType Name="ТорговыйЗал">
           <Key>
@@ -328,6 +329,8 @@
           <Property Name="КодФилиала" Type="int" Nullable="false" />
           <Property Name="КодТовара" Type="int" Nullable="false" />
           <Property Name="Количество" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="МинимальныйЛимит" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="Норма" Type="decimal" Precision="18" Scale="3" Nullable="false" />
         </EntityType>
         <EntityType Name="Элемент">
           <Key>
@@ -1441,6 +1444,7 @@
           <Property Name="ДатаОповещения" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Цена" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Вес" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="ДатаИзготовления" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Поставка" Relationship="Self.FK_ТоварПоставка_Поставка" FromRole="ТоварПоставка" ToRole="Поставка" />
           <NavigationProperty Name="Товар" Relationship="Self.FK_ТоварПоставка_Товар" FromRole="ТоварПоставка" ToRole="Товар" />
         </EntityType>
@@ -1505,6 +1509,8 @@
           <Property Name="КодФилиала" Type="Int32" Nullable="false" />
           <Property Name="КодТовара" Type="Int32" Nullable="false" />
           <Property Name="Количество" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="МинимальныйЛимит" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="Норма" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
           <NavigationProperty Name="Товар" Relationship="Self.FK_ФилиалТовар_Товар" FromRole="ФилиалТовар" ToRole="Товар" />
           <NavigationProperty Name="Филиал" Relationship="Self.FK_ФилиалТовар_Филиал" FromRole="ФилиалТовар" ToRole="Филиал" />
         </EntityType>
@@ -2507,6 +2513,7 @@
                 <ScalarProperty Name="ДатаОповещения" ColumnName="ДатаОповещения" />
                 <ScalarProperty Name="Цена" ColumnName="Цена" />
                 <ScalarProperty Name="Вес" ColumnName="Вес" />
+                <ScalarProperty Name="ДатаИзготовления" ColumnName="ДатаИзготовления" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2555,6 +2562,8 @@
                 <ScalarProperty Name="КодФилиала" ColumnName="КодФилиала" />
                 <ScalarProperty Name="КодТовара" ColumnName="КодТовара" />
                 <ScalarProperty Name="Количество" ColumnName="Количество" />
+                <ScalarProperty Name="МинимальныйЛимит" ColumnName="МинимальныйЛимит" />
+                <ScalarProperty Name="Норма" ColumnName="Норма" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

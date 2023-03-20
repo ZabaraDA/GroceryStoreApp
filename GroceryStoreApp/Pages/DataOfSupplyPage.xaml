@@ -29,11 +29,11 @@
             <Setter Property="Margin" Value="5"/>
         </Style>
         <Style TargetType="{x:Type DatePicker}" BasedOn="{StaticResource DatePickerBaseStyle}">
-            <Setter Property="Width" Value="300"/>
-            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="135"/>
+            <Setter Property="Height" Value="30"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="HorizontalAlignment" Value="Left"></Setter>
-            <Setter Property="Margin" Value="0 5 0 0"/>
+            <Setter Property="Margin" Value="0 5 5 0"/>
         </Style>
         <Style TargetType="{x:Type my:TextBoxWithRemoved}">
             <Setter Property="Width" Value="300"/>
@@ -44,7 +44,7 @@
             <Setter Property="Margin" Value="0 5 0 0"/>
         </Style>
         <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource ComboBoxBaseStyle}">
-            <Setter Property="Width" Value="300"/>
+            <Setter Property="Width" Value="320"/>
             <Setter Property="Height" Value="30"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -70,7 +70,8 @@
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="Background" Value="{StaticResource ListViewItem.Static.Background}" />
+            <Setter Property="Background" Value="{StaticResource ListViewItem.Static.Background}"/>
+            <!--<EventSetter Event="ComboBoxItem.PreviewMouseDown" Handler="ComboBoxItem_PreviewMouseDown"/>-->
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
@@ -134,10 +135,6 @@
             <Button Content="Назад"></Button>
             <TextBlock Text="Поставки" Margin="10" Width="auto" FontSize="24"/>
         </StackPanel>
-        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.ColumnSpan="2">
-            <Button Content="Отменить"></Button>
-            <Button Content="Сохранить" Background="#FF23C523" Foreground="White"></Button>
-        </StackPanel>
         <ListView x:Name="SupplyListView" Style="{StaticResource ProductListViewStyle}" Grid.Row="2">
             <ListView.View>
                 <GridView>
@@ -179,8 +176,20 @@
                     <GridViewColumn Header="Статус">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox SelectedIndex="{Binding Статус}" Width="150"  SelectionChanged="StatusComboBox_SelectionChanged" >
-                                    <ComboBoxItem Content="Не отправлен" Foreground="Black"></ComboBoxItem>
+                                <ComboBox SelectedIndex="{Binding Статус}" SelectionChanged="StatusComboBox_SelectionChanged" 
+                                          PreviewKeyDown="ComboBox_PreviewKeyDown" PreviewMouseWheel="ComboBox_PreviewMouseWheel">
+                                    <ComboBox.Style>
+                                        <Style TargetType="ComboBox" BasedOn="{StaticResource ComboBoxBaseStyle}">
+                                            <EventSetter Event="ComboBoxItem.PreviewMouseDown" Handler="ComboBoxItem_PreviewMouseDown"/>
+                                            <Setter Property="Width" Value="150"/>
+                                            <Setter Property="Height" Value="30"/>
+                                            <Setter Property="FontSize" Value="18"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                            <Setter Property="VerticalAlignment" Value="Center"/>
+                                        </Style>
+                                    </ComboBox.Style>
+                                    <ComboBoxItem Content="Не отправлен" Foreground="Black" ></ComboBoxItem>
                                     <ComboBoxItem Content="Отправлен" Foreground="DarkOrange"></ComboBoxItem>
                                     <ComboBoxItem Content="Отменён" Foreground="Red"></ComboBoxItem>
                                     <ComboBoxItem Content="Выполнен" Foreground="Green"></ComboBoxItem>
@@ -192,9 +201,15 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <my:NavigationButton  Background="Blue" Data="{StaticResource ProductPathData}" Name="ViewSupplyButton" Click="ViewSupplyButton_Click"></my:NavigationButton>
-                                    <my:NavigationButton  Background="Green" Data="{StaticResource ExpandPathData}" Name="ChangeSupplyButton" Click="ChangeSupplyButton_Click"></my:NavigationButton>
-                                    <my:NavigationButton  Background="Red" Data="{StaticResource ExitPathData}" Name="DeleteSupplyButton" Click="DeleteSupplyButton_Click"></my:NavigationButton>
+                                    <my:NavigationButton  Background="Blue" Data="{StaticResource ProductPathData}" 
+                                                          Name="ViewSupplyButton" Click="ViewSupplyButton_Click"
+                                                          ToolTip="Просмотр товаров поставки"></my:NavigationButton>
+                                    <my:NavigationButton  Background="Green" Data="{StaticResource ExpandPathData}" 
+                                                          Name="ChangeSupplyButton" Click="ChangeSupplyButton_Click"
+                                                          ToolTip="Редактировать поставку"></my:NavigationButton>
+                                    <my:NavigationButton  Background="Red" Data="{StaticResource ExitPathData}" 
+                                                          Name="DeleteSupplyButton" Click="DeleteSupplyButton_Click"
+                                                          ToolTip="Удалить поставку"></my:NavigationButton>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -205,41 +220,53 @@
 
         <StackPanel Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Background="#FFD6D6D6">
             <StackPanel Margin="10">
-                <TextBlock Text="Фильтр по году поставки"></TextBlock>
-                <ComboBox Name="YearSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged" Cursor="Hand"></ComboBox>
+                <TextBlock Text="Фильтр поставок" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock Name="NumberOfSupplyTextBlock" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock Text="Статус поставки" HorizontalAlignment="Center"></TextBlock>
+                <ComboBox SelectionChanged="SearchComboBox_SelectionChanged" Name="StatusSearchComboBox">
+                    <ComboBoxItem Content="Все статусы" Foreground="Black"></ComboBoxItem>
+                    <ComboBoxItem Content="Не отправлен" Foreground="Black"></ComboBoxItem>
+                    <ComboBoxItem Content="Отправлен" Foreground="DarkOrange"></ComboBoxItem>
+                    <ComboBoxItem Content="Отменён" Foreground="Red"></ComboBoxItem>
+                    <ComboBoxItem Content="Выполнен" Foreground="Green"></ComboBoxItem>
+                </ComboBox>
+                <TextBlock Text="Год поставки"></TextBlock>
+                <ComboBox Name="YearSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged"></ComboBox>
+                <TextBlock Text="Поставщик"></TextBlock>
+                <ComboBox Name="SupplierSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged"></ComboBox>
                 <TextBlock Text="Тип сортировки"></TextBlock>
-                <ComboBox Name="TypeSortComboBox" SelectionChanged="TypeSortComboBox_SelectionChanged" Cursor="Hand">
+                <ComboBox Name="TypeSortComboBox" SelectionChanged="TypeSortComboBox_SelectionChanged">
                     <ComboBoxItem Content="Не сортировать"></ComboBoxItem>
                     <ComboBoxItem Content="Сортировать по дате заявки"></ComboBoxItem>
                     <ComboBoxItem Content="Сортировать по дате поставки"></ComboBoxItem>
                 </ComboBox>
                 <StackPanel Name="DateOfCreationSortStackPanel" Visibility="Collapsed">
                     <TextBlock Text="Дата заявки"></TextBlock>
-                    <ComboBox Name="DateOfCreationSearchComboBox">
+                    <ComboBox Name="DateOfCreationSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged">
                         <ComboBoxItem Content="Произвольно"></ComboBoxItem>
                         <ComboBoxItem Content="По возрастанию"></ComboBoxItem>
                         <ComboBoxItem Content="По убыванию"></ComboBoxItem>
 
                     </ComboBox>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="От"></TextBlock>
-                        <DatePicker Name="MinimumDateOfCreationDatePicker" Width="150" SelectedDateChanged="DatePicker_SelectedDateChanged"></DatePicker>
-                        <TextBlock Text="До"></TextBlock>
-                        <DatePicker Name="MaximumDateOfCreationDatePicker" Width="150" SelectedDateChanged="DatePicker_SelectedDateChanged"></DatePicker>
+                        <TextBlock Text="От" Margin="0 0 3 0"></TextBlock>
+                        <DatePicker Name="MinimumDateOfCreationDatePicker" SelectedDateChanged="DatePicker_SelectedDateChanged"></DatePicker>
+                        <TextBlock Text="До" Margin="0 0 3 0"></TextBlock>
+                        <DatePicker Name="MaximumDateOfCreationDatePicker"  SelectedDateChanged="DatePicker_SelectedDateChanged"></DatePicker>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Name="DateOfSupplySortStackPanel" Visibility="Collapsed">
                     <TextBlock Text="Дата поставки"></TextBlock>
-                    <ComboBox Name="DateOfSupplySearchComboBox">
+                    <ComboBox Name="DateOfSupplySearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged">
                         <ComboBoxItem Content="Произвольно"></ComboBoxItem>
                         <ComboBoxItem Content="По возрастанию"></ComboBoxItem>
                         <ComboBoxItem Content="По убыванию"></ComboBoxItem>
                     </ComboBox>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="От"></TextBlock>
-                        <DatePicker Name="MinimumDateOfDeliveryDatePicker" Width="150" SelectedDateChanged="DatePicker_SelectedDateChanged"></DatePicker>
-                        <TextBlock Text="До"></TextBlock>
-                        <DatePicker Name="MaximumDateOfDeliveryDatePicker" Width="150" SelectedDateChanged="DatePicker_SelectedDateChanged"></DatePicker>
+                        <TextBlock Text="От" Margin="0 0 3 0"></TextBlock>
+                        <DatePicker Name="MinimumDateOfDeliveryDatePicker" SelectedDateChanged="DatePicker_SelectedDateChanged"></DatePicker>
+                        <TextBlock Text="До" Margin="0 0 3 0"></TextBlock>
+                        <DatePicker Name="MaximumDateOfDeliveryDatePicker" SelectedDateChanged="DatePicker_SelectedDateChanged"></DatePicker>
                     </StackPanel>
                 </StackPanel>
                 <Button Content="Сбросить фильтры" x:Name="ClearFilterButton" Click="ClearFilterButton_Click"></Button>

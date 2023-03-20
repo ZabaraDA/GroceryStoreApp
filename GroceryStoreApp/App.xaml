@@ -317,7 +317,8 @@
                                     </ControlTemplate>
                                 </Button.Template>
                             </Button>
-                            <DatePickerTextBox Background="{x:Null}" BorderBrush="{x:Null}" x:Name="PART_TextBox" 
+                            <DatePickerTextBox Background="{x:Null}" BorderBrush="{x:Null}" Grid.ColumnSpan="2" 
+                                               x:Name="PART_TextBox" Margin="3 0 30 0"
                                                Focusable="{TemplateBinding Focusable}" HorizontalAlignment="Center"
                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"/>

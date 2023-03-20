@@ -17,6 +17,8 @@ namespace GroceryStoreApp.Databases
         public int КодФилиала { get; set; }
         public int КодТовара { get; set; }
         public decimal Количество { get; set; }
+        public decimal МинимальныйЛимит { get; set; }
+        public decimal Норма { get; set; }
     
         public virtual Товар Товар { get; set; }
         public virtual Филиал Филиал { get; set; }

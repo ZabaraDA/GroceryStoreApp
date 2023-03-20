@@ -54,6 +54,7 @@
             <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="Background" Value="{StaticResource ListViewItem.Static.Background}" />
+           
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
@@ -153,14 +154,9 @@
             </StackPanel>
             <StackPanel>
                 <ComboBox Name="SubsidiaryComboBox" SelectionChanged="SubsidiaryComboBox_SelectionChanged" Cursor="Hand">
-                    <!--<ComboBox.ItemContainerStyle>
-                        <Style>
-                            <EventSetter Event="ComboBoxItem.PreviewMouseDown" Handler="ComboBox_PreviewMouseDown"/>
-                        </Style>
-                    </ComboBox.ItemContainerStyle>-->
                 </ComboBox>
                 <ComboBox Name="WarehouseComboBox" SelectionChanged="WarehouseComboBox_SelectionChanged" 
-                          ItemsSource="{Binding WarehouseList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
+                          ItemsSource="{Binding WarehouseList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                     
                 </ComboBox>
             </StackPanel>
