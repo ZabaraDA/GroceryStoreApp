@@ -1,4 +1,5 @@
 ﻿using GroceryStoreApp.Databases;
+using GroceryStoreApp.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -139,9 +140,9 @@ namespace GroceryStoreApp.Pages
                     List<ТоварПоставка> productSupplyList = selectedSupply.ТоварПоставка.ToList();
                     for (int i = 0; i < productSupplyList.Count; i++)
                     {
-                        Товар currentProduct = databaseEntities.Товар.Where(x => x.Код.Equals(productSupplyList[i].КодТовара)).FirstOrDefault();
+                        Товар currentProduct = databaseEntities.Товар.ToList().Where(x => x.Equals(productSupplyList[i].Товар)).FirstOrDefault();
                         currentProduct.Количество += productSupplyList[i].Количество;
-                        ФилиалТовар subsidiaryProduct = databaseEntities.ФилиалТовар.Where(x => x.Филиал.Equals(selectedSupply.Филиал)
+                        ФилиалТовар subsidiaryProduct = databaseEntities.ФилиалТовар.ToList().Where(x => x.Филиал.Equals(selectedSupply.Филиал)
                                                                                                  && x.Товар.Equals(currentProduct)).FirstOrDefault();
                         if (subsidiaryProduct != null)
                         {
@@ -149,13 +150,30 @@ namespace GroceryStoreApp.Pages
                         }
                         else
                         {
-                            databaseEntities.ФилиалТовар.Add(new ФилиалТовар
+                            subsidiaryProduct = new ФилиалТовар()
                             {
                                 Филиал = selectedSupply.Филиал,
                                 Товар = currentProduct,
-                                Количество = productSupplyList[i].Количество,
-                                
-                            });
+                                Количество = productSupplyList[i].Количество
+                            };
+
+                            DatabaseReferenceWindow window = new DatabaseReferenceWindow(subsidiaryProduct)
+                            {
+                                Owner = Window.GetWindow(this)
+                            };
+
+                            if (window.ShowDialog() == true)
+                            {
+                                subsidiaryProduct.Норма = window.NormalLimit;
+                                subsidiaryProduct.МинимальныйЛимит = window.MinimumLimit;
+
+                                databaseEntities.ФилиалТовар.Add(subsidiaryProduct);
+                            }
+                            else
+                            {
+                                comboBox.SelectedItem = e.RemovedItems[0];
+                                return;
+                            }
                         }
 
                     }
@@ -242,12 +260,15 @@ namespace GroceryStoreApp.Pages
         }
         private void CreateRangeYears()
         {
-            DateTime firstDeliveryDate = databaseEntities.Поставка.Min(x => x.ДатаПоставки);
-            int timeRange = month.Year - firstDeliveryDate.Year;
             List<string> yearList = new List<string>();
-            for (int i = 0; i < timeRange + 1; i++)
+            if (databaseEntities.Поставка.Count() > 0)
             {
-                yearList.Add((firstDeliveryDate.Year + i).ToString());
+                DateTime firstDeliveryDate = databaseEntities.Поставка.Min(x => x.ДатаПоставки);
+                int timeRange = month.Year - firstDeliveryDate.Year;
+                for (int i = 0; i < timeRange + 1; i++)
+                {
+                    yearList.Add((firstDeliveryDate.Year + i).ToString());
+                }
             }
             yearList.Insert(0, "Все года");
             YearSearchComboBox.ItemsSource = yearList.ToList();
@@ -255,6 +276,7 @@ namespace GroceryStoreApp.Pages
         }
         private void SearchComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            _handleSelection = false;
             UpdateSupplyList();
         }
         private void ViewSupplyButton_Click(object sender, RoutedEventArgs e)
@@ -293,7 +315,10 @@ namespace GroceryStoreApp.Pages
 
         private void ChangeSupplyButton_Click(object sender, RoutedEventArgs e)
         {
+            Button button = sender as Button;
+            Поставка selectedSupply = button.DataContext as Поставка;
 
+            NavigationService.Navigate(new AddSupplyPage(selectedSupply));
         }
 
         private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -318,6 +343,18 @@ namespace GroceryStoreApp.Pages
         private void ComboBox_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             e.Handled = true;
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            _handleSelection = false;
+            CreateRangeYears();
+            UpdateSupplyList();
+        }
+
+        private void AddSupplyButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new AddSupplyPage(null));
         }
     }
 }

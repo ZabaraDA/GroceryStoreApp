@@ -26,7 +26,7 @@ namespace GroceryStoreApp.Pages
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public int Quantity { get; set; }
+        public decimal Quantity { get; set; }
         public decimal Cost { get; set; }
         public decimal Price { get; set; }
         public decimal Weight { get; set; }
@@ -91,36 +91,69 @@ namespace GroceryStoreApp.Pages
 
     public partial class AddSupplyPage : Page
     {
-        public ObservableCollection<Product> ProductList { get; set; } = new ObservableCollection<Product>();
-        public List<Склад> WarehouseList { get; set; } = new List<Склад>();
-        readonly GroceryStoreDatabasesEntities databaseEntities = new GroceryStoreDatabasesEntities();
+        readonly GroceryStoreDatabasesEntities _databaseEntities = new GroceryStoreDatabasesEntities();
+        public List<Product> ProductList { get; set; } = new List<Product>();
+        public List<Филиал> SubsidiaryList { get; set; } = new List<Филиал>();
+        public ObservableCollection<Склад> WarehouseList { get; set; } = new ObservableCollection<Склад>();
+        public ObservableCollection<Поставщик> SupplierList { get; set; } = new ObservableCollection<Поставщик>();
+        List<Товар> _supplyProductList = new List<Товар>();
 
-        List<Товар> supplyProductList = new List<Товар>();
         public TotalSupplyValue TotalSupplyValue { get; set; } = new TotalSupplyValue();
-
         private bool _handleSelection = true;
-        public AddSupplyPage()
+        public AddSupplyPage(Поставка currentSupply)
         {
             InitializeComponent();
+
             this.DataContext = this;
-            
+
+            SubsidiaryList = _databaseEntities.Филиал.ToList();
+            SubsidiaryList.Insert(0, new Филиал
+            {
+                Наименование = "Выберите филиал"
+            });
+            SubsidiaryComboBox.DisplayMemberPath = "Наименование";
+            SubsidiaryComboBox.SelectedIndex = 0;
+
+            if (currentSupply != null)
+            {
+                NumberSupplyTextBlock.Text = $"Заказ поставщику № {currentSupply.Код}";
+                DateOfCreationDatePicker.Text = currentSupply.ДатаЗаявки.ToString();
+                DateOfArrivalDatePicker.Text = currentSupply.ДатаПоставки.ToString();
+                SubsidiaryComboBox.SelectedItem = SubsidiaryList.Where(x => x.Код.Equals(currentSupply.Филиал.Код)).FirstOrDefault();
+                WarehouseComboBox.SelectedItem = WarehouseList.Where(x => x.Код.Equals(currentSupply.Склад.Код)).FirstOrDefault();
+                SupplierComboBox.SelectedItem = SupplierList.Where(x => x.Код.Equals(currentSupply.Поставщик.Код)).FirstOrDefault();
+                List<ТоварПоставка> productSupplyList = currentSupply.ТоварПоставка.ToList();
+                for (int i = 0; i < productSupplyList.Count; i++)
+                {
+                    ProductList.Add(new Product
+                    {
+                        ID = productSupplyList[i].КодТовара,
+                        Name = productSupplyList[i].Товар.Наименование,
+                        Quantity = productSupplyList[i].Количество,
+                        Cost = productSupplyList[i].Товар.Цена,
+                        Price = productSupplyList[i].Цена,
+                        Unit = productSupplyList[i].Товар.ЕдиницаИзмерения,
+                        Weight = productSupplyList[i].Товар.Вес,
+                        Bulk = productSupplyList[i].Вес
+                    });
+                    _supplyProductList.Add(productSupplyList[i].Товар);
+                }
+                TotalSupplyValue.Weight = currentSupply.Вес;
+                TotalSupplyValue.Amount = currentSupply.Цена;
+                ReminderTextBlockVisiblity();
+            }
+            else
+            {
+                DateOfCreationDatePicker.Text = DateTime.Now.ToString();
+                DateOfArrivalDatePicker.Text = DateTime.Now.ToString();
+            }
+
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            DateOfCreationDatePicker.Text = DateTime.Now.ToString();
-            DateOfArrivalDatePicker.Text = DateTime.Now.ToString();
 
-            List<Филиал> subsidiaryList = databaseEntities.Филиал.ToList();
-            subsidiaryList.Insert(0, new Филиал
-            {
-                Наименование = "Выберите филиал"
-            });
-            SubsidiaryComboBox.ItemsSource = subsidiaryList.ToList();
-            SubsidiaryComboBox.DisplayMemberPath = "Наименование";
-            SubsidiaryComboBox.SelectedIndex = 0;
-
-            List<Группа> groupList = databaseEntities.Группа.ToList();
+            List<Группа> groupList = _databaseEntities.Группа.ToList();
             groupList.Insert(0, new Группа
             {
                 Наименование = "Все группы"
@@ -129,7 +162,7 @@ namespace GroceryStoreApp.Pages
             GroupSearchComboBox.DisplayMemberPath = "Наименование";
             GroupSearchComboBox.SelectedIndex = 0;
 
-            List<Производитель> manufacturerList = databaseEntities.Производитель.ToList();
+            List<Производитель> manufacturerList = _databaseEntities.Производитель.ToList();
             manufacturerList.Insert(0, new Производитель
             {
                 Наименование = "Все производители"
@@ -150,15 +183,14 @@ namespace GroceryStoreApp.Pages
             {
                 return;
             }
-            List<Товар> productList = databaseEntities.Товар.ToList();
+            List<Товар> productList = (WarehouseComboBox.SelectedItem as Склад).Товар.ToList();
 
             NumberOfProductTextBlock.Text = productList.Count().ToString();
 
-            if (supplyProductList.Count > 0)
+            if (_supplyProductList.Count > 0)
             {
-                productList = productList.Except(supplyProductList).ToList();
+                productList = productList.Except(_supplyProductList).ToList();
             }
-
             if (NameSearchTextBox.Text != null && NameSearchTextBox.Text != "")
             {
                 productList = productList.Where(x => x.Наименование.ToLower().Contains(NameSearchTextBox.Text.ToLower())).ToList();
@@ -218,12 +250,13 @@ namespace GroceryStoreApp.Pages
             }
             FilterNumberOfProductTextBlock.Text = productList.Count().ToString();
             ProductListView.ItemsSource = productList.ToList();
+            ProductListView.Items.Refresh();
         }
         private void AddProductToDeliveryButton_Click(object sender, RoutedEventArgs e)
         {
             if ((sender as Button).DataContext is Товар selectedProduct)
             {
-                supplyProductList.Add(selectedProduct);
+                _supplyProductList.Add(selectedProduct);
                 ProductList.Add(new Product
                 {
                     ID = selectedProduct.Код,
@@ -231,12 +264,12 @@ namespace GroceryStoreApp.Pages
                     Quantity = 1,
                     Cost = selectedProduct.Цена,
                     Unit = selectedProduct.ЕдиницаИзмерения,
-                    Price = 1 * selectedProduct.Цена,
-                    Weight = (decimal)selectedProduct.Вес,
-                    Bulk = (decimal)(1 * selectedProduct.Вес)
+                    Price = selectedProduct.Цена,
+                    Weight = selectedProduct.Вес,
+                    Bulk = selectedProduct.Вес
                 });
                 TotalSupplyValue.Amount += selectedProduct.Цена;
-                TotalSupplyValue.Weight += (decimal)selectedProduct.Вес;
+                TotalSupplyValue.Weight += selectedProduct.Вес;
 
                 UpdateProductList();
             }
@@ -281,7 +314,7 @@ namespace GroceryStoreApp.Pages
             List<Категория> categoryList = new List<Категория>();
             if (GroupSearchComboBox.SelectedIndex > 0)
             {
-                categoryList = databaseEntities.Категория.ToList();
+                categoryList = _databaseEntities.Категория.ToList();
                 categoryList = categoryList.Where(x => x.Группа.Equals(GroupSearchComboBox.SelectedItem)).ToList();
                 CategorySearchComboBox.IsEnabled = true;
             }
@@ -425,9 +458,9 @@ namespace GroceryStoreApp.Pages
                 return;
             }
 
-            databaseEntities.Поставка.Add(new Поставка
+            _databaseEntities.Поставка.Add(new Поставка
             {
-                Код = databaseEntities.Поставка.Count(),
+                Код = _databaseEntities.Поставка.Count(),
                 ДатаЗаявки = Convert.ToDateTime(DateOfCreationDatePicker.Text),
                 ДатаПоставки = Convert.ToDateTime(DateOfArrivalDatePicker.Text),
                 Статус = 0,
@@ -442,9 +475,9 @@ namespace GroceryStoreApp.Pages
             for (int i = 0; i < ProductList.Count; i++)
             {
                 ProductList[i].PriceUpdate();
-                databaseEntities.ТоварПоставка.Add(new ТоварПоставка
+                _databaseEntities.ТоварПоставка.Add(new ТоварПоставка
                 {
-                    КодПоставки = databaseEntities.Поставка.Count(),
+                    КодПоставки = _databaseEntities.Поставка.Count(),
                     КодТовара = ProductList[i].ID,
                     Количество = ProductList[i].Quantity,
                     Цена = ProductList[i].Price,
@@ -454,7 +487,9 @@ namespace GroceryStoreApp.Pages
             }
             try
             {
-                databaseEntities.SaveChanges();
+                MessageBox.Show("Поставка успешно сохранена");
+                _databaseEntities.SaveChanges();
+
             }
             catch (Exception exeption)
             {
@@ -520,7 +555,8 @@ namespace GroceryStoreApp.Pages
         {
             if (_handleSelection == true)
             {
-                if (ProductList.Count > 0 && MessageBox.Show("1111При изменении будут сброшены товары в поставке", "Вы уверены", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
+                if (ProductList.Count > 0 &&
+                    MessageBox.Show("При изменении будут сброшены товары в поставке", "Вы уверены", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
                 {
                     ComboBox comboBox = (ComboBox)sender;
                     _handleSelection = false;
@@ -532,12 +568,24 @@ namespace GroceryStoreApp.Pages
                     ClearSupplyData();
                 }
             }
-            _handleSelection = true;
-            List<Поставщик> supplierList = new List<Поставщик>();
+            else
+            {
+                _handleSelection = true;
+                return;
+            }
+
+            SupplierList.Clear();
             if (WarehouseComboBox.SelectedIndex > 0)
             {
-                var selectedWarehouse = WarehouseComboBox.SelectedItem as Склад;
-                supplierList = selectedWarehouse.Поставщик.ToList();
+                Склад selectedWarehouse = WarehouseComboBox.SelectedItem as Склад;
+                List<Поставщик> supplierList = selectedWarehouse.Поставщик.ToList();
+                for (int i = 0; i < supplierList.Count; i++)
+                {
+                    SupplierList.Add(supplierList[i]);
+
+                }
+
+
                 SupplierComboBox.IsEnabled = true;
                 ProductEditStackPanel.IsEnabled = true;
                 UpdateProductList();
@@ -546,17 +594,16 @@ namespace GroceryStoreApp.Pages
             }
             else
             {
-                ClearFilter();
                 ProductListView.ItemsSource = null;
                 SupplierComboBox.IsEnabled = false;
                 ProductEditStackPanel.IsEnabled = false;
+                ClearFilter();
             }
             ReminderTextBlockVisiblity();
-            supplierList.Insert(0, new Поставщик
+            SupplierList.Insert(0, new Поставщик
             {
                 Наименование = "Выберите поставщика"
             });
-            SupplierComboBox.ItemsSource = supplierList.ToList();
             SupplierComboBox.DisplayMemberPath = "Наименование";
             SupplierComboBox.SelectedIndex = 0;
         }
@@ -564,10 +611,12 @@ namespace GroceryStoreApp.Pages
         {
             if (_handleSelection == true)
             {
-                if (ProductList.Count > 0 && MessageBox.Show("1111При изменении будут сброшены товары в поставке", "Вы уверены", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
+                if (ProductList.Count > 0 &&
+                    MessageBox.Show("При изменении будут сброшены товары в поставке", "Вы уверены", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
                 {
-                    ComboBox combo = (ComboBox)sender;
+
                     _handleSelection = false;
+                    ComboBox combo = (ComboBox)sender;
                     combo.SelectedItem = e.RemovedItems[0];
                     return;
                 }
@@ -581,11 +630,20 @@ namespace GroceryStoreApp.Pages
                 _handleSelection = true;
                 return;
             }
+
+            WarehouseList.Clear();
             if (SubsidiaryComboBox.SelectedIndex > 0)
             {
                 var selectedSubsidiary = SubsidiaryComboBox.SelectedItem as Филиал;
-                WarehouseList = selectedSubsidiary.Склад.ToList();
+                List<Склад> warehouseList = selectedSubsidiary.Склад.ToList();
+                
+                for (int i = 0; i < warehouseList.Count; i++)
+                {
+                    WarehouseList.Add(warehouseList[i]);
+
+                }
                 WarehouseComboBox.IsEnabled = true;
+
             }
             else
             {
@@ -595,16 +653,14 @@ namespace GroceryStoreApp.Pages
             {
                 Наименование = "Выберите склад"
             });
-            WarehouseComboBox.ItemsSource = WarehouseList.ToList();
             WarehouseComboBox.DisplayMemberPath = "Наименование";
             WarehouseComboBox.SelectedIndex = 0;
 
         }
-
         private void ClearSupplyData()
         {
             ProductList.Clear();
-            supplyProductList.Clear();
+            _supplyProductList.Clear();
             TotalSupplyValue.Amount = 0;
             TotalSupplyValue.Weight = 0;
         }
@@ -617,9 +673,9 @@ namespace GroceryStoreApp.Pages
             selectedProduct.BulkUpdate();
             TotalSupplyValue.Amount -= selectedProduct.Price;
             TotalSupplyValue.Weight -= selectedProduct.Bulk;
-            supplyProductList.Remove(supplyProductList.Where(x => x.Код.Equals(selectedProduct.ID)).FirstOrDefault());
+            _supplyProductList.Remove(_supplyProductList.Where(x => x.Код.Equals(selectedProduct.ID)).FirstOrDefault());
             UpdateProductList();
         }
-       
+
     }
 }

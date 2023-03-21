@@ -1,0 +1,81 @@
+﻿<Window x:Class="GroceryStoreApp.Windows.DatabaseReferenceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GroceryStoreApp.Windows" 
+        xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
+        mc:Ignorable="d"
+        Title="DatabaseReferenceWindow" Height="500" Width="300" FontFamily="{StaticResource Blogger Sans}" 
+        WindowStartupLocation="CenterOwner" WindowStyle="None">
+    <Window.Resources>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="TextWrapping" Value="NoWrap"/>
+            <Setter Property="TextTrimming" Value="None"/>
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+            <Setter Property="Margin" Value="15 10 10 0"/>
+        </Style>
+        <Style TargetType="{x:Type my:TextBoxWithRemoved}">
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0 5 0 0"/>
+        </Style>
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource NavigationStyle}">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <TextBlock Text="Лимиты товара для филиала" HorizontalAlignment="Center" FontSize="18" Margin="5"></TextBlock>
+            <Border CornerRadius="10" Width="200" Height="200" Margin="0 0 0 10"
+                            HorizontalAlignment="Center" 
+                            BorderBrush="Black" BorderThickness="1">
+                <Border.Background>
+                    <ImageBrush Stretch="Fill">
+                        <ImageBrush.ImageSource>
+                            <Binding Path="Товар.Фото">
+                                <Binding.TargetNullValue>
+                                    <ImageSource>/Images/ImageStub.png</ImageSource>
+                                </Binding.TargetNullValue>
+                                <Binding.FallbackValue>
+                                    <ImageSource>/Images/ImageStub.png</ImageSource>
+                                </Binding.FallbackValue>
+                            </Binding>
+                        </ImageBrush.ImageSource>
+                    </ImageBrush>
+                </Border.Background>
+            </Border>
+            <!--<TextBlock Name="ProductNameTextBlock"></TextBlock>
+            <TextBlock Name="SubsidiaryProductTextBlock"></TextBlock>-->
+            <TextBlock Text="{Binding Товар.Наименование,FallbackValue=Товар.Наименование, StringFormat={} Товар:{0}}"></TextBlock>
+            <TextBlock Text="{Binding Филиал.Наименование,FallbackValue=Филиал.Наименование, StringFormat={} Филиал:{0}}"></TextBlock>
+        </StackPanel>
+        <StackPanel Margin="10" Grid.Row="1">
+            <TextBlock Text="Минимальный лимит товара" />
+            <my:TextBoxWithRemoved x:Name="MinimumLimitTextBox"/>
+            <TextBlock Text="Необходимый лимит товара" />
+            <my:TextBoxWithRemoved  x:Name="NormalLimitTextBox"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="Готово" Name="AddLimitToSubsidiaryButton" Click="AddLimitToSubsidiaryButton_Click"/>
+                <Button Content="Отмена" Name="CancelAddingLimitButton" Click="CancelAddingLimitButton_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

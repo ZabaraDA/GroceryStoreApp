@@ -5,7 +5,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GroceryStoreApp.Pages"
       mc:Ignorable="d" xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
-      Title="DataOfSupplyPage" FontFamily="{StaticResource Blogger Sans}" IsVisibleChanged="Page_IsVisibleChanged">
+      Title="DataOfSupplyPage" FontFamily="{StaticResource Blogger Sans}" 
+      IsVisibleChanged="Page_IsVisibleChanged" Loaded="Page_Loaded">
 
     <Page.Resources>
         <Style TargetType="{x:Type TextBlock}">
@@ -145,6 +146,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+                    
                     <GridViewColumn Header="Дата заявки">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -176,8 +178,10 @@
                     <GridViewColumn Header="Статус">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox SelectedIndex="{Binding Статус}" SelectionChanged="StatusComboBox_SelectionChanged" 
-                                          PreviewKeyDown="ComboBox_PreviewKeyDown" PreviewMouseWheel="ComboBox_PreviewMouseWheel">
+                                <ComboBox SelectedIndex="{Binding Статус}" 
+                                          SelectionChanged="StatusComboBox_SelectionChanged" 
+                                          PreviewKeyDown="ComboBox_PreviewKeyDown" 
+                                          PreviewMouseWheel="ComboBox_PreviewMouseWheel">
                                     <ComboBox.Style>
                                         <Style TargetType="ComboBox" BasedOn="{StaticResource ComboBoxBaseStyle}">
                                             <EventSetter Event="ComboBoxItem.PreviewMouseDown" Handler="ComboBoxItem_PreviewMouseDown"/>
@@ -269,7 +273,8 @@
                         <DatePicker Name="MaximumDateOfDeliveryDatePicker" SelectedDateChanged="DatePicker_SelectedDateChanged"></DatePicker>
                     </StackPanel>
                 </StackPanel>
-                <Button Content="Сбросить фильтры" x:Name="ClearFilterButton" Click="ClearFilterButton_Click"></Button>
+                <Button Content="Сбросить фильтры" Name="ClearFilterButton" Click="ClearFilterButton_Click"></Button>
+                <Button Content="Новая поставка" Name="AddSupplyButton" Click="AddSupplyButton_Click"></Button>
             </StackPanel>
         </StackPanel>
     </Grid>

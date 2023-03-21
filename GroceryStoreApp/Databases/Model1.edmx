@@ -257,7 +257,7 @@
           <Property Name="СрокГодности" Type="int" Nullable="false" />
           <Property Name="КодЕдиницыИзмерения" Type="int" Nullable="false" />
           <Property Name="Фото" Type="image" />
-          <Property Name="Вес" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="Вес" Type="decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="Высота" Type="int" Nullable="false" />
           <Property Name="Ширина" Type="int" Nullable="false" />
           <Property Name="Статус" Type="bit" Nullable="false" />
@@ -506,7 +506,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Поставка_Склад">
+        <Association Name="FK_Поставка_Склад1">
           <End Role="Склад" Type="Self.Склад" Multiplicity="1" />
           <End Role="Поставка" Type="Self.Поставка" Multiplicity="*" />
           <ReferentialConstraint>
@@ -518,7 +518,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Поставка_Филиал">
+        <Association Name="FK_Поставка_Филиал1">
           <End Role="Филиал" Type="Self.Филиал" Multiplicity="1" />
           <End Role="Поставка" Type="Self.Поставка" Multiplicity="*" />
           <ReferentialConstraint>
@@ -990,11 +990,11 @@
             <End Role="Поставщик" EntitySet="Поставщик" />
             <End Role="Поставка" EntitySet="Поставка" />
           </AssociationSet>
-          <AssociationSet Name="FK_Поставка_Склад" Association="Self.FK_Поставка_Склад">
+          <AssociationSet Name="FK_Поставка_Склад1" Association="Self.FK_Поставка_Склад1">
             <End Role="Склад" EntitySet="Склад" />
             <End Role="Поставка" EntitySet="Поставка" />
           </AssociationSet>
-          <AssociationSet Name="FK_Поставка_Филиал" Association="Self.FK_Поставка_Филиал">
+          <AssociationSet Name="FK_Поставка_Филиал1" Association="Self.FK_Поставка_Филиал1">
             <End Role="Филиал" EntitySet="Филиал" />
             <End Role="Поставка" EntitySet="Поставка" />
           </AssociationSet>
@@ -1265,8 +1265,8 @@
           <Property Name="Цена" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Вес" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
           <NavigationProperty Name="Поставщик" Relationship="Self.FK_Поставка_Поставщик" FromRole="Поставка" ToRole="Поставщик" />
-          <NavigationProperty Name="Склад" Relationship="Self.FK_Поставка_Склад" FromRole="Поставка" ToRole="Склад" />
-          <NavigationProperty Name="Филиал" Relationship="Self.FK_Поставка_Филиал" FromRole="Поставка" ToRole="Филиал" />
+          <NavigationProperty Name="Склад" Relationship="Self.FK_Поставка_Склад1" FromRole="Поставка" ToRole="Склад" />
+          <NavigationProperty Name="Филиал" Relationship="Self.FK_Поставка_Филиал1" FromRole="Поставка" ToRole="Филиал" />
           <NavigationProperty Name="ТоварПоставка" Relationship="Self.FK_ТоварПоставка_Поставка" FromRole="Поставка" ToRole="ТоварПоставка" />
         </EntityType>
         <EntityType Name="Поставщик">
@@ -1307,7 +1307,7 @@
           <Property Name="Наименование" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="КодАдреса" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Адрес" Relationship="Self.FK_Склад_Адрес1" FromRole="Склад" ToRole="Адрес" />
-          <NavigationProperty Name="Поставка" Relationship="Self.FK_Поставка_Склад" FromRole="Склад" ToRole="Поставка" />
+          <NavigationProperty Name="Поставка" Relationship="Self.FK_Поставка_Склад1" FromRole="Склад" ToRole="Поставка" />
           <NavigationProperty Name="Поставщик" Relationship="Self.СкладПоставщик" FromRole="Склад" ToRole="Поставщик" />
           <NavigationProperty Name="Товар" Relationship="Self.СкладТовар" FromRole="Склад" ToRole="Товар" />
           <NavigationProperty Name="Филиал" Relationship="Self.ФилиалСклад" FromRole="Склад" ToRole="Филиал" />
@@ -1417,7 +1417,7 @@
           <Property Name="СрокГодности" Type="Int32" Nullable="false" />
           <Property Name="КодЕдиницыИзмерения" Type="Int32" Nullable="false" />
           <Property Name="Фото" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="Вес" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="Вес" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="Высота" Type="Int32" Nullable="false" />
           <Property Name="Ширина" Type="Int32" Nullable="false" />
           <Property Name="Статус" Type="Boolean" Nullable="false" />
@@ -1493,7 +1493,7 @@
           <NavigationProperty Name="Адрес" Relationship="Self.FK_Филиал_Адрес" FromRole="Филиал" ToRole="Адрес" />
           <NavigationProperty Name="Заказ" Relationship="Self.FK_Заказ_Филиал" FromRole="Филиал" ToRole="Заказ" />
           <NavigationProperty Name="МодификаторЦены" Relationship="Self.FK_МодификаторЦены_Филиал" FromRole="Филиал" ToRole="МодификаторЦены" />
-          <NavigationProperty Name="Поставка" Relationship="Self.FK_Поставка_Филиал" FromRole="Филиал" ToRole="Поставка" />
+          <NavigationProperty Name="Поставка" Relationship="Self.FK_Поставка_Филиал1" FromRole="Филиал" ToRole="Поставка" />
           <NavigationProperty Name="Сотрудник" Relationship="Self.FK_Сотрудник_Филиал" FromRole="Филиал" ToRole="Сотрудник" />
           <NavigationProperty Name="Списание" Relationship="Self.FK_Списание_Филиал" FromRole="Филиал" ToRole="Списание" />
           <NavigationProperty Name="Стеллаж" Relationship="Self.FK_Стеллаж_Филиал1" FromRole="Филиал" ToRole="Стеллаж" />
@@ -1799,7 +1799,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Поставка_Склад">
+        <Association Name="FK_Поставка_Склад1">
           <End Role="Склад" Type="Self.Склад" Multiplicity="1" />
           <End Role="Поставка" Type="Self.Поставка" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1811,7 +1811,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Поставка_Филиал">
+        <Association Name="FK_Поставка_Филиал1">
           <End Role="Филиал" Type="Self.Филиал" Multiplicity="1" />
           <End Role="Поставка" Type="Self.Поставка" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2148,11 +2148,11 @@
             <End Role="Поставщик" EntitySet="Поставщик" />
             <End Role="Поставка" EntitySet="Поставка" />
           </AssociationSet>
-          <AssociationSet Name="FK_Поставка_Склад" Association="Self.FK_Поставка_Склад">
+          <AssociationSet Name="FK_Поставка_Склад1" Association="Self.FK_Поставка_Склад1">
             <End Role="Склад" EntitySet="Склад" />
             <End Role="Поставка" EntitySet="Поставка" />
           </AssociationSet>
-          <AssociationSet Name="FK_Поставка_Филиал" Association="Self.FK_Поставка_Филиал">
+          <AssociationSet Name="FK_Поставка_Филиал1" Association="Self.FK_Поставка_Филиал1">
             <End Role="Филиал" EntitySet="Филиал" />
             <End Role="Поставка" EntitySet="Поставка" />
           </AssociationSet>

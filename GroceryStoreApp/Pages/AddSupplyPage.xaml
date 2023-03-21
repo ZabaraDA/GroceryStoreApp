@@ -131,7 +131,7 @@
         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
             <Button Content="Назад"></Button>
             <TextBlock Text="Заказ поставщику №" Margin="10" FontFamily="{StaticResource Blogger Sans}"
-                           Width="auto" FontSize="24"  />
+                           Width="auto" FontSize="24" Name="NumberSupplyTextBlock"/>
         </StackPanel>
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.ColumnSpan="2">
             <Button Content="Отменить"></Button>
@@ -153,10 +153,11 @@
                 <TextBlock Text="Склад" ></TextBlock>
             </StackPanel>
             <StackPanel>
-                <ComboBox Name="SubsidiaryComboBox" SelectionChanged="SubsidiaryComboBox_SelectionChanged" Cursor="Hand">
+                <ComboBox Name="SubsidiaryComboBox" SelectionChanged="SubsidiaryComboBox_SelectionChanged"
+                           ItemsSource="{Binding Path= SubsidiaryList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                 </ComboBox>
                 <ComboBox Name="WarehouseComboBox" SelectionChanged="WarehouseComboBox_SelectionChanged" 
-                          ItemsSource="{Binding WarehouseList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                          ItemsSource="{Binding Path= WarehouseList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
                     
                 </ComboBox>
             </StackPanel>
@@ -164,7 +165,8 @@
                 <TextBlock Text="Поставщик" Margin="10"></TextBlock>
             </StackPanel>
             <StackPanel>
-                <ComboBox Name="SupplierComboBox"></ComboBox>
+                <ComboBox Name="SupplierComboBox"
+                          ItemsSource="{Binding Path= SupplierList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Cursor="Hand"></ComboBox>
             </StackPanel>
         </StackPanel>
 

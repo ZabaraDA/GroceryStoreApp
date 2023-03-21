@@ -33,7 +33,7 @@ namespace GroceryStoreApp.Windows
           (3,new AddProductPage(), "Добавить товар","AddProductPathData"),
           (3,new DataOfCategoriesPage(), "Категории","ProductPathData"),
           (3,new DataOfSupplyPage(), "Поставки","SupplyPathData"),
-          (3,new AddSupplyPage(), "Добавить поставку","SupplyPathData"),
+          //(3,new AddSupplyPage(), "Добавить поставку","SupplyPathData"),
 
         };
         public MenuWindow()

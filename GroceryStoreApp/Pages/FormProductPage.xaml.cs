@@ -59,17 +59,19 @@ namespace GroceryStoreApp.Pages
             ChartCanvas.Children.Clear();
             GenerateCanvas();
 
-            int max = (int)deliverySelectedProductList.Max(x => x.Количество);
-            int step = 1;
+            double max = (int)deliverySelectedProductList.Sum(x => x.Количество);
+            double step = 1;
 
             while (max > 10)
             {
-                max = max / 10;
+                
+                max = Math.Ceiling(max / 10);
                 step = step * 10;
             }
-            step = step / 10;
-            int quantityInSegment = max * step;
+            step = Math.Ceiling(step / 10);
+            int quantityInSegment = (int)(max * step);
 
+            MessageBox.Show($"{step}, {max} ,{quantityInSegment}");
 
             for (int i = 0; i < _quantity; i++)
             {
@@ -201,13 +203,16 @@ namespace GroceryStoreApp.Pages
 
         private void CreateRangeYears() //временной диапазон поставок товара
         {                               //от года первой поставки до текущего года
-            DateTime firstDeliveryDate = databaseEntities.Поставка.Min(x => x.ДатаПоставки);
-            int timeRange = month.Year - firstDeliveryDate.Year;
-            InfoTextBlock.Text = timeRange.ToString();
-            _year = new int[timeRange + 1];
-            for (int i = 0; i < _year.Length; i++)
+            if (databaseEntities.Поставка.Count()> 0)//Доработать
             {
-                _year[i] = firstDeliveryDate.Year + i;
+                DateTime firstDeliveryDate = databaseEntities.Поставка.Min(x => x.ДатаПоставки);
+                int timeRange = month.Year - firstDeliveryDate.Year;
+                InfoTextBlock.Text = timeRange.ToString();
+                _year = new int[timeRange + 1];
+                for (int i = 0; i < _year.Length; i++)
+                {
+                    _year[i] = firstDeliveryDate.Year + i;
+                }
             }
             ShowYearComboBox.ItemsSource = _year;
             ShowYearComboBox.SelectedIndex = 0;
