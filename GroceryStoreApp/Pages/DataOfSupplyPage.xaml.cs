@@ -20,7 +20,7 @@ namespace GroceryStoreApp.Pages
 {
     public partial class DataOfSupplyPage : Page
     {
-        readonly GroceryStoreDatabasesEntities databaseEntities = new GroceryStoreDatabasesEntities();
+        readonly GroceryStoreDatabasesEntities _databaseEntities = new GroceryStoreDatabasesEntities();
 
         DateTime month = DateTime.Now;
 
@@ -50,7 +50,7 @@ namespace GroceryStoreApp.Pages
             TypeSortComboBox.SelectedIndex = 0;
             UpdateSupplyList();
 
-            List<Поставщик> supplierList = databaseEntities.Поставщик.ToList();
+            List<Поставщик> supplierList = _databaseEntities.Поставщик.ToList();
             supplierList.Insert(0, new Поставщик
             {
                 Наименование = "Все поставщики"
@@ -62,7 +62,7 @@ namespace GroceryStoreApp.Pages
 
         private void UpdateSupplyList()
         {
-            var supplyList = databaseEntities.Поставка.OrderByDescending(x => x.ДатаПоставки).ToList();
+            var supplyList = _databaseEntities.Поставка.OrderByDescending(x => x.ДатаПоставки).ToList();
 
             int numberOfSupply = supplyList.Count();
             if (StatusSearchComboBox.SelectedIndex > 0)
@@ -140,9 +140,9 @@ namespace GroceryStoreApp.Pages
                     List<ТоварПоставка> productSupplyList = selectedSupply.ТоварПоставка.ToList();
                     for (int i = 0; i < productSupplyList.Count; i++)
                     {
-                        Товар currentProduct = databaseEntities.Товар.ToList().Where(x => x.Equals(productSupplyList[i].Товар)).FirstOrDefault();
+                        Товар currentProduct = _databaseEntities.Товар.ToList().Where(x => x.Equals(productSupplyList[i].Товар)).FirstOrDefault();
                         currentProduct.Количество += productSupplyList[i].Количество;
-                        ФилиалТовар subsidiaryProduct = databaseEntities.ФилиалТовар.ToList().Where(x => x.Филиал.Equals(selectedSupply.Филиал)
+                        ФилиалТовар subsidiaryProduct = _databaseEntities.ФилиалТовар.ToList().Where(x => x.Филиал.Equals(selectedSupply.Филиал)
                                                                                                  && x.Товар.Equals(currentProduct)).FirstOrDefault();
                         if (subsidiaryProduct != null)
                         {
@@ -167,7 +167,7 @@ namespace GroceryStoreApp.Pages
                                 subsidiaryProduct.Норма = window.NormalLimit;
                                 subsidiaryProduct.МинимальныйЛимит = window.MinimumLimit;
 
-                                databaseEntities.ФилиалТовар.Add(subsidiaryProduct);
+                                _databaseEntities.ФилиалТовар.Add(subsidiaryProduct);
                             }
                             else
                             {
@@ -217,7 +217,7 @@ namespace GroceryStoreApp.Pages
 
             try
             {
-                databaseEntities.SaveChanges();
+                _databaseEntities.SaveChanges();
             }
             catch (Exception exeption)
             {
@@ -261,9 +261,9 @@ namespace GroceryStoreApp.Pages
         private void CreateRangeYears()
         {
             List<string> yearList = new List<string>();
-            if (databaseEntities.Поставка.Count() > 0)
+            if (_databaseEntities.Поставка.Count() > 0)
             {
-                DateTime firstDeliveryDate = databaseEntities.Поставка.Min(x => x.ДатаПоставки);
+                DateTime firstDeliveryDate = _databaseEntities.Поставка.Min(x => x.ДатаПоставки);
                 int timeRange = month.Year - firstDeliveryDate.Year;
                 for (int i = 0; i < timeRange + 1; i++)
                 {
@@ -300,11 +300,11 @@ namespace GroceryStoreApp.Pages
                 $"\nДата поставки: {selectedSupply.ДатаПоставки}" +
                 $"\nПоставщик: {selectedSupply.Поставщик.Наименование}", "Внимание", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
-                databaseEntities.ТоварПоставка.RemoveRange(selectedSupply.ТоварПоставка);
-                databaseEntities.Поставка.Remove(selectedSupply);
+                _databaseEntities.ТоварПоставка.RemoveRange(selectedSupply.ТоварПоставка);
+                _databaseEntities.Поставка.Remove(selectedSupply);
                 try
                 {
-                    databaseEntities.SaveChanges();
+                    _databaseEntities.SaveChanges();
                     MessageBox.Show("Информация о поставке успешно удалена");
                     UpdateSupplyList();
                 }
@@ -354,9 +354,11 @@ namespace GroceryStoreApp.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            _databaseEntities.ChangeTracker.Entries().ToList().ForEach(x => x.Reload());
             _handleSelection = false;
             CreateRangeYears();
             UpdateSupplyList();
+
         }
 
         private void AddSupplyButton_Click(object sender, RoutedEventArgs e)

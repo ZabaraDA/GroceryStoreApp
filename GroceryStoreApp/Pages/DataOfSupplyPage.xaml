@@ -178,7 +178,7 @@
                     <GridViewColumn Header="Статус">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox SelectedIndex="{Binding Статус}" 
+                                <ComboBox SelectedIndex="{Binding Статус,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                                           SelectionChanged="StatusComboBox_SelectionChanged" 
                                           PreviewKeyDown="ComboBox_PreviewKeyDown" 
                                           PreviewMouseWheel="ComboBox_PreviewMouseWheel">

@@ -14,6 +14,7 @@ namespace GroceryStoreApp.Databases
     
     public partial class ТоварПоставка
     {
+        public int Код { get; set; }
         public int КодПоставки { get; set; }
         public int КодТовара { get; set; }
         public decimal Количество { get; set; }

@@ -18,7 +18,6 @@ namespace GroceryStoreApp.Databases
         public Поставка()
         {
             this.ТоварПоставка = new HashSet<ТоварПоставка>();
-            
         }
     
         public int Код { get; set; }

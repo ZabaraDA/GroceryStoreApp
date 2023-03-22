@@ -129,7 +129,7 @@
         </Grid.ColumnDefinitions>
         <Border Background="#FFD6D6D6" Grid.ColumnSpan="2"></Border>
         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-            <Button Content="Назад"></Button>
+            <Button Content="Назад" Name="GoBackButton" Click="GoBackButton_Click"></Button>
             <TextBlock Text="Заказ поставщику №" Margin="10" FontFamily="{StaticResource Blogger Sans}"
                            Width="auto" FontSize="24" Name="NumberSupplyTextBlock"/>
         </StackPanel>
@@ -154,7 +154,7 @@
             </StackPanel>
             <StackPanel>
                 <ComboBox Name="SubsidiaryComboBox" SelectionChanged="SubsidiaryComboBox_SelectionChanged"
-                           ItemsSource="{Binding Path= SubsidiaryList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                           ItemsSource="{Binding Path= SubsidiaryList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
                 </ComboBox>
                 <ComboBox Name="WarehouseComboBox" SelectionChanged="WarehouseComboBox_SelectionChanged" 
                           ItemsSource="{Binding Path= WarehouseList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
@@ -247,7 +247,7 @@
                   Style="{StaticResource ProductListViewStyle}" Grid.Row="2">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="#" DisplayMemberBinding="{Binding ID}" Width="60" />
+                    <GridViewColumn Header="#" DisplayMemberBinding="{Binding ProductID}" Width="60" />
                     <!--<GridViewColumn Header="Фото" Width="80">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -292,11 +292,6 @@
                                                            Mode=TwoWay,StringFormat={}{0:N3}}"
                                                            x:Name="QuantityProductTextBox" VerticalAlignment="Center" 
                                                            TextChanged="QuantityProductTextBox_TextChanged">
-                                        <!--<TextBox.Text>
-                                            <Binding  Path="Quantity" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
-                                                     Converter="{StaticResource QuantityConverter}">
-                                            </Binding>
-                                        </TextBox.Text>-->
                                     </my:TextBoxWithRemoved>
                                     <my:NavigationButton Data="{StaticResource ExpandPathData}" Name="AddOneProductButton" 
                                                          Click="AddOneProductButton_Click"></my:NavigationButton>
@@ -318,7 +313,7 @@
                     <GridViewColumn Header="Цена" Width="130">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Cost, StringFormat={}{0:N3} РУБ}" HorizontalAlignment="Left" FontSize="18"></TextBlock>
+                                <TextBlock Text="{Binding Cost, StringFormat={}{0:N2} РУБ}" HorizontalAlignment="Left" FontSize="18"></TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

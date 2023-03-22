@@ -264,9 +264,9 @@
         </EntityType>
         <EntityType Name="ТоварПоставка">
           <Key>
-            <PropertyRef Name="КодПоставки" />
-            <PropertyRef Name="КодТовара" />
+            <PropertyRef Name="Код" />
           </Key>
+          <Property Name="Код" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="КодПоставки" Type="int" Nullable="false" />
           <Property Name="КодТовара" Type="int" Nullable="false" />
           <Property Name="Количество" Type="decimal" Precision="18" Scale="3" Nullable="false" />
@@ -734,7 +734,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ТоварПоставка_Поставка">
+        <Association Name="FK_ТоварПоставка_Поставка1">
           <End Role="Поставка" Type="Self.Поставка" Multiplicity="1" />
           <End Role="ТоварПоставка" Type="Self.ТоварПоставка" Multiplicity="*" />
           <ReferentialConstraint>
@@ -746,7 +746,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ТоварПоставка_Товар">
+        <Association Name="FK_ТоварПоставка_Товар1">
           <End Role="Товар" Type="Self.Товар" Multiplicity="1" />
           <End Role="ТоварПоставка" Type="Self.ТоварПоставка" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1066,11 +1066,11 @@
             <End Role="Производитель" EntitySet="Производитель" />
             <End Role="Товар" EntitySet="Товар" />
           </AssociationSet>
-          <AssociationSet Name="FK_ТоварПоставка_Поставка" Association="Self.FK_ТоварПоставка_Поставка">
+          <AssociationSet Name="FK_ТоварПоставка_Поставка1" Association="Self.FK_ТоварПоставка_Поставка1">
             <End Role="Поставка" EntitySet="Поставка" />
             <End Role="ТоварПоставка" EntitySet="ТоварПоставка" />
           </AssociationSet>
-          <AssociationSet Name="FK_ТоварПоставка_Товар" Association="Self.FK_ТоварПоставка_Товар">
+          <AssociationSet Name="FK_ТоварПоставка_Товар1" Association="Self.FK_ТоварПоставка_Товар1">
             <End Role="Товар" EntitySet="Товар" />
             <End Role="ТоварПоставка" EntitySet="ТоварПоставка" />
           </AssociationSet>
@@ -1267,7 +1267,7 @@
           <NavigationProperty Name="Поставщик" Relationship="Self.FK_Поставка_Поставщик" FromRole="Поставка" ToRole="Поставщик" />
           <NavigationProperty Name="Склад" Relationship="Self.FK_Поставка_Склад1" FromRole="Поставка" ToRole="Склад" />
           <NavigationProperty Name="Филиал" Relationship="Self.FK_Поставка_Филиал1" FromRole="Поставка" ToRole="Филиал" />
-          <NavigationProperty Name="ТоварПоставка" Relationship="Self.FK_ТоварПоставка_Поставка" FromRole="Поставка" ToRole="ТоварПоставка" />
+          <NavigationProperty Name="ТоварПоставка" Relationship="Self.FK_ТоварПоставка_Поставка1" FromRole="Поставка" ToRole="ТоварПоставка" />
         </EntityType>
         <EntityType Name="Поставщик">
           <Key>
@@ -1427,15 +1427,15 @@
           <NavigationProperty Name="МодификаторЦены" Relationship="Self.FK_МодификаторЦены_Товар" FromRole="Товар" ToRole="МодификаторЦены" />
           <NavigationProperty Name="Производитель" Relationship="Self.FK_Товар_Производитель" FromRole="Товар" ToRole="Производитель" />
           <NavigationProperty Name="СписаниеТовар" Relationship="Self.FK_СписаниеТовар_Товар" FromRole="Товар" ToRole="СписаниеТовар" />
-          <NavigationProperty Name="ТоварПоставка" Relationship="Self.FK_ТоварПоставка_Товар" FromRole="Товар" ToRole="ТоварПоставка" />
+          <NavigationProperty Name="ТоварПоставка" Relationship="Self.FK_ТоварПоставка_Товар1" FromRole="Товар" ToRole="ТоварПоставка" />
           <NavigationProperty Name="ФилиалТовар" Relationship="Self.FK_ФилиалТовар_Товар" FromRole="Товар" ToRole="ФилиалТовар" />
           <NavigationProperty Name="Склад" Relationship="Self.СкладТовар" FromRole="Товар" ToRole="Склад" />
         </EntityType>
         <EntityType Name="ТоварПоставка">
           <Key>
-            <PropertyRef Name="КодПоставки" />
-            <PropertyRef Name="КодТовара" />
+            <PropertyRef Name="Код" />
           </Key>
+          <Property Name="Код" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="КодПоставки" Type="Int32" Nullable="false" />
           <Property Name="КодТовара" Type="Int32" Nullable="false" />
           <Property Name="Количество" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
@@ -1445,8 +1445,8 @@
           <Property Name="Цена" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Вес" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="ДатаИзготовления" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Поставка" Relationship="Self.FK_ТоварПоставка_Поставка" FromRole="ТоварПоставка" ToRole="Поставка" />
-          <NavigationProperty Name="Товар" Relationship="Self.FK_ТоварПоставка_Товар" FromRole="ТоварПоставка" ToRole="Товар" />
+          <NavigationProperty Name="Поставка" Relationship="Self.FK_ТоварПоставка_Поставка1" FromRole="ТоварПоставка" ToRole="Поставка" />
+          <NavigationProperty Name="Товар" Relationship="Self.FK_ТоварПоставка_Товар1" FromRole="ТоварПоставка" ToRole="Товар" />
         </EntityType>
         <EntityType Name="ТорговыйЗал">
           <Key>
@@ -1823,7 +1823,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ТоварПоставка_Поставка">
+        <Association Name="FK_ТоварПоставка_Поставка1">
           <End Role="Поставка" Type="Self.Поставка" Multiplicity="1" />
           <End Role="ТоварПоставка" Type="Self.ТоварПоставка" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1943,7 +1943,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ТоварПоставка_Товар">
+        <Association Name="FK_ТоварПоставка_Товар1">
           <End Role="Товар" Type="Self.Товар" Multiplicity="1" />
           <End Role="ТоварПоставка" Type="Self.ТоварПоставка" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2156,7 +2156,7 @@
             <End Role="Филиал" EntitySet="Филиал" />
             <End Role="Поставка" EntitySet="Поставка" />
           </AssociationSet>
-          <AssociationSet Name="FK_ТоварПоставка_Поставка" Association="Self.FK_ТоварПоставка_Поставка">
+          <AssociationSet Name="FK_ТоварПоставка_Поставка1" Association="Self.FK_ТоварПоставка_Поставка1">
             <End Role="Поставка" EntitySet="Поставка" />
             <End Role="ТоварПоставка" EntitySet="ТоварПоставка" />
           </AssociationSet>
@@ -2196,7 +2196,7 @@
             <End Role="Стеллаж" EntitySet="Стеллаж" />
             <End Role="ТорговыйЗалСтеллаж" EntitySet="ТорговыйЗалСтеллаж" />
           </AssociationSet>
-          <AssociationSet Name="FK_ТоварПоставка_Товар" Association="Self.FK_ТоварПоставка_Товар">
+          <AssociationSet Name="FK_ТоварПоставка_Товар1" Association="Self.FK_ТоварПоставка_Товар1">
             <End Role="Товар" EntitySet="Товар" />
             <End Role="ТоварПоставка" EntitySet="ТоварПоставка" />
           </AssociationSet>
@@ -2505,6 +2505,7 @@
           <EntitySetMapping Name="ТоварПоставка">
             <EntityTypeMapping TypeName="GroceryStoreDatabasesModel.ТоварПоставка">
               <MappingFragment StoreEntitySet="ТоварПоставка">
+                <ScalarProperty Name="Код" ColumnName="Код" />
                 <ScalarProperty Name="КодПоставки" ColumnName="КодПоставки" />
                 <ScalarProperty Name="КодТовара" ColumnName="КодТовара" />
                 <ScalarProperty Name="Количество" ColumnName="Количество" />

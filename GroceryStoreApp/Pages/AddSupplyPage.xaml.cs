@@ -1,8 +1,10 @@
 ﻿using GroceryStoreApp.Databases;
+using GroceryStoreApp.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.Entity.Migrations;
 using System.Globalization;
 using System.Linq;
 using System.Security.Principal;
@@ -26,16 +28,18 @@ namespace GroceryStoreApp.Pages
     public class Product
     {
         public int ID { get; set; }
+        public int ProductID { get; set; }
         public string Name { get; set; }
         public decimal Quantity { get; set; }
         public decimal Cost { get; set; }
         public decimal Price { get; set; }
         public decimal Weight { get; set; }
         public decimal Bulk { get; set; }
+
         public ЕдиницаИзмерения Unit { get; set; }
         public Product(int id, string name, int quantity, ЕдиницаИзмерения unit, decimal cost, decimal price, decimal weight, decimal bulk)
         {
-            ID = id;
+            ProductID = id;
             Name = name;
             Quantity = quantity;
             Unit = unit;
@@ -101,9 +105,11 @@ namespace GroceryStoreApp.Pages
         public TotalSupplyValue TotalSupplyValue { get; set; } = new TotalSupplyValue();
         private Поставка _currentSupply;
         private bool _handleSelection = true;
+        private bool _isDeliveriChange;
         public AddSupplyPage(Поставка currentSupply, bool isDeliveriChange)
         {
             InitializeComponent();
+            _isDeliveriChange = isDeliveriChange;
             _currentSupply = currentSupply;
             this.DataContext = this;
 
@@ -133,21 +139,34 @@ namespace GroceryStoreApp.Pages
                 {
                     ProductList.Add(new Product
                     {
-                        ID = productSupplyList[i].КодТовара,
+                        ID = productSupplyList[i].Код,
+                        ProductID = productSupplyList[i].КодТовара,
                         Name = productSupplyList[i].Товар.Наименование,
                         Quantity = productSupplyList[i].Количество,
                         Cost = productSupplyList[i].Товар.Цена,
                         Price = productSupplyList[i].Цена,
                         Unit = productSupplyList[i].Товар.ЕдиницаИзмерения,
                         Weight = productSupplyList[i].Товар.Вес,
-                        Bulk = productSupplyList[i].Вес
+                        Bulk = productSupplyList[i].Вес,
+
                     });
                     _supplyProductList.Add((WarehouseComboBox.SelectedItem as Склад).Товар.Where(x => x.Код.Equals(productSupplyList[i].КодТовара)).FirstOrDefault());
                 }
-               
                 ReminderTextBlockVisiblity();
                 TotalSupplyValue.Weight = _currentSupply.Вес;
                 TotalSupplyValue.Amount = _currentSupply.Цена;
+                WarehouseComboBox.IsEnabled = false;
+                SubsidiaryComboBox.IsEnabled = false;
+                if(_isDeliveriChange == false)
+                {
+                    ProductListView.IsEnabled = false;
+                    SupplierComboBox.IsEnabled = false;
+                    AddSupplyButton.IsEnabled = false;
+                    SupplyOfProductListView.IsEnabled = false;
+                    ViewProductInDeliveryButton.IsEnabled = false;
+                    ProductEditStackPanel.IsEnabled = false;
+                    AddSupplyButton.Visibility = Visibility.Collapsed;
+                }
             }
             else
             {
@@ -261,7 +280,7 @@ namespace GroceryStoreApp.Pages
                 _supplyProductList.Add(selectedProduct);
                 ProductList.Add(new Product
                 {
-                    ID = selectedProduct.Код,
+                    ProductID = selectedProduct.Код,
                     Name = selectedProduct.Наименование,
                     Quantity = 1,
                     Cost = selectedProduct.Цена,
@@ -459,38 +478,105 @@ namespace GroceryStoreApp.Pages
                 MessageBox.Show(errors.ToString());
                 return;
             }
-
-            _databaseEntities.Поставка.Add(new Поставка
+            if (_isDeliveriChange == true)
             {
-                Код = _databaseEntities.Поставка.Count(),
-                ДатаЗаявки = Convert.ToDateTime(DateOfCreationDatePicker.Text),
-                ДатаПоставки = Convert.ToDateTime(DateOfArrivalDatePicker.Text),
-                Статус = 0,
-                Шаблон = false,
-                Поставщик = SupplierComboBox.SelectedItem as Поставщик,
-                Склад = WarehouseComboBox.SelectedItem as Склад,
-                Филиал = SubsidiaryComboBox.SelectedItem as Филиал,
-                Вес = TotalSupplyValue.Weight,
-                Цена = TotalSupplyValue.Amount,
-
-            });
-            for (int i = 0; i < ProductList.Count; i++)
-            {
-                ProductList[i].PriceUpdate();
-                _databaseEntities.ТоварПоставка.Add(new ТоварПоставка
+                _databaseEntities.Поставка.AddOrUpdate(new Поставка
                 {
-                    КодПоставки = _databaseEntities.Поставка.Count(),
-                    КодТовара = ProductList[i].ID,
-                    Количество = ProductList[i].Quantity,
-                    Цена = ProductList[i].Price,
-                    Остаток = ProductList[i].Quantity,
-                    Вес = ProductList[i].Bulk,
+                    Код = _currentSupply.Код,
+                    ДатаЗаявки = Convert.ToDateTime(DateOfCreationDatePicker.Text),
+                    ДатаПоставки = Convert.ToDateTime(DateOfArrivalDatePicker.Text),
+                    Статус = 3,
+                    Шаблон = false,
+                    КодПоставщика = (SupplierComboBox.SelectedItem as Поставщик).Код,
+                    КодСклада = (WarehouseComboBox.SelectedItem as Склад).Код,
+                    КодФилиала = (SubsidiaryComboBox.SelectedItem as Филиал).Код,
+                    Вес = TotalSupplyValue.Weight,
+                    Цена = TotalSupplyValue.Amount,
+
                 });
+                for (int i = 0; i < ProductList.Count; i++)
+                {
+                    _databaseEntities.ТоварПоставка.AddOrUpdate(new ТоварПоставка
+                    {
+                        Код = ProductList[i].ID,
+                        КодПоставки = _currentSupply.Код,
+                        КодТовара = ProductList[i].ProductID,
+                        Количество = ProductList[i].Quantity,
+                        Цена = ProductList[i].Price,
+                        Остаток = ProductList[i].Quantity,
+                        Вес = ProductList[i].Bulk,
+                    });
+                    Товар currentProduct = _databaseEntities.Товар.ToList().Where(x => x.Код.Equals(ProductList[i].ProductID)).FirstOrDefault();
+
+                    currentProduct.Количество += ProductList[i].Quantity;
+                    ФилиалТовар subsidiaryProduct = _databaseEntities.ФилиалТовар.ToList().Where(x => x.Филиал.Код.Equals((SubsidiaryComboBox.SelectedItem as Филиал).Код)
+                                                                                             && x.Товар.Equals(currentProduct)).FirstOrDefault();
+                    if (subsidiaryProduct != null)
+                    {
+                        subsidiaryProduct.Количество += ProductList[i].Quantity;
+                    }
+                    else
+                    {
+                        subsidiaryProduct = new ФилиалТовар()
+                        {
+                            Филиал = SubsidiaryComboBox.SelectedItem as Филиал,
+                            Товар = currentProduct,
+                            Количество = ProductList[i].Quantity
+                        };
+
+                        DatabaseReferenceWindow window = new DatabaseReferenceWindow(subsidiaryProduct)
+                        {
+                            Owner = Window.GetWindow(this)
+                        };
+
+                        if (window.ShowDialog() == true)
+                        {
+                            subsidiaryProduct.Норма = window.NormalLimit;
+                            subsidiaryProduct.МинимальныйЛимит = window.MinimumLimit;
+                            _databaseEntities.ФилиалТовар.Add(subsidiaryProduct);
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                }
             }
+            else
+            {
+                _databaseEntities.Поставка.Add(new Поставка
+                {
+                    Код = _databaseEntities.Поставка.Count(),
+                    ДатаЗаявки = Convert.ToDateTime(DateOfCreationDatePicker.Text),
+                    ДатаПоставки = Convert.ToDateTime(DateOfArrivalDatePicker.Text),
+                    Статус = 0,
+                    Шаблон = false,
+                    Поставщик = SupplierComboBox.SelectedItem as Поставщик,
+                    Склад = WarehouseComboBox.SelectedItem as Склад,
+                    Филиал = SubsidiaryComboBox.SelectedItem as Филиал,
+                    Вес = TotalSupplyValue.Weight,
+                    Цена = TotalSupplyValue.Amount,
+
+                });
+                for (int i = 0; i < ProductList.Count; i++)
+                {
+                    _databaseEntities.ТоварПоставка.Add(new ТоварПоставка
+                    {
+                        КодПоставки = _databaseEntities.Поставка.Count(),
+                        КодТовара = ProductList[i].ProductID,
+                        Количество = ProductList[i].Quantity,
+                        Цена = ProductList[i].Price,
+                        Остаток = ProductList[i].Quantity,
+                        Вес = ProductList[i].Bulk,
+                    });
+                }
+            }
+
             try
             {
-                MessageBox.Show("Поставка успешно сохранена");
                 _databaseEntities.SaveChanges();
+                MessageBox.Show("Поставка успешно сохранена");
+                NavigationService.GoBack();
 
             }
             catch (Exception exeption)
@@ -527,28 +613,6 @@ namespace GroceryStoreApp.Pages
             if (e.Key >= Key.D0 && e.Key <= Key.D9 || e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9
                 || e.Key == Key.Back || e.Key == Key.Right || e.Key == Key.Left)
             {
-                //if (e.Key == Key.OemPeriod)
-                //{
-                //    for (int i = 0; i < textBox.Text.Length; i++)
-                //    {
-                //        if (textBox.Text[i] == '.')
-                //        {
-                //            e.Handled = true;
-                //            return;
-                //        }
-                //    }
-                //}
-                //else if (e.Key == Key.OemComma)
-                //{
-                //    for (int i = 0; i < textBox.Text.Length; i++)
-                //    {
-                //        if (textBox.Text[i] == ',')
-                //        {
-                //            e.Handled = true;
-                //        }
-                //    }
-                //}
-
                 e.Handled = false;
             }
             else if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control && e.Key == Key.V)
@@ -577,18 +641,18 @@ namespace GroceryStoreApp.Pages
                         break;
                     }
                 }
-                if(a == true)
+                if (a == true)
                 {
                     pay = Decimal.Parse(textBox.Text.Replace(",", CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator), CultureInfo.InvariantCulture);
-                    //pay = Decimal.Parse(textBox.Text);
+
                 }
             }
-            
+
 
 
             if (textBox.Text == null || textBox.Text == "" || pay < 0.001M)
             {
-                textBox.Text = "0.01";
+                textBox.Text = "1";
             }
             if (textBox.DataContext is Product selectedProduct)
             {
@@ -725,8 +789,12 @@ namespace GroceryStoreApp.Pages
             selectedProduct.BulkUpdate();
             TotalSupplyValue.Amount -= selectedProduct.Price;
             TotalSupplyValue.Weight -= selectedProduct.Bulk;
-            _supplyProductList.Remove(_supplyProductList.Where(x => x.Код.Equals(selectedProduct.ID)).FirstOrDefault());
+            _supplyProductList.Remove(_supplyProductList.Where(x => x.Код.Equals(selectedProduct.ProductID)).FirstOrDefault());
             UpdateProductList();
+        }
+        private void GoBackButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
         }
     }
 }
