@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace GroceryStoreApp.CsClasses
@@ -22,7 +23,7 @@ namespace GroceryStoreApp.CsClasses
         }
     }
 
-    [ValueConversion(typeof(decimal), typeof(int))]
+    [ValueConversion(typeof(decimal), typeof(decimal))]
     public class PriceConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -31,15 +32,15 @@ namespace GroceryStoreApp.CsClasses
                 return null;
 
             Nullable<decimal> cost;
-            Nullable<int> quantity;
+            Nullable<decimal> quantity;
 
             cost = values[0] as Nullable<decimal>;
-            quantity = values[1] as Nullable<int>;
+            quantity = values[1] as Nullable<decimal>;
 
             if (cost == null || quantity == null)
                 return null;
-
-            return (cost * quantity).ToString();
+           
+            return (cost * quantity);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
@@ -47,4 +48,43 @@ namespace GroceryStoreApp.CsClasses
             throw new NotSupportedException();
         }
     }
+    public class QuantityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+            {
+                return null;
+            }
+
+            Nullable<decimal> quantity;
+            quantity = value as Nullable<decimal>;
+
+            if (quantity == null)
+            {
+                return null;
+            }
+
+            string quantityString = quantity.ToString();
+
+            for (int i = 0; i < quantityString.Length; i++)
+            {
+                if(quantityString[i] == ',')
+                {
+                    return quantityString;
+                }
+            }
+            return value.ToString();
+            return quantityString.Replace('.', ',');
+            //quantity = (decimal?)b;
+            //return quantity;
+            //return quantity.Replace(',', '.');
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 }

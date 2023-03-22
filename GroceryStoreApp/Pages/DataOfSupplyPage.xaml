@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:GroceryStoreApp.Pages"
       mc:Ignorable="d" xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
       Title="DataOfSupplyPage" FontFamily="{StaticResource Blogger Sans}" 
-      IsVisibleChanged="Page_IsVisibleChanged" Loaded="Page_Loaded">
+      Loaded="Page_Loaded">
 
     <Page.Resources>
         <Style TargetType="{x:Type TextBlock}">

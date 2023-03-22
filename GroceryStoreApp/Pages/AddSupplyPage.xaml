@@ -287,10 +287,17 @@
                                                          Click="RemoveOneProductButton_Click"></my:NavigationButton>
                                     <my:TextBoxWithRemoved Uid="Введите количество" Width="150" Margin="0 5 0 5"
                                                            ContextMenu="{StaticResource TextBoxContextMenu}" 
-                                                           Text="{Binding Path=Quantity, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                                            PreviewKeyDown="QuantityProductTextBox_PreviewKeyDown"
+                                                           Text="{Binding Path=Quantity, UpdateSourceTrigger=PropertyChanged,
+                                                           Mode=TwoWay,StringFormat={}{0:N3}}"
                                                            x:Name="QuantityProductTextBox" VerticalAlignment="Center" 
-                                                           TextChanged="QuantityProductTextBox_TextChanged"></my:TextBoxWithRemoved>
+                                                           TextChanged="QuantityProductTextBox_TextChanged">
+                                        <!--<TextBox.Text>
+                                            <Binding  Path="Quantity" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
+                                                     Converter="{StaticResource QuantityConverter}">
+                                            </Binding>
+                                        </TextBox.Text>-->
+                                    </my:TextBoxWithRemoved>
                                     <my:NavigationButton Data="{StaticResource ExpandPathData}" Name="AddOneProductButton" 
                                                          Click="AddOneProductButton_Click"></my:NavigationButton>
                                 </StackPanel>
@@ -311,7 +318,7 @@
                     <GridViewColumn Header="Цена" Width="130">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Cost, StringFormat={}{0} РУБ}" HorizontalAlignment="Left" FontSize="18"></TextBlock>
+                                <TextBlock Text="{Binding Cost, StringFormat={}{0:N3} РУБ}" HorizontalAlignment="Left" FontSize="18"></TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -320,8 +327,8 @@
                             <DataTemplate>
                                 <TextBlock Name="PriceTextBlock" HorizontalAlignment="Left" FontSize="18">
                                     <TextBlock.Text>
-                                        <MultiBinding Converter="{StaticResource PriceConverter}">
-                                            <Binding Path="Cost"/>
+                                        <MultiBinding StringFormat="{}{0:N2}" Converter="{StaticResource PriceConverter}">
+                                            <Binding Path="Cost" />
                                             <Binding Path="Quantity"/>
                                         </MultiBinding>
                                     </TextBlock.Text>
@@ -411,8 +418,8 @@
         <Border Grid.Row="3" DataContext="{Binding TotalSupplyValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Padding="5" Background="{StaticResource Window.NavigationBar.Background2}">
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" >
                 <TextBlock Text="Итого" FontWeight="Medium" HorizontalAlignment="Left"></TextBlock>
-                <TextBlock Width="200"  Name="WeightTextBlock" Text="{Binding Weight,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0} КГ}"></TextBlock>
-                <TextBlock Width="200" Name="AmountTextBlock" Text="{Binding Amount,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0} РУБ}"></TextBlock>
+                <TextBlock Width="200"  Name="WeightTextBlock" Text="{Binding Weight,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:N3} КГ}"></TextBlock>
+                <TextBlock Width="200" Name="AmountTextBlock" Text="{Binding Amount,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:N2} РУБ}"></TextBlock>
             </StackPanel>
         </Border>
         <TextBlock Text="" Grid.Column="0" HorizontalAlignment="Center" Grid.Row="2" 

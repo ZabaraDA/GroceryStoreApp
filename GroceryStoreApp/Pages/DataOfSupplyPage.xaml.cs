@@ -281,7 +281,9 @@ namespace GroceryStoreApp.Pages
         }
         private void ViewSupplyButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Button button = sender as Button;
+            Поставка selectedSupply = button.DataContext as Поставка;
+            NavigationService.Navigate(new AddSupplyPage(selectedSupply,false));
         }
 
         private void DeleteSupplyButton_Click(object sender, RoutedEventArgs e)
@@ -317,13 +319,18 @@ namespace GroceryStoreApp.Pages
         {
             Button button = sender as Button;
             Поставка selectedSupply = button.DataContext as Поставка;
-
-            NavigationService.Navigate(new AddSupplyPage(selectedSupply));
-        }
-
-        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-
+            if (selectedSupply.Статус == 2)
+            {
+                MessageBox.Show("Невозможно редактировать отменённую поставку");
+            }
+            else if (selectedSupply.Статус == 3)
+            {
+                MessageBox.Show("Невозможно редактировать выполненную поставку");
+            }
+            else
+            {
+                NavigationService.Navigate(new AddSupplyPage(selectedSupply,true));
+            }
         }
 
         private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -354,7 +361,7 @@ namespace GroceryStoreApp.Pages
 
         private void AddSupplyButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new AddSupplyPage(null));
+            NavigationService.Navigate(new AddSupplyPage(null,false));
         }
     }
 }

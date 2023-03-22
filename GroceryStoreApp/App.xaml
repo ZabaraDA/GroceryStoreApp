@@ -10,6 +10,7 @@
         <!--#region converter-->
         <local:RectangleConverter x:Key="RectangleConverter"/>
         <local:PriceConverter x:Key="PriceConverter"></local:PriceConverter>
+        <local:QuantityConverter x:Key="QuantityConverter"></local:QuantityConverter>
         <!--#endregion-->
         <!--#region fonts-->
         <FontFamily x:Key="Blogger Sans">/Fonts/#Blogger Sans</FontFamily>
