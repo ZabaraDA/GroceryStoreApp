@@ -25,7 +25,7 @@
             <Setter Property="Margin" Value="0 5 10 0"/>
         </Style>
         <Style TargetType="{x:Type my:TextBoxWithRemoved}">
-            <Setter Property="Width" Value="300"/>
+            <Setter Property="Width" Value="230"/>
             <Setter Property="Height" Value="30"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -33,7 +33,7 @@
             <Setter Property="Margin" Value="0 5 0 0"/>
         </Style>
         <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource ComboBoxBaseStyle}">
-            <Setter Property="Width" Value="300"/>
+            <Setter Property="Width" Value="230"/>
             <Setter Property="Height" Value="30"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -54,7 +54,7 @@
             <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="Background" Value="{StaticResource ListViewItem.Static.Background}" />
-           
+
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
@@ -158,7 +158,7 @@
                 </ComboBox>
                 <ComboBox Name="WarehouseComboBox" SelectionChanged="WarehouseComboBox_SelectionChanged" 
                           ItemsSource="{Binding Path= WarehouseList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
-                    
+
                 </ComboBox>
             </StackPanel>
             <StackPanel>
@@ -168,9 +168,18 @@
                 <ComboBox Name="SupplierComboBox"
                           ItemsSource="{Binding Path= SupplierList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Cursor="Hand"></ComboBox>
             </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Тип заполнения" VerticalAlignment="Top" Margin="10"></TextBlock>
+                <ComboBox Name="TypeFillingCombobBox" VerticalAlignment="Top" 
+                          SelectionChanged="TypeFillingCombobBox_SelectionChanged" Cursor="Hand">
+                    <ComboBoxItem Content="Вручную"></ComboBoxItem>
+                    <ComboBoxItem Content="По лимитам"></ComboBoxItem>
+                    <ComboBoxItem Content="По шаблону"></ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" Name="NavigationStackPanel"
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Grid.Row="1" Name="NavigationStackPanel"
                     VerticalAlignment="Bottom" HorizontalAlignment="Right">
 
             <Button Content="Список товаров" Name="ViewProductListButton" Click="ViewProductListButton_Click"
@@ -248,30 +257,6 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="#" DisplayMemberBinding="{Binding ProductID}" Width="60" />
-                    <!--<GridViewColumn Header="Фото" Width="80">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Border CornerRadius="10" Width="60" Height="60" HorizontalAlignment="Center"
-                                        BorderBrush="Black" BorderThickness="1">
-                                    <Border.Background>
-                                        <ImageBrush Stretch="Fill">
-                                            <ImageBrush.ImageSource>
-                                                <Binding Path="Фото">
-                                                    <Binding.TargetNullValue>
-                                                        <ImageSource>/Images/ImageStub.png</ImageSource>
-                                                    </Binding.TargetNullValue>
-                                                    <Binding.FallbackValue>
-                                                        <ImageSource>/Images/ImageStub.png</ImageSource>
-                                                    </Binding.FallbackValue>
-                                                </Binding>
-                                            </ImageBrush.ImageSource>
-                                        </ImageBrush>
-                                    </Border.Background>
-                                </Border>
-                            </DataTemplate>
-
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>-->
                     <GridViewColumn Header="Наименование" Width="200">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -299,7 +284,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Единица измерения" Width="180">
+                    <GridViewColumn Header="Единица измерения" Width="200">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" TextBlock.FontSize="18">
@@ -322,12 +307,39 @@
                             <DataTemplate>
                                 <TextBlock Name="PriceTextBlock" HorizontalAlignment="Left" FontSize="18">
                                     <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0:N2}" Converter="{StaticResource PriceConverter}">
+                                        <MultiBinding StringFormat="{}{0:N2} РУБ" Converter="{StaticResource PriceConverter}">
                                             <Binding Path="Cost" />
                                             <Binding Path="Quantity"/>
                                         </MultiBinding>
                                     </TextBlock.Text>
                                 </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Вес" Width="130">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Weight, StringFormat={}{0:N3}}"  HorizontalAlignment="Left" FontSize="18"></TextBlock>
+                                    <TextBlock Text="{Binding Unit.Аббревиатура, StringFormat={} {0}}" FontSize="16" VerticalAlignment="Bottom"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Общий вес" Width="170">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Name="PriceTextBlock" HorizontalAlignment="Left" FontSize="18">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0:N3}" Converter="{StaticResource PriceConverter}">
+                                                <Binding Path="Weight"/>
+                                                <Binding Path="Quantity"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                    <TextBlock Text="{Binding Unit.Аббревиатура, StringFormat={} {0}}" FontSize="16" VerticalAlignment="Bottom"></TextBlock>
+                                </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -342,73 +354,67 @@
                 </GridView>
             </ListView.View>
         </ListView>
-
-        <StackPanel Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Background="#FFD6D6D6" >
-            <StackPanel Margin="10" Name="ProductEditStackPanel" IsEnabled="False">
-                <TextBlock Text="Фильтры" HorizontalAlignment="Center" TextAlignment="Center" ></TextBlock>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock Text="Выбрано "></TextBlock>
-                    <TextBlock Name="FilterNumberOfProductTextBlock"></TextBlock>
-                    <TextBlock Text=" из "></TextBlock>
-                    <TextBlock Name="NumberOfProductTextBlock"></TextBlock>
-                    <TextBlock Text=" товаров"></TextBlock>
-                </StackPanel>
-                <TextBlock Text="Поиск по наименованию"></TextBlock>
-                <my:TextBoxWithRemoved Name="NameSearchTextBox" TextChanged="SearchTextBox_TextChanged"></my:TextBoxWithRemoved>
-                <TextBlock Text="Группа товара"></TextBlock>
-                <ComboBox Name="GroupSearchComboBox" SelectionChanged="GroupSearchComboBox_SelectionChanged"></ComboBox>
-                <TextBlock Text="Категория товара"></TextBlock>
-                <ComboBox Name="CategorySearchComboBox"  SelectionChanged="SearchComboBox_SelectionChanged"></ComboBox>
-                <TextBlock Text="Производитель"></TextBlock>
-                <ComboBox Name="ManufacturerSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged"></ComboBox>
-                <TextBlock Text="Статус товара"></TextBlock>
-                <ComboBox Name="StatusSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged">
-                    <ComboBoxItem Content="Все товары"></ComboBoxItem>
-                    <ComboBoxItem Content="Доступны к продаже"></ComboBoxItem>
-                    <ComboBoxItem Content="Надоступны к продаже"></ComboBoxItem>
-                </ComboBox>
-                <TextBlock Text="Фото товара"></TextBlock>
-                <ComboBox Name="PhotoSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged">
-                    <ComboBoxItem Content="Все товары"></ComboBoxItem>
-                    <ComboBoxItem Content="Товары с фото"></ComboBoxItem>
-                    <ComboBoxItem Content="Товары без фото"></ComboBoxItem>
-                </ComboBox>
-                <TextBlock Text="Тип сортировки"></TextBlock>
-                <ComboBox Name="TypeSortComboBox" SelectionChanged="TypeSortComboBox_SelectionChanged" Cursor="Hand">
+        <Border Grid.Column="1" Grid.Row="2" Background="#FFD6D6D6"></Border>
+        <StackPanel Name="ProductEditStackPanel"
+                        Grid.Column="1" Grid.Row="2" Margin="5"
+                        IsEnabled="False" Visibility="Collapsed">
+            <TextBlock Text="Фильтры" HorizontalAlignment="Center" TextAlignment="Center" ></TextBlock>
+            <TextBlock Name="NumberOfProductTextBlock" HorizontalAlignment="Center"></TextBlock>
+            <TextBlock Text="Поиск по наименованию"></TextBlock>
+            <my:TextBoxWithRemoved Name="NameSearchTextBox" TextChanged="SearchTextBox_TextChanged"></my:TextBoxWithRemoved>
+            <TextBlock Text="Группа товара"></TextBlock>
+            <ComboBox Name="GroupSearchComboBox" SelectionChanged="GroupSearchComboBox_SelectionChanged"></ComboBox>
+            <TextBlock Text="Категория товара"></TextBlock>
+            <ComboBox Name="CategorySearchComboBox"  SelectionChanged="SearchComboBox_SelectionChanged"></ComboBox>
+            <TextBlock Text="Производитель"></TextBlock>
+            <ComboBox Name="ManufacturerSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged"></ComboBox>
+            <TextBlock Text="Статус товара"></TextBlock>
+            <ComboBox Name="StatusSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged">
+                <ComboBoxItem Content="Все товары"></ComboBoxItem>
+                <ComboBoxItem Content="Доступны к продаже"></ComboBoxItem>
+                <ComboBoxItem Content="Надоступны к продаже"></ComboBoxItem>
+            </ComboBox>
+            <TextBlock Text="Фото товара"></TextBlock>
+            <ComboBox Name="PhotoSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged">
+                <ComboBoxItem Content="Все товары"></ComboBoxItem>
+                <ComboBoxItem Content="Товары с фото"></ComboBoxItem>
+                <ComboBoxItem Content="Товары без фото"></ComboBoxItem>
+            </ComboBox>
+            <TextBlock Text="Тип сортировки"></TextBlock>
+            <ComboBox Name="TypeSortComboBox" SelectionChanged="TypeSortComboBox_SelectionChanged" Cursor="Hand">
+                <ComboBoxItem Content="Произвольно"></ComboBoxItem>
+                <ComboBoxItem Content="Сортировать по весу"></ComboBoxItem>
+                <ComboBoxItem Content="Сортировать по цене"></ComboBoxItem>
+            </ComboBox>
+            <StackPanel Name="WeightSortStackPanel" Visibility="Collapsed">
+                <TextBlock Text="Сортировать по весу"></TextBlock>
+                <ComboBox Name="WeightSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged">
                     <ComboBoxItem Content="Произвольно"></ComboBoxItem>
-                    <ComboBoxItem Content="Сортировать по весу"></ComboBoxItem>
-                    <ComboBoxItem Content="Сортировать по цене"></ComboBoxItem>
+                    <ComboBoxItem Content="По возрастанию"></ComboBoxItem>
+                    <ComboBoxItem Content="По убыванию"></ComboBoxItem>
                 </ComboBox>
-                <StackPanel Name="WeightSortStackPanel" Visibility="Collapsed">
-                    <TextBlock Text="Сортировать по весу"></TextBlock>
-                    <ComboBox Name="WeightSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged">
-                        <ComboBoxItem Content="Произвольно"></ComboBoxItem>
-                        <ComboBoxItem Content="По возрастанию"></ComboBoxItem>
-                        <ComboBoxItem Content="По убыванию"></ComboBoxItem>
-                    </ComboBox>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="От"></TextBlock>
-                        <my:TextBoxWithRemoved Width="110" Name="MinimumWeightTextBox" TextChanged="SearchTextBox_TextChanged"></my:TextBoxWithRemoved>
-                        <TextBlock Text="До"></TextBlock>
-                        <my:TextBoxWithRemoved Width="110" Name="MaximumWeightTextBox" TextChanged="SearchTextBox_TextChanged"></my:TextBoxWithRemoved>
-                    </StackPanel>
-                </StackPanel>
-                <StackPanel Name="CostSortStackPanel" Visibility="Collapsed">
-                    <TextBlock Text="Сортировать по цене"></TextBlock>
-                    <ComboBox Name="CostSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged" Cursor="Hand">
-                        <ComboBoxItem Content="Произвольно"></ComboBoxItem>
-                        <ComboBoxItem Content="По возрастанию"></ComboBoxItem>
-                        <ComboBoxItem Content="По убыванию"></ComboBoxItem>
-                    </ComboBox>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="От"></TextBlock>
-                        <my:TextBoxWithRemoved Width="110" Name="MinimumCostTextBox" TextChanged="SearchTextBox_TextChanged"></my:TextBoxWithRemoved>
-                        <TextBlock Text="До"></TextBlock>
-                        <my:TextBoxWithRemoved Width="110" Name="MaximumCostTextBox" TextChanged="SearchTextBox_TextChanged"></my:TextBoxWithRemoved>
-                    </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="От"></TextBlock>
+                    <my:TextBoxWithRemoved Width="110" Name="MinimumWeightTextBox" TextChanged="SearchTextBox_TextChanged"></my:TextBoxWithRemoved>
+                    <TextBlock Text="До"></TextBlock>
+                    <my:TextBoxWithRemoved Width="110" Name="MaximumWeightTextBox" TextChanged="SearchTextBox_TextChanged"></my:TextBoxWithRemoved>
                 </StackPanel>
             </StackPanel>
-            <Button  Content="Сбросить фильтры" x:Name="ClearFilterButton" Click="ClearFilterButton_Click"></Button>
+            <StackPanel Name="CostSortStackPanel" Visibility="Collapsed">
+                <TextBlock Text="Сортировать по цене"></TextBlock>
+                <ComboBox Name="CostSearchComboBox" SelectionChanged="SearchComboBox_SelectionChanged" Cursor="Hand">
+                    <ComboBoxItem Content="Произвольно"></ComboBoxItem>
+                    <ComboBoxItem Content="По возрастанию"></ComboBoxItem>
+                    <ComboBoxItem Content="По убыванию"></ComboBoxItem>
+                </ComboBox>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="От"></TextBlock>
+                    <my:TextBoxWithRemoved Width="110" Name="MinimumCostTextBox" TextChanged="SearchTextBox_TextChanged"></my:TextBoxWithRemoved>
+                    <TextBlock Text="До"></TextBlock>
+                    <my:TextBoxWithRemoved Width="110" Name="MaximumCostTextBox" TextChanged="SearchTextBox_TextChanged"></my:TextBoxWithRemoved>
+                </StackPanel>
+            </StackPanel>
+            <Button Margin="10"  Content="Сбросить фильтры" x:Name="ClearFilterButton" Click="ClearFilterButton_Click"></Button>
         </StackPanel>
         <Border Grid.Row="3" DataContext="{Binding TotalSupplyValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Padding="5" Background="{StaticResource Window.NavigationBar.Background2}">
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" >

@@ -610,7 +610,7 @@
             <Setter Property="FontFamily" Value="Bahnschrift SemiLight"></Setter>
             <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="Height" Value="35"></Setter>
-            <Setter Property="Width" Value="130"></Setter>
+            <Setter Property="Width" Value="137"></Setter>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="FocusVisualStyle"
                     Value="{StaticResource ButtonFocusVisual}"/>

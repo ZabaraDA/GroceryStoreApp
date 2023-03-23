@@ -124,9 +124,9 @@ namespace GroceryStoreApp.Pages
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            TypeFillingCombobBox.SelectedIndex = 0;
             if (_currentSupply != null)
             {
-
                 NumberSupplyTextBlock.Text = $"Заказ поставщику № {_currentSupply.Код}";
                 DateOfCreationDatePicker.Text = _currentSupply.ДатаЗаявки.ToString();
                 DateOfArrivalDatePicker.Text = _currentSupply.ДатаПоставки.ToString();
@@ -159,6 +159,7 @@ namespace GroceryStoreApp.Pages
                 SubsidiaryComboBox.IsEnabled = false;
                 if(_isDeliveriChange == false)
                 {
+                    TypeFillingCombobBox.IsEnabled = false;
                     ProductListView.IsEnabled = false;
                     SupplierComboBox.IsEnabled = false;
                     AddSupplyButton.IsEnabled = false;
@@ -206,7 +207,7 @@ namespace GroceryStoreApp.Pages
             }
             List<Товар> productList = (WarehouseComboBox.SelectedItem as Склад).Товар.ToList();
 
-            NumberOfProductTextBlock.Text = productList.Count().ToString();
+            int numberOfSupply = productList.Count();
 
             if (_supplyProductList.Count > 0)
             {
@@ -269,7 +270,7 @@ namespace GroceryStoreApp.Pages
                     productList = productList.Where(x => x.Фото == null).ToList();
                 }
             }
-            FilterNumberOfProductTextBlock.Text = productList.Count().ToString();
+            NumberOfProductTextBlock.Text = $"Выбрано {productList.Count} из {numberOfSupply} поставок";
             ProductListView.ItemsSource = productList.ToList();
             ProductListView.Items.Refresh();
         }
@@ -401,6 +402,8 @@ namespace GroceryStoreApp.Pages
             ViewProductListButton.BorderThickness = new Thickness(0, 0, 0, 3);
             ViewProductListButton.BorderBrush = null;
             ViewProductListButton.Background = Brushes.Gray;
+
+            ProductEditStackPanel.Visibility = Visibility.Collapsed;
         }
         private void ViewProductListButton_Click(object sender, RoutedEventArgs e)
         {
@@ -418,6 +421,8 @@ namespace GroceryStoreApp.Pages
             ViewProductInDeliveryButton.BorderThickness = new Thickness(0, 0, 0, 3);
             ViewProductInDeliveryButton.BorderBrush = null;
             ViewProductInDeliveryButton.Background = Brushes.Gray;
+
+            ProductEditStackPanel.Visibility = Visibility.Visible;
         }
         private void ReminderTextBlockVisiblity()
         {
@@ -697,7 +702,7 @@ namespace GroceryStoreApp.Pages
                     SupplierList.Add(supplierList[i]);
 
                 }
-
+                TypeFillingCombobBox.IsEnabled = true;
 
                 SupplierComboBox.IsEnabled = true;
                 ProductEditStackPanel.IsEnabled = true;
@@ -710,6 +715,7 @@ namespace GroceryStoreApp.Pages
                 ProductListView.ItemsSource = null;
                 SupplierComboBox.IsEnabled = false;
                 ProductEditStackPanel.IsEnabled = false;
+                TypeFillingCombobBox.IsEnabled = false;
                 ClearFilter();
             }
 
@@ -795,6 +801,64 @@ namespace GroceryStoreApp.Pages
         private void GoBackButton_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
+        }
+
+        private void TypeFillingCombobBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (_handleSelection == true)
+            {
+                if (ProductList.Count > 0 &&
+                    MessageBox.Show("При изменении способа заполнения будут сброшены товары в поставке", "Вы уверены", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
+                {
+                    ComboBox comboBox = sender as ComboBox;
+                    _handleSelection = false;
+                    comboBox.SelectedItem = e.RemovedItems[0];
+                    return;
+                }
+                else
+                {
+                    ClearSupplyData();
+                    ClearFilter();
+                }
+            }
+            _handleSelection = true;
+            ClearSupplyData();
+            if(TypeFillingCombobBox.SelectedIndex == 1)
+            {
+                List<ФилиалТовар> subsdinaryProductList = (SubsidiaryComboBox.SelectedItem as Филиал).ФилиалТовар.Where(x => x.Количество < x.МинимальныйЛимит).ToList();
+                List<Товар> productList = new List<Товар>();
+                for (int i = 0; i < subsdinaryProductList.Count; i++)
+                {
+                    productList.Add(subsdinaryProductList[i].Товар);
+                }
+                List<Товар> productInStockList = (WarehouseComboBox.SelectedItem as Склад).Товар.ToList();
+                productList = productList.Intersect(productInStockList).ToList();
+
+                for (int i = 0; i < productList.Count; i++)
+                {
+                    _supplyProductList.Add(productList[i]);
+
+                    ФилиалТовар subsdinaryProduct = productList[i].ФилиалТовар.Where(x => x.КодФилиала.Equals((SubsidiaryComboBox.SelectedItem as Филиал).Код)).FirstOrDefault();
+                    decimal quantity = subsdinaryProduct.Норма - subsdinaryProduct.Количество;
+                    ProductList.Add(new Product
+                    {
+                        ProductID = productList[i].Код,
+                        Name = productList[i].Наименование,
+                        Quantity = quantity,
+                        Cost = productList[i].Цена,
+                        Unit = productList[i].ЕдиницаИзмерения,
+                        Price = productList[i].Цена * quantity,
+                        Weight = productList[i].Вес,
+                        Bulk = productList[i].Вес * quantity
+                    });
+                    TotalSupplyValue.Amount += productList[i].Цена * quantity;
+                    TotalSupplyValue.Weight += productList[i].Вес * quantity;
+
+                }
+                    UpdateProductList();
+            }
+            ReminderTextBlockVisiblity();
+
         }
     }
 }
