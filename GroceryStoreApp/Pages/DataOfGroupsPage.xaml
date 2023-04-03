@@ -7,28 +7,124 @@
       xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
       mc:Ignorable="d" FontFamily="{StaticResource Blogger Sans}">
     <Page.Resources>
-        <Style TargetType="ListBoxItem">
+        <Style TargetType="ListViewItem" x:Key="ProductItemStyle">
+            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Background" Value="{StaticResource ListViewItem.Static.Background}"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate>
-                        <Border Name="border" CornerRadius="5" Height="50" Grid.ColumnSpan="2" 
-                                BorderBrush="Gray" BorderThickness="2" Margin="5" 
-                                Background="LightGray">
-                            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
-                                <TextBlock Text="{Binding Наименование}" Margin="20 0 0 0" FontSize="18"/>
-                            </StackPanel>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border x:Name="Border" Padding="2" SnapsToDevicePixels="true" Margin="1"
+                                BorderThickness="0 0 0 1" BorderBrush="{TemplateBinding BorderBrush}"
+                                Background="{TemplateBinding Background}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <!--<Border CornerRadius="5" Width="60" Height="60" HorizontalAlignment="Center"
+                                        BorderBrush="Black" BorderThickness="1" SnapsToDevicePixels="True">
+                                    <Border.Background>
+                                        <ImageBrush Stretch="Fill">
+                                            <ImageBrush.ImageSource>
+                                                <Binding Path="Фото">
+                                                    <Binding.TargetNullValue>
+                                                        <ImageSource>/Images/ImageStub.png</ImageSource>
+                                                    </Binding.TargetNullValue>
+                                                    <Binding.FallbackValue>
+                                                        <ImageSource>/Images/ImageStub.png</ImageSource>
+                                                    </Binding.FallbackValue>
+                                                </Binding>
+                                            </ImageBrush.ImageSource>
+                                        </ImageBrush>
+                                    </Border.Background>
+                                </Border>-->
+                                <Border Name="LabelBorder" Height="auto" Width="3" Background="{StaticResource ListViewItem.MouseOver.Border}" HorizontalAlignment="Left" Visibility="Hidden"></Border>
+                                <ContentPresenter Margin="20 0 0 0" Content="{Binding Наименование}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Left">
+                                    <my:NavigationButton  Background="Blue" Data="{StaticResource ProductPathData}" 
+                                                          Name="ViewProductButton" Click="ViewProductButton_Click"
+                                                          ToolTip="Информация о товаре"></my:NavigationButton>
+                                    <my:NavigationButton  Background="Green" Data="{StaticResource ExpandPathData}" 
+                                                          Name="ChangeProductButton" Click="ChangeProductButton_Click"
+                                                          ToolTip="Редактировать товар"></my:NavigationButton>
+                                    <my:NavigationButton  Background="Red" Data="{StaticResource ExitPathData}" 
+                                                          Name="DeleteProductButton" Click="DeleteProductButton_Click"
+                                                          ToolTip="Деактивировать товар"></my:NavigationButton>
+                                </StackPanel>
+                            </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
-
+                            <Trigger Property="IsMouseOver"  Value="True">
+                                <Setter Property="Background" Value="{StaticResource ListViewItem.MouseOver.Background}" />
+                                <Setter TargetName="LabelBorder" Property="Visibility" Value="Visible"></Setter>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="{StaticResource ListViewItem.Pressed.Background}"/>
+                            </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style TargetType="ListViewItem">
+        <Style TargetType="ListViewItem" x:Key="CategoryItemStyle">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <ToggleButton Name="PART_ToggleButton" Height="50" Grid.ColumnSpan="2" 
+                                          BorderBrush="Gray" BorderThickness="2" Margin="5"
+                                          Background="LightGray" HorizontalContentAlignment="Left" 
+                                          Style="{x:Null}" Padding="20 0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Наименование}" Margin="20 0 0 0" FontSize="18"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </ToggleButton>
+                            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Left" Margin="10">
+                                <my:NavigationButton  Background="Blue" Data="{StaticResource ProductPathData}" 
+                                                          Name="AddProductButton" Click="AddProductButton_Click"
+                                                          ToolTip="Информация о товаре"></my:NavigationButton>
+                                <my:NavigationButton  Background="Green" Data="{StaticResource ExpandPathData}" 
+                                                          Name="ChangeCategoryButton" Click="ChangeProductButton_Click"
+                                                          ToolTip="Редактировать товар"></my:NavigationButton>
+                                <!--<my:NavigationButton  Background="Red" Data="{StaticResource ExitPathData}" 
+                                                          Name="DeleteCategorytButton" Click="DeleteProductButton_Click"
+                                                          ToolTip="Деактивировать товар"></my:NavigationButton>-->
+                            </StackPanel>
+                            <ListView Grid.Row="1" Margin="20 0 0 0" Grid.Column="0" Grid.ColumnSpan="2" Name="ListBox" 
+                                     Visibility="{Binding ElementName=PART_ToggleButton,Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                     ItemsSource="{Binding Товар}" ItemContainerStyle="{StaticResource ProductItemStyle}"
+                                     BorderBrush="Gray" BorderThickness="1 0 0 0" Background="{x:Null}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Наименование}"></TextBlock>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"  Value="True">
+                                <Setter TargetName="PART_ToggleButton" Property="BorderBrush" Value="DarkGreen"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="ListViewItem" x:Key="GroupItemStyle">
             <Setter Property="FontFamily" Value="{StaticResource Blogger Sans}"></Setter>
             <Setter Property="FontSize" Value="18"></Setter>
-            <Setter Property="local:AP.IsChecked" Value="False"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
@@ -42,16 +138,10 @@
                                 <RowDefinition Height="*"></RowDefinition>
                             </Grid.RowDefinitions>
                             <ToggleButton Name="PART_ToggleButton" Height="50" Grid.ColumnSpan="2" 
-                                          IsChecked="{TemplateBinding local:AP.IsChecked}"
                                           BorderBrush="Gray" BorderThickness="2" Margin="5"
                                           Background="LightGray" HorizontalContentAlignment="Left" 
                                           Style="{x:Null}" Padding="20 0">
                                 <StackPanel Orientation="Horizontal">
-                                    <CheckBox Name="PART_CheckBox" 
-                                        IsChecked="{TemplateBinding local:AP.IsChecked}">
-                                        <!--IsChecked="{Binding RelativeSource={RelativeSource TenplateParent},Path=IsSelected,Mode=TwoWay }"-->
-                                              
-                                    </CheckBox>
                                     <!--<Border  CornerRadius="10" HorizontalAlignment="Left" 
                                              BorderThickness="1" BorderBrush="Black"
                                              Height="50" Width="50" Margin="5" >
@@ -71,49 +161,16 @@
                                                HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </ToggleButton>
-                            <ListBox Grid.Row="1" Margin="20 0 0 0" Grid.Column="0" Grid.ColumnSpan="2" Name="ListBox" 
+                            <ListView Grid.Row="1" Margin="20 0 0 0" Grid.Column="0" Grid.ColumnSpan="2" Name="ListBox" 
                                      Visibility="{Binding ElementName=PART_ToggleButton,Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                     ItemsSource="{Binding Категория}"
-                                     BorderBrush="Gray" BorderThickness="1 0 0 0" Background="{x:Null}">
-                                <!--<Listbox.Visibility>
-                                    <MultiBinding Converter="{StaticResource a}">
-                                        
-                                    </MultiBinding>
-                                </Listbox.Visibility>-->
-                            </ListBox>
+                                     ItemsSource="{Binding Категория}" ItemContainerStyle="{StaticResource CategoryItemStyle}"
+                                     BorderBrush="Gray" BorderThickness="1 0 0 0" Background="{x:Null}"></ListView>
                         </Grid>
 
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver"  Value="True">
                                 <Setter TargetName="PART_ToggleButton" Property="BorderBrush" Value="DarkGreen"></Setter>
-                            </Trigger> 
-                            <!--<Trigger SourceName="border" Property="IsSelected"  Value="True">
-                                <Setter TargetName="border" Property="BorderBrush" Value="DarkGreen"></Setter>
-                            </Trigger>-->
-                            <!--<MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    --><!--<Condition Binding="{Binding ElementName=border, Path=IsPressed}" Value="True"></Condition>-->
-                                    <!--<Condition Binding="{Binding ElementName=PART_CheckBox, Path=IsChecked}" Value="False"></Condition>--><!--
-                                    <Condition Binding="{Binding ElementName=ListBox, Path=Visibility,Converter={StaticResource BooleanToVisibilityConverter}}" 
-                                               Value="Visible"></Condition>
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    --><!--<Setter TargetName="PART_CheckBox" Property="IsChecked" Value="True"/>--><!--
-                                    <Setter Property="local:AP.IsChecked" Value="True"></Setter>
-                                    --><!--<Setter TargetName="ListBox" Property="Visibility" Value="Visible"/>--><!--
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>-->
-                            <!--<MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=border, Path=IsPressed}" Value="True"></Condition>
-                                    --><!--<Condition Binding="{Binding ElementName=PART_CheckBox, Path=IsChecked}" Value="False"></Condition>-->
-                                    <!--<Condition Binding="{Binding ElementName=ListBox, Path=Visibility}" Value="Collapsed"></Condition>--><!--
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    <Setter TargetName="PART_CheckBox" Property="IsChecked" Value="True"/>
-                                    <Setter TargetName="ListBox" Property="Visibility" Value="Visible"/>
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>-->
+                            </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -141,7 +198,8 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock Text="Группы товаров" FontSize="24"></TextBlock>
-        <ListView x:Name="GroupListView" Grid.Row="1"
+        <ListView x:Name="GroupListView" Grid.Row="1" 
+                  ItemContainerStyle="{StaticResource GroupItemStyle}"
                   Style="{StaticResource ProductListViewStyle}">
         </ListView>
     </Grid>

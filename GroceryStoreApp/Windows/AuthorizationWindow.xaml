@@ -28,7 +28,7 @@
         <Border Grid.Row="0" Background="{StaticResource Window.NavigationBar.Background}">
         </Border>
         <TextBlock Text="Окно авторизации" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"></TextBlock>
-        <StackPanel  HorizontalAlignment="Right" Margin="2" Orientation="Horizontal">
+        <StackPanel  HorizontalAlignment="Right" Orientation="Horizontal">
             <my:NavigationButton Data="{StaticResource HidePathData}"  Style="{StaticResource PanelNavigationButtonStyle}" VerticalContentAlignment="Bottom"
                                  HorizontalAlignment="Left" x:Name="CollapseButton" Click="CollapseButton_Click"></my:NavigationButton>
             <my:NavigationButton Data="{StaticResource ExitPathData}" Style="{StaticResource PanelNavigationButtonStyle}" x:Name="ExitButton" Click="ExitButton_Click"></my:NavigationButton>

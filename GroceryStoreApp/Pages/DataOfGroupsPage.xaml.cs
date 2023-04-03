@@ -17,20 +17,6 @@ using System.Windows.Shapes;
 
 namespace GroceryStoreApp.Pages
 {
-    public sealed class AP : DependencyObject
-    {
-        public static bool GetIsChecked(DependencyObject obj)
-        {
-            return (bool)obj.GetValue(IsCheckedProperty);
-        }
-
-        public static void SetIsChecked(DependencyObject obj, bool value)
-        {
-            obj.SetValue(IsCheckedProperty, value);
-        }
-        public static readonly DependencyProperty IsCheckedProperty =
-            DependencyProperty.RegisterAttached("IsChecked", typeof(bool), typeof(AP), new UIPropertyMetadata(false));
-    }
     public partial class DataOfGroupsPage : Page
     {
         GroceryStoreDatabasesEntities _databasesEntities = new GroceryStoreDatabasesEntities();
@@ -40,12 +26,25 @@ namespace GroceryStoreApp.Pages
             GroupListView.ItemsSource = _databasesEntities.Группа.ToList();
         }
 
-        private void border_Click(object sender, RoutedEventArgs e)
+        private void ViewProductButton_Click(object sender, RoutedEventArgs e)
         {
-            var a = sender as Button;
-            var b = a.Parent as Grid;
-            var c = b.Parent as ListViewItem;
-            
+
+            NavigationService.Navigate(new FormProductPage((sender as Button).DataContext as Товар));
+        }
+
+        private void ChangeProductButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteProductButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AddProductButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
