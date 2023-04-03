@@ -20,9 +20,9 @@ namespace GroceryStoreApp.Windows
 {
     public partial class MenuWindow : Window
     {
-        DoubleAnimation doubleAnimation = new DoubleAnimation();
+        private readonly DoubleAnimation _doubleAnimation = new DoubleAnimation();
 
-        int quantity = 0;
+        int _quantity = 0;
 
         readonly List<(int access,Page page, string content, string geometryName)> navigationButtonList = new List<(int access, Page page, string content, string data)>()
         {
@@ -33,17 +33,13 @@ namespace GroceryStoreApp.Windows
           (3,new AddProductPage(), "Добавить товар","AddProductPathData"),
           (3,new DataOfCategoriesPage(), "Категории","ProductPathData"),
           (3,new DataOfSupplyPage(), "Поставки","SupplyPathData"),
-          //(3,new AddSupplyPage(), "Добавить поставку","SupplyPathData"),
+          (3,new DataOfGroupsPage(), "Товары","ProductPathData"),
 
         };
         public MenuWindow()
         {
 
             InitializeComponent();
-
-            //ExitPath.Data = Geometry.Parse(PathDataClass.exitData);
-            //WindowStatePath.Data = Geometry.Parse(PathDataClass.fullScreenData);
-            //HidePath.Data = Geometry.Parse(PathDataClass.hideData);
             StatusBarTextBlock.Text = "Главное меню - Приветствие";
 
             MenuFrame.Navigate(new WelcomePage());
@@ -59,8 +55,7 @@ namespace GroceryStoreApp.Windows
                 {
                     Content = navigationButtonList[i].content,
                     Data = (Geometry)Application.Current.FindResource(navigationButtonList[i].geometryName),
-                    Tag = quantity++,
-
+                    Tag = _quantity++,
                 };
                  
                 navigationButton.Click += Button_Click;
@@ -93,32 +88,47 @@ namespace GroceryStoreApp.Windows
         {
             if (WindowState == WindowState.Normal)
             {
+                ResizeMode = ResizeMode.NoResize;  
                 WindowState = WindowState.Maximized;
-                StateScreenButton.Data = (Geometry)Application.Current.FindResource("CollapsePathData");
+                
             }
             else
             {
+                ResizeMode = ResizeMode.CanResize;
                 WindowState = WindowState.Normal;
-                StateScreenButton.Data = (Geometry)Application.Current.FindResource("FullScreenPathData");
+                
             }
         }
         private void ControlPanel_MouseEnter(object sender, MouseEventArgs e)
         {
-
-            doubleAnimation.From = ControlGrid.ActualWidth;
-            doubleAnimation.To = 210;
-            doubleAnimation.Duration = TimeSpan.FromSeconds(0.5);
-            doubleAnimation.EasingFunction = new QuadraticEase();
-            ControlGrid.BeginAnimation(WidthProperty, doubleAnimation);
+            _doubleAnimation.From = ControlGrid.ActualWidth;
+            _doubleAnimation.To = 210;
+            _doubleAnimation.Duration = TimeSpan.FromSeconds(0.5);
+            _doubleAnimation.EasingFunction = new QuadraticEase();
+            ControlGrid.BeginAnimation(WidthProperty, _doubleAnimation);
         }
 
         private void ControlPanel_MouseLeave(object sender, MouseEventArgs e)
         {
-            doubleAnimation.From = ControlGrid.ActualWidth;
-            doubleAnimation.To = 70;
-            doubleAnimation.Duration = TimeSpan.FromSeconds(0.5);
-            doubleAnimation.EasingFunction = new QuadraticEase();
-            ControlGrid.BeginAnimation(WidthProperty, doubleAnimation);
+            _doubleAnimation.From = ControlGrid.ActualWidth;
+            _doubleAnimation.To = 70;
+            _doubleAnimation.Duration = TimeSpan.FromSeconds(0.5);
+            _doubleAnimation.EasingFunction = new QuadraticEase();
+            ControlGrid.BeginAnimation(WidthProperty, _doubleAnimation);
+        }
+
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                ResizeMode = ResizeMode.CanResize;
+                StateScreenButton.Data = (Geometry)Application.Current.FindResource("CollapsePathData");
+            }
+            else
+            {
+                
+                StateScreenButton.Data = (Geometry)Application.Current.FindResource("FullScreenPathData");
+            }
         }
     }
 }

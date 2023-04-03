@@ -67,5 +67,10 @@ namespace GroceryStoreApp.Pages
 
             NavigationService.Navigate(new FormProductPage((sender as Button).DataContext as Товар));
         }
+
+        private void ChangeProductButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

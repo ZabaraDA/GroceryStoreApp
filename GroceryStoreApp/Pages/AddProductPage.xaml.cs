@@ -207,9 +207,6 @@ namespace GroceryStoreApp.Pages
             }
 
             #endregion
-
-
-
             databasesEntities.Товар.Add(new Товар
             {
                 Актикул = VendorCodeTextBox.Text,

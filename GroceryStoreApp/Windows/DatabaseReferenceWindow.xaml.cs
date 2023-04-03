@@ -27,11 +27,7 @@ namespace GroceryStoreApp.Windows
             }
 
         }
-        //public void ShowDialog(Window owner)
-        //{
-        //    this.Owner = owner;
-        //    this.ShowDialog();
-        //}
+
         
         public decimal MinimumLimit
         {
@@ -103,6 +99,11 @@ namespace GroceryStoreApp.Windows
             NormalLimit = Convert.ToDecimal(NormalLimitTextBox.Text);
             DialogResult = true;
             this.Close();
+        }
+
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
         }
     }
 }

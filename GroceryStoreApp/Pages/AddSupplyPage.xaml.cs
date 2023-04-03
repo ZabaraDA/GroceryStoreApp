@@ -35,9 +35,13 @@ namespace GroceryStoreApp.Pages
         public decimal Price { get; set; }
         public decimal Weight { get; set; }
         public decimal Bulk { get; set; }
-
+        public DateTime ManufacturedDate { get; set; }
+        public int StorageDay { get; set; }
+        public int NotificationDay { get; set; }
         public ЕдиницаИзмерения Unit { get; set; }
-        public Product(int id, string name, int quantity, ЕдиницаИзмерения unit, decimal cost, decimal price, decimal weight, decimal bulk)
+        public Product(int id, string name, int quantity, ЕдиницаИзмерения unit,
+                       decimal cost, decimal price, decimal weight, decimal bulk,
+                       DateTime manufacturedDate,int storageDay, int notificationDay)
         {
             ProductID = id;
             Name = name;
@@ -47,6 +51,9 @@ namespace GroceryStoreApp.Pages
             Price = cost * quantity;
             Weight = weight;
             Bulk = bulk;
+            ManufacturedDate = manufacturedDate;
+            StorageDay = storageDay;
+            NotificationDay = notificationDay;
         }
         public void PriceUpdate()
         {
@@ -120,13 +127,14 @@ namespace GroceryStoreApp.Pages
             });
             SubsidiaryComboBox.DisplayMemberPath = "Наименование";
             SubsidiaryComboBox.SelectedIndex = 0;
-
+            
         }
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             TypeFillingCombobBox.SelectedIndex = 0;
             if (_currentSupply != null)
             {
+                SampleCombobBox.SelectedIndex = Convert.ToInt16(_currentSupply.Шаблон);
                 NumberSupplyTextBlock.Text = $"Заказ поставщику № {_currentSupply.Код}";
                 DateOfCreationDatePicker.Text = _currentSupply.ДатаЗаявки.ToString();
                 DateOfArrivalDatePicker.Text = _currentSupply.ДатаПоставки.ToString();
@@ -134,7 +142,6 @@ namespace GroceryStoreApp.Pages
                 WarehouseComboBox.SelectedItem = WarehouseList.Where(x => x.Код.Equals(_currentSupply.Склад.Код)).FirstOrDefault();
                 SupplierComboBox.SelectedItem = SupplierList.Where(x => x.Код.Equals(_currentSupply.Поставщик.Код)).FirstOrDefault();
                 List<ТоварПоставка> productSupplyList = _currentSupply.ТоварПоставка.ToList();
-                MessageBox.Show(productSupplyList.Count.ToString());
                 for (int i = 0; i < productSupplyList.Count; i++)
                 {
                     ProductList.Add(new Product
@@ -148,6 +155,8 @@ namespace GroceryStoreApp.Pages
                         Unit = productSupplyList[i].Товар.ЕдиницаИзмерения,
                         Weight = productSupplyList[i].Товар.Вес,
                         Bulk = productSupplyList[i].Вес,
+                        ManufacturedDate = productSupplyList[i].ДатаИзготовления,
+                        StorageDay = productSupplyList[i].Товар.СрокГодности
 
                     });
                     _supplyProductList.Add((WarehouseComboBox.SelectedItem as Склад).Товар.Where(x => x.Код.Equals(productSupplyList[i].КодТовара)).FirstOrDefault());
@@ -167,6 +176,7 @@ namespace GroceryStoreApp.Pages
                     ViewProductInDeliveryButton.IsEnabled = false;
                     ProductEditStackPanel.IsEnabled = false;
                     AddSupplyButton.Visibility = Visibility.Collapsed;
+                    SampleCombobBox.IsEnabled = false;
                 }
             }
             else
@@ -198,6 +208,7 @@ namespace GroceryStoreApp.Pages
             WeightSearchComboBox.SelectedIndex = 0;
             TypeSortComboBox.SelectedIndex = 0;
             PhotoSearchComboBox.SelectedIndex = 0;
+            SampleCombobBox.SelectedIndex = 0;
         }
         private void UpdateProductList()
         {
@@ -288,7 +299,10 @@ namespace GroceryStoreApp.Pages
                     Unit = selectedProduct.ЕдиницаИзмерения,
                     Price = selectedProduct.Цена,
                     Weight = selectedProduct.Вес,
-                    Bulk = selectedProduct.Вес
+                    Bulk = selectedProduct.Вес,
+                    ManufacturedDate = DateTime.Now,
+                    StorageDay = selectedProduct.СрокГодности,
+                    NotificationDay = selectedProduct.СрокОповещения
                 });
                 TotalSupplyValue.Amount += selectedProduct.Цена;
                 TotalSupplyValue.Weight += selectedProduct.Вес;
@@ -491,12 +505,13 @@ namespace GroceryStoreApp.Pages
                     ДатаЗаявки = Convert.ToDateTime(DateOfCreationDatePicker.Text),
                     ДатаПоставки = Convert.ToDateTime(DateOfArrivalDatePicker.Text),
                     Статус = 3,
-                    Шаблон = false,
+                    Шаблон = Convert.ToBoolean(SampleCombobBox.SelectedIndex),
                     КодПоставщика = (SupplierComboBox.SelectedItem as Поставщик).Код,
                     КодСклада = (WarehouseComboBox.SelectedItem as Склад).Код,
                     КодФилиала = (SubsidiaryComboBox.SelectedItem as Филиал).Код,
                     Вес = TotalSupplyValue.Weight,
                     Цена = TotalSupplyValue.Amount,
+                    
 
                 });
                 for (int i = 0; i < ProductList.Count; i++)
@@ -510,6 +525,9 @@ namespace GroceryStoreApp.Pages
                         Цена = ProductList[i].Price,
                         Остаток = ProductList[i].Quantity,
                         Вес = ProductList[i].Bulk,
+                        ДатаИзготовления = ProductList[i].ManufacturedDate,
+                        ДатаСписания = ProductList[i].ManufacturedDate.AddDays(ProductList[i].StorageDay),
+                        ДатаОповещения = ProductList[i].ManufacturedDate.AddDays(ProductList[i].StorageDay - ProductList[i].NotificationDay)
                     });
                     Товар currentProduct = _databaseEntities.Товар.ToList().Where(x => x.Код.Equals(ProductList[i].ProductID)).FirstOrDefault();
 
@@ -562,6 +580,7 @@ namespace GroceryStoreApp.Pages
                     Вес = TotalSupplyValue.Weight,
                     Цена = TotalSupplyValue.Amount,
 
+
                 });
                 for (int i = 0; i < ProductList.Count; i++)
                 {
@@ -573,6 +592,9 @@ namespace GroceryStoreApp.Pages
                         Цена = ProductList[i].Price,
                         Остаток = ProductList[i].Quantity,
                         Вес = ProductList[i].Bulk,
+                        ДатаИзготовления = ProductList[i].ManufacturedDate,
+                        ДатаСписания = ProductList[i].ManufacturedDate.AddDays(ProductList[i].StorageDay),
+                        ДатаОповещения = ProductList[i].ManufacturedDate.AddDays(ProductList[i].StorageDay - ProductList[i].NotificationDay)
                     });
                 }
             }
@@ -700,7 +722,6 @@ namespace GroceryStoreApp.Pages
                 for (int i = 0; i < supplierList.Count; i++)
                 {
                     SupplierList.Add(supplierList[i]);
-
                 }
                 TypeFillingCombobBox.IsEnabled = true;
 
@@ -802,7 +823,6 @@ namespace GroceryStoreApp.Pages
         {
             NavigationService.GoBack();
         }
-
         private void TypeFillingCombobBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (_handleSelection == true)
@@ -849,7 +869,11 @@ namespace GroceryStoreApp.Pages
                         Unit = productList[i].ЕдиницаИзмерения,
                         Price = productList[i].Цена * quantity,
                         Weight = productList[i].Вес,
-                        Bulk = productList[i].Вес * quantity
+                        Bulk = productList[i].Вес * quantity,
+                        ManufacturedDate = DateTime.Now,
+                        StorageDay = productList[i].СрокГодности,
+                        NotificationDay = productList[i].СрокОповещения
+                        
                     });
                     TotalSupplyValue.Amount += productList[i].Цена * quantity;
                     TotalSupplyValue.Weight += productList[i].Вес * quantity;
@@ -857,8 +881,36 @@ namespace GroceryStoreApp.Pages
                 }
                     UpdateProductList();
             }
+            else if (TypeFillingCombobBox.SelectedIndex == 1)
+            {
+
+            }
             ReminderTextBlockVisiblity();
 
+        }
+
+        private void DivideProductButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            Product productSupply = button.DataContext as Product;
+
+            ProductList.Add(new Product
+            {
+                ProductID = productSupply.ProductID,
+                Name = productSupply.Name,
+                Quantity = 1,
+                Cost = productSupply.Cost,
+                Unit = productSupply.Unit,
+                Price = productSupply.Cost,
+                Weight = productSupply.Weight,
+                Bulk = productSupply.Weight,
+                ManufacturedDate = DateTime.Now,
+                StorageDay = productSupply.StorageDay,
+                NotificationDay = productSupply.NotificationDay,
+
+            });
+            TotalSupplyValue.Amount += productSupply.Cost;
+            TotalSupplyValue.Weight += productSupply.Weight;
         }
     }
 }

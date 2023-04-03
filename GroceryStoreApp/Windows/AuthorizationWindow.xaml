@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GroceryStoreApp"
         xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
         mc:Ignorable="d"
-        Title="Окно авторизации" Height="630" Width="430" 
+        Title="Окно авторизации" Height="600" Width="400" 
         MouseLeftButtonDown="Window_MouseLeftButtonDown" WindowStyle="None"
         FontSize="20"  FontFamily="Bahnschrift Light SemiCondensed"
         BorderBrush="Transparent" BorderThickness="0" 
@@ -16,30 +16,22 @@
     </WindowChrome.WindowChrome>
     <Window.Resources>
         <Style TargetType="Button" BasedOn="{StaticResource NavigationStyle}"></Style>
-       
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="460"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Border Grid.RowSpan="3" Grid.Row="0" Margin="1">
-            <Border.Background >
-                <LinearGradientBrush>
-                    <GradientStop Color="#FFE8E8E8" Offset="0"/>
-                    <GradientStop Color="#FFE4E4E4" Offset="1"/>
-                </LinearGradientBrush>
-            </Border.Background>
-        </Border>
-        <Border Grid.Row="0" Margin="1" Background="{StaticResource Window.NavigationBar.Background}">
+        <Border Grid.RowSpan="3" Grid.Row="0" Background="{StaticResource Window.NavigationBar.Foreground}"></Border>
+        <Border Grid.Row="0" Background="{StaticResource Window.NavigationBar.Background}">
         </Border>
         <TextBlock Text="Окно авторизации" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"></TextBlock>
         <StackPanel  HorizontalAlignment="Right" Margin="2" Orientation="Horizontal">
-            <my:NavigationButton Data="{StaticResource HidePathData}"  Style="{StaticResource StateNavigationButtonStyle}" VerticalContentAlignment="Bottom"
+            <my:NavigationButton Data="{StaticResource HidePathData}"  Style="{StaticResource PanelNavigationButtonStyle}" VerticalContentAlignment="Bottom"
                                  HorizontalAlignment="Left" x:Name="CollapseButton" Click="CollapseButton_Click"></my:NavigationButton>
-            <my:NavigationButton Data="{StaticResource ExitPathData}" Style="{StaticResource StateNavigationButtonStyle}" x:Name="ExitButton" Click="ExitButton_Click"></my:NavigationButton>
+            <my:NavigationButton Data="{StaticResource ExitPathData}" Style="{StaticResource PanelNavigationButtonStyle}" x:Name="ExitButton" Click="ExitButton_Click"></my:NavigationButton>
         </StackPanel>
 
         <StackPanel Grid.Row="1"  Width="300" Name="AuthorizationStackPanel">

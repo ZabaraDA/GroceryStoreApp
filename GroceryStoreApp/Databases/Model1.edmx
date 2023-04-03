@@ -255,6 +255,7 @@
           <Property Name="НДС" Type="tinyint" Nullable="false" />
           <Property Name="Количество" Type="decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="СрокГодности" Type="int" Nullable="false" />
+          <Property Name="СрокОповещения" Type="int" Nullable="false" />
           <Property Name="КодЕдиницыИзмерения" Type="int" Nullable="false" />
           <Property Name="Фото" Type="image" />
           <Property Name="Вес" Type="decimal" Precision="18" Scale="3" Nullable="false" />
@@ -275,7 +276,7 @@
           <Property Name="ДатаОповещения" Type="date" Nullable="false" />
           <Property Name="Цена" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Вес" Type="decimal" Precision="18" Scale="3" Nullable="false" />
-          <Property Name="ДатаИзготовления" Type="date" />
+          <Property Name="ДатаИзготовления" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="ТорговыйЗал">
           <Key>
@@ -1415,6 +1416,7 @@
           <Property Name="НДС" Type="Byte" Nullable="false" />
           <Property Name="Количество" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="СрокГодности" Type="Int32" Nullable="false" />
+          <Property Name="СрокОповещения" Type="Int32" Nullable="false" />
           <Property Name="КодЕдиницыИзмерения" Type="Int32" Nullable="false" />
           <Property Name="Фото" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Вес" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
@@ -1444,7 +1446,7 @@
           <Property Name="ДатаОповещения" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Цена" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Вес" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
-          <Property Name="ДатаИзготовления" Type="DateTime" Precision="0" />
+          <Property Name="ДатаИзготовления" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Поставка" Relationship="Self.FK_ТоварПоставка_Поставка1" FromRole="ТоварПоставка" ToRole="Поставка" />
           <NavigationProperty Name="Товар" Relationship="Self.FK_ТоварПоставка_Товар1" FromRole="ТоварПоставка" ToRole="Товар" />
         </EntityType>
@@ -2493,6 +2495,7 @@
                 <ScalarProperty Name="НДС" ColumnName="НДС" />
                 <ScalarProperty Name="Количество" ColumnName="Количество" />
                 <ScalarProperty Name="СрокГодности" ColumnName="СрокГодности" />
+                <ScalarProperty Name="СрокОповещения" ColumnName="СрокОповещения" />
                 <ScalarProperty Name="КодЕдиницыИзмерения" ColumnName="КодЕдиницыИзмерения" />
                 <ScalarProperty Name="Фото" ColumnName="Фото" />
                 <ScalarProperty Name="Вес" ColumnName="Вес" />

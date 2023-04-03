@@ -36,6 +36,7 @@ namespace GroceryStoreApp.Databases
         public byte НДС { get; set; }
         public decimal Количество { get; set; }
         public int СрокГодности { get; set; }
+        public int СрокОповещения { get; set; }
         public int КодЕдиницыИзмерения { get; set; }
         public byte[] Фото { get; set; }
         public decimal Вес { get; set; }

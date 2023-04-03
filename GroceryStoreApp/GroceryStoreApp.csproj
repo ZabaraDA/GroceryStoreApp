@@ -197,6 +197,9 @@
     <Compile Include="Pages\DataOfCategoriesPage.xaml.cs">
       <DependentUpon>DataOfCategoriesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\DataOfGroupsPage.xaml.cs">
+      <DependentUpon>DataOfGroupsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\DataOfSupplyPage.xaml.cs">
       <DependentUpon>DataOfSupplyPage.xaml</DependentUpon>
     </Compile>
@@ -242,6 +245,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\DataOfCategoriesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\DataOfGroupsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -365,6 +372,8 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Content Include="Images\Devide1.svg" />
+    <Content Include="Images\DivideData.svg" />
     <Content Include="Images\Фигура 347 1.svg" />
     <Resource Include="Images\plus.png" />
     <Content Include="Images\DatePickerData.svg" />

@@ -365,5 +365,15 @@ namespace GroceryStoreApp.Pages
         {
             NavigationService.Navigate(new AddSupplyPage(null,false));
         }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            _databaseEntities.SaveChanges();
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            _databaseEntities.SaveChanges();
+        }
     }
 }

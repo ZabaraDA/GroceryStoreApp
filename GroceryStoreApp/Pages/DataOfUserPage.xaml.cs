@@ -20,20 +20,6 @@ namespace GroceryStoreApp.Pages
     public partial class DataOfUserPage : Page
     {
         readonly GroceryStoreDatabasesEntities databaseEntities = new GroceryStoreDatabasesEntities();
-
-        private class User : Сотрудник
-        {
-            //public Color Color
-            //{
-            //    get
-            //    {
-            //        return Фамилия.Length > 3 ? Colors.BlanchedAlmond : Colors.Chocolate;
-            //    }
-            //}
-
-
-        }
-
         public DataOfUserPage()
         {
             InitializeComponent();

@@ -4,24 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GroceryStoreApp.Windows" xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
-        mc:Ignorable="d"
+        mc:Ignorable="d" StateChanged="Window_StateChanged"
         Title="MenuWindow" Height="900" Width="1440" WindowStartupLocation="CenterScreen"
         MouseLeftButtonDown="Window_MouseLeftButtonDown" WindowStyle="None"
-        FontSize="20"  FontFamily="Bahnschrift Light SemiCondensed"
-        BorderBrush="Transparent" BorderThickness="0">
+        FontSize="20" FontFamily="Bahnschrift Light SemiCondensed"
+        BorderBrush="Transparent">
     <WindowChrome.WindowChrome>
-        <WindowChrome NonClientFrameEdges="Bottom" CaptionHeight="0" ResizeBorderThickness="5"/>
+        <WindowChrome NonClientFrameEdges="None" GlassFrameThickness="{x:Static WindowChrome.GlassFrameCompleteThickness}"
+                      CaptionHeight="40" ResizeBorderThickness="5" />
     </WindowChrome.WindowChrome>
-    <Grid Margin="1">
+    <Grid Margin="0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="70"></ColumnDefinition>
             <ColumnDefinition ></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="{StaticResource Window.NavigationBar.Background}">
+        <Border Grid.Row="0"  Grid.ColumnSpan="2" Background="{StaticResource Window.NavigationBar.Background}">
         </Border>
 
         <Frame NavigationUIVisibility="Hidden" Background="{StaticResource Frame.Static.Background}" 
@@ -30,12 +31,16 @@
                Foreground="White" Grid.ColumnSpan="2" Name="StatusBarTextBlock"
                HorizontalAlignment="Center"/>
         
-        <StackPanel  HorizontalAlignment="Right" Margin="2" Orientation="Horizontal" Grid.Column="1">
-            <my:NavigationButton Data="{StaticResource HidePathData}"  Style="{StaticResource StateNavigationButtonStyle}" VerticalContentAlignment="Bottom"
-                                 HorizontalAlignment="Left" x:Name="CollapseButton" Click="CollapseButton_Click"></my:NavigationButton>
-            <my:NavigationButton Data="{StaticResource FullScreenPathData}"  Style="{StaticResource StateNavigationButtonStyle}" VerticalContentAlignment="Bottom"
-                                 HorizontalAlignment="Left" x:Name="StateScreenButton" Click="StateScreenButton_Click"></my:NavigationButton>
-            <my:NavigationButton Data="{StaticResource ExitPathData}" Style="{StaticResource StateNavigationButtonStyle}" x:Name="ExitButton" Click="ExitButton_Click"></my:NavigationButton>
+        <StackPanel  HorizontalAlignment="Right" Orientation="Horizontal" Grid.Column="1">
+            <my:NavigationButton Data="{StaticResource HidePathData}"  Style="{StaticResource PanelNavigationButtonStyle}" VerticalContentAlignment="Bottom"
+                                 HorizontalAlignment="Left" x:Name="CollapseButton" Click="CollapseButton_Click"
+                                 WindowChrome.IsHitTestVisibleInChrome="True"></my:NavigationButton>
+            <my:NavigationButton Data="{StaticResource FullScreenPathData}"  Style="{StaticResource PanelNavigationButtonStyle}" VerticalContentAlignment="Bottom"
+                                 HorizontalAlignment="Left" x:Name="StateScreenButton" Click="StateScreenButton_Click"
+                                 WindowChrome.IsHitTestVisibleInChrome="True"></my:NavigationButton>
+            <my:NavigationButton Data="{StaticResource ExitPathData}" Style="{StaticResource PanelNavigationButtonStyle}" 
+                                 x:Name="ExitButton" Click="ExitButton_Click"
+                                 WindowChrome.IsHitTestVisibleInChrome="True"></my:NavigationButton>
         </StackPanel>
         <Grid Width="70" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" 
               Name="ControlGrid" Background="{StaticResource Window.NavigationBar.Border}" 

@@ -163,15 +163,21 @@
             </StackPanel>
             <StackPanel>
                 <TextBlock Text="Поставщик" Margin="10"></TextBlock>
+                
+                <TextBlock Text="Шаблон" VerticalAlignment="Top" ></TextBlock>
             </StackPanel>
             <StackPanel>
-                <ComboBox Name="SupplierComboBox"
-                          ItemsSource="{Binding Path= SupplierList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Cursor="Hand"></ComboBox>
+                <ComboBox ItemsSource="{Binding Path= SupplierList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                          Name="SupplierComboBox"></ComboBox>
+                <ComboBox Name="SampleCombobBox" VerticalAlignment="Top" Cursor="Hand">
+                    <ComboBoxItem Content="Не использовать"></ComboBoxItem>
+                    <ComboBoxItem Content="Использовать как шаблон"></ComboBoxItem>
+                </ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Тип заполнения" VerticalAlignment="Top" Margin="10"></TextBlock>
                 <ComboBox Name="TypeFillingCombobBox" VerticalAlignment="Top" 
-                          SelectionChanged="TypeFillingCombobBox_SelectionChanged" Cursor="Hand">
+                          SelectionChanged="TypeFillingCombobBox_SelectionChanged" >
                     <ComboBoxItem Content="Вручную"></ComboBoxItem>
                     <ComboBoxItem Content="По лимитам"></ComboBoxItem>
                     <ComboBoxItem Content="По шаблону"></ComboBoxItem>
@@ -284,6 +290,17 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+                    <GridViewColumn Header="Дата производства" Width="250">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <DatePicker Margin="0" SelectedDate="{Binding ManufacturedDate, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></DatePicker>
+                                    <my:NavigationButton Data="{StaticResource DevidePathData}" Name="DivideProductButton" 
+                                                         Click="DivideProductButton_Click"></my:NavigationButton>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Header="Единица измерения" Width="200">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -294,6 +311,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+                    
 
                     <GridViewColumn Header="Цена" Width="130">
                         <GridViewColumn.CellTemplate>
@@ -346,6 +364,7 @@
                     <GridViewColumn Header="Back" Width="50">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
+                                
                                 <my:NavigationButton Data="{StaticResource ExitPathData}" Name="ExcludeProductButton" 
                                                          Click="ExcludeProductButton_Click"></my:NavigationButton>
                             </DataTemplate>
@@ -416,7 +435,8 @@
             </StackPanel>
             <Button Margin="10"  Content="Сбросить фильтры" x:Name="ClearFilterButton" Click="ClearFilterButton_Click"></Button>
         </StackPanel>
-        <Border Grid.Row="3" DataContext="{Binding TotalSupplyValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Padding="5" Background="{StaticResource Window.NavigationBar.Background2}">
+        <Border Grid.Row="3" DataContext="{Binding TotalSupplyValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                Padding="5" Background="{StaticResource Window.NavigationBar.Background2}" Grid.ColumnSpan="2">
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" >
                 <TextBlock Text="Итого" FontWeight="Medium" HorizontalAlignment="Left"></TextBlock>
                 <TextBlock Width="200"  Name="WeightTextBlock" Text="{Binding Weight,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:N3} КГ}"></TextBlock>

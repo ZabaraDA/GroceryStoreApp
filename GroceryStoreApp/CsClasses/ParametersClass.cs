@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using GroceryStoreApp.Databases;
 
 namespace GroceryStoreApp.CsClasses
 {
@@ -13,5 +12,6 @@ namespace GroceryStoreApp.CsClasses
         public static bool TimerStart = false;
         public static Аккаунт SelectedAccount;
         public static Сотрудник SelectedUser;
+        public static Поставка SelectedSupply;
     }
 }

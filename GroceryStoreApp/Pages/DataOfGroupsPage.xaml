@@ -1,0 +1,135 @@
+﻿<Page x:Class="GroceryStoreApp.Pages.DataOfGroupsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:GroceryStoreApp.Pages"
+      xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
+      mc:Ignorable="d" FontFamily="{StaticResource Blogger Sans}">
+    <Page.Resources>
+        <Style TargetType="ListBoxItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border Name="border" CornerRadius="5" Height="50" Grid.ColumnSpan="2" 
+                                BorderBrush="Gray" BorderThickness="2" Margin="5" 
+                                Background="LightGray">
+                            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Наименование}" Margin="20 0 0 0" FontSize="18"/>
+                            </StackPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="ListViewItem">
+            <Setter Property="FontFamily" Value="{StaticResource Blogger Sans}"></Setter>
+            <Setter Property="FontSize" Value="18"></Setter>
+            <Setter Property="local:AP.IsChecked" Value="False"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Button Name="border" Height="50" Grid.ColumnSpan="2" 
+                                    BorderBrush="Gray" BorderThickness="2" Margin="5" 
+                                    Background="LightGray" HorizontalContentAlignment="Left" Style="{x:Null}" Padding="20 0">
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox Name="PART_CheckBox" IsChecked="{TemplateBinding local:AP.IsChecked}"></CheckBox>
+                                    <!--<Border  CornerRadius="10" HorizontalAlignment="Left" 
+                                             BorderThickness="1" BorderBrush="Black"
+                                             Height="50" Width="50" Margin="5" >
+                                        <Border.Background>
+                                            <ImageBrush Stretch="UniformToFill">
+                                                <ImageBrush.ImageSource>
+                                                    <Binding Path="Фото">
+                                                        <Binding.TargetNullValue>
+                                                            <ImageSource>/Images/ImageStub.png</ImageSource>
+                                                        </Binding.TargetNullValue>
+                                                    </Binding>
+                                                </ImageBrush.ImageSource>
+                                            </ImageBrush>
+                                        </Border.Background>
+                                    </Border>-->
+                                    <TextBlock Text="{Binding Наименование}" Margin="20 0 0 0" FontSize="18"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                            <ListBox Grid.Row="1" Margin="20 0 0 0" Grid.Column="0" Grid.ColumnSpan="2" Name="ListBox" 
+                                     Visibility="{Binding ElementName=PART_CheckBox,Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                     ItemsSource="{Binding Категория}"
+                                     BorderBrush="Gray" BorderThickness="1 0 0 0" Background="{x:Null}">
+                            </ListBox>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"  Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="DarkGreen"></Setter>
+                            </Trigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <!--<Condition Binding="{Binding ElementName=border, Path=IsPressed}" Value="True"></Condition>-->
+                                    <!--<Condition Binding="{Binding ElementName=PART_CheckBox, Path=IsChecked}" Value="False"></Condition>-->
+                                    <Condition Binding="{Binding ElementName=ListBox, Path=Visibility,Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                               Value="Visible"></Condition>
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <!--<Setter TargetName="PART_CheckBox" Property="IsChecked" Value="True"/>-->
+                                    <Setter Property="local:AP.IsChecked" Value="True"></Setter>
+                                    <!--<Setter TargetName="ListBox" Property="Visibility" Value="Visible"/>-->
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <!--<MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=border, Path=IsPressed}" Value="True"></Condition>
+                                    --><!--<Condition Binding="{Binding ElementName=PART_CheckBox, Path=IsChecked}" Value="False"></Condition>-->
+                                    <!--<Condition Binding="{Binding ElementName=ListBox, Path=Visibility}" Value="Collapsed"></Condition>--><!--
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter TargetName="PART_CheckBox" Property="IsChecked" Value="True"/>
+                                    <Setter TargetName="ListBox" Property="Visibility" Value="Visible"/>
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>-->
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource NavigationStyle}">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="5"></Setter>
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="{x:Type my:NavigationButton}" BasedOn="{StaticResource StateNavigationButtonStyle}">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Template" Value="{StaticResource ListViewButtonTemplate}"></Setter>
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Группы товаров" FontSize="24"></TextBlock>
+        <ListView x:Name="GroupListView" Grid.Row="1"
+                  Style="{StaticResource ProductListViewStyle}">
+        </ListView>
+    </Grid>
+</Page>

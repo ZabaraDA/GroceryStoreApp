@@ -23,7 +23,7 @@ namespace GroceryStoreApp.Databases
         public System.DateTime ДатаОповещения { get; set; }
         public decimal Цена { get; set; }
         public decimal Вес { get; set; }
-        public Nullable<System.DateTime> ДатаИзготовления { get; set; }
+        public System.DateTime ДатаИзготовления { get; set; }
     
         public virtual Поставка Поставка { get; set; }
         public virtual Товар Товар { get; set; }

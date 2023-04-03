@@ -11,40 +11,39 @@
         <Style TargetType="ListViewItem">
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="Background" Value="#FFB3B3B3" />
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Background" Value="{StaticResource ListViewItem.Static.Background}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
                         <Border x:Name="Border" Padding="2" SnapsToDevicePixels="true" Margin="1"
                                 BorderThickness="0 0 0 1" BorderBrush="{TemplateBinding BorderBrush}"
                                 Background="{TemplateBinding Background}">
-                            <Grid>
-                                <Border Name="LabelBorder" Height="20" Background="Orange" VerticalAlignment="Top" Visibility="Hidden"></Border>
-                                <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            <Grid Width="auto" >
+                                <Border Name="LabelBorder" Height="auto" Width="3" Background="{StaticResource ListViewItem.MouseOver.Border}" HorizontalAlignment="Left" Visibility="Hidden"></Border>
+                                <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver"  Value="True">
-                                <Setter Property="Background" Value="#FF929292" />
+                                <Setter Property="Background" Value="{StaticResource ListViewItem.MouseOver.Background}" />
                                 <Setter TargetName="LabelBorder" Property="Visibility" Value="Visible"></Setter>
                             </Trigger>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Background" Value="Orange"/>
-                                <Setter Property="Background" Value="#FF7F7F7F"/>
-
+                                <Setter Property="Background" Value="{StaticResource ListViewItem.Pressed.Background}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-
         <Style TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="Padding" Value="5 0 5 0"></Setter>
+            <Setter Property="Width" Value="auto"></Setter>
             <Setter Property="OverridesDefaultStyle" Value="True" />
             <Setter Property="Foreground" Value="Black" />
-            <Setter Property="FontFamily" Value="Arial Narrow" />
+            <Setter Property="FontFamily" Value="{StaticResource Blogger Sans}" />
+            <Setter Property="FontSize" Value="18" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
@@ -55,12 +54,11 @@
                                     <GradientStop Color="#FFCACACA" Offset="1"/>
                                 </LinearGradientBrush>
                             </Border.Background>
-                            <TextBlock x:Name="ContentHeader" Text="{TemplateBinding Content}" Padding="{TemplateBinding Padding}" Width="{TemplateBinding Width}" TextAlignment="Center" />
+                            <TextBlock x:Name="ContentHeader" FontSize="{TemplateBinding FontSize}" Text="{TemplateBinding Content}" Padding="{TemplateBinding Padding}" Width="{TemplateBinding Width}" TextAlignment="Center" />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-
         </Style>
         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource NavigationStyle}">
             <Setter Property="Height" Value="40"/>
@@ -71,6 +69,12 @@
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
+        <Style TargetType="{x:Type my:NavigationButton}" BasedOn="{StaticResource StateNavigationButtonStyle}">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Template" Value="{StaticResource ListViewButtonTemplate}"></Setter>
+        </Style>
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -78,15 +82,16 @@
             <ColumnDefinition Width="200"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <ListView x:Name="ProductListView" Width="auto" Background="{x:Null}" BorderBrush="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Visible">
+        <ListView x:Name="ProductListView" Width="auto" Background="White" BorderBrush="{x:Null}" 
+                  ScrollViewer.VerticalScrollBarVisibility="Visible">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="#" DisplayMemberBinding="{Binding Код}" Width="30"/>
                     <GridViewColumn Header="Фото">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Border CornerRadius="10" Width="200" Height="200" HorizontalAlignment="Center"
-                                        BorderBrush="Black" BorderThickness="1">
+                                <Border CornerRadius="5" Width="60" Height="60" HorizontalAlignment="Center"
+                                        BorderBrush="Black" BorderThickness="1" SnapsToDevicePixels="True">
                                     <Border.Background>
                                         <ImageBrush Stretch="Fill">
                                             <ImageBrush.ImageSource>
@@ -105,40 +110,35 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Наименование" Width="200">
+                    <GridViewColumn Header="Наименование" Width="300">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Name="ViewProductButton" Click="ViewProductButton_Click" Content="Подробнее"></Button>
+                                <TextBlock Text="{Binding Наименование}" HorizontalAlignment="Left"></TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Наименование" Width="200">
+                    <GridViewColumn Header="Группа" DisplayMemberBinding="{Binding Категория.Группа.Наименование}" Width="250"/>
+                    <GridViewColumn Header="Категория" DisplayMemberBinding="{Binding Категория.Наименование}" Width="250"/>
+                    <GridViewColumn Header="Производитель" DisplayMemberBinding="{Binding Производитель.Наименование}" Width="250"/>
+                    <GridViewColumn Header="Управление">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Border BorderThickness="1 0" Padding="5" CornerRadius="0" Height="90" BorderBrush="#FF545454" Width="180">
-                                    <TextBlock Text="{Binding Наименование}" HorizontalAlignment="Center"></TextBlock>
-                                </Border>
+                                <StackPanel Orientation="Horizontal">
+                                    <my:NavigationButton  Background="Blue" Data="{StaticResource ProductPathData}" 
+                                                          Name="ViewProductButton" Click="ViewProductButton_Click"
+                                                          ToolTip="Информация о товаре"></my:NavigationButton>
+                                    <my:NavigationButton  Background="Green" Data="{StaticResource ExpandPathData}" 
+                                                          Name="ChangeProductButton" Click="ChangeProductButton_Click"
+                                                          ToolTip="Редактировать товар"></my:NavigationButton>
+                                    <my:NavigationButton  Background="Red" Data="{StaticResource ExitPathData}" 
+                                                          Name="DeleteProductButton" Click="DeleteProductButton_Click"
+                                                          ToolTip="Деактивировать товар"></my:NavigationButton>
+                                </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Категория" DisplayMemberBinding="{Binding Категория.Наименование}" Width="200"/>
-                    <GridViewColumn Header="Производитель" DisplayMemberBinding="{Binding Производитель.Наименование}" Width="200"/>
-                    <GridViewColumn Header="Цена" DisplayMemberBinding="{Binding Цена}" Width="100"/>
-                    <GridViewColumn Header="НДС" DisplayMemberBinding="{Binding НДС}" Width="50"/>
-                    <GridViewColumn Header="Количество" DisplayMemberBinding="{Binding Количество}" Width="100"/>
-                  
-
                 </GridView>
             </ListView.View>
-            <!--<ListView.GroupStyle>
-                <GroupStyle>
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate>
-                            <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Наименование}"/>
-                        </DataTemplate>
-                    </GroupStyle.HeaderTemplate>
-                </GroupStyle>
-            </ListView.GroupStyle>-->
         </ListView>
         <StackPanel Grid.Column="1" Name="UserEditStackPanel" Margin="0 0 5 0" >
             <StackPanel>
@@ -160,8 +160,8 @@
             </StackPanel>
             <StackPanel>
                 <TextBlock Text="Редактировать"></TextBlock>
-                <Button Content="Добавить &#xa;сотрудника &#xa;" x:Name="AddProductButton" Click="AddProductButton_Click"></Button>
-                <Button Content="Удалить"  x:Name="DeleteProductButton" Click="DeleteProductButton_Click" ></Button>
+                <Button Content="+ Товар" x:Name="AddProductButton" Click="AddProductButton_Click"></Button>
+                <Button Content="Удалить" x:Name="DeleteProductButton" Click="DeleteProductButton_Click" ></Button>
 
             </StackPanel>
         </StackPanel>

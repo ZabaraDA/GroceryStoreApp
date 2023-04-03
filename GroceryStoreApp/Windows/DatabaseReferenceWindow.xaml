@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GroceryStoreApp.Windows" 
         xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
-        mc:Ignorable="d"
-        Title="DatabaseReferenceWindow" Height="500" Width="300" FontFamily="{StaticResource Blogger Sans}" 
-        WindowStartupLocation="CenterOwner" WindowStyle="None">
+        mc:Ignorable="d" Width="280" Height="600" ResizeMode="NoResize"
+        Title="DatabaseReferenceWindow" FontFamily="{StaticResource Blogger Sans}" 
+        WindowStartupLocation="CenterOwner" WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown">
     <Window.Resources>
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="TextWrapping" Value="NoWrap"/>
@@ -42,6 +42,9 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
+        <Border Background="{StaticResource Window.NavigationBar.Foreground}" 
+                BorderThickness="1" BorderBrush="{StaticResource Window.NavigationBar.Border}" 
+                Grid.RowSpan="2"></Border>
         <StackPanel>
             <TextBlock Text="Лимиты товара для филиала" HorizontalAlignment="Center" FontSize="18" Margin="5"></TextBlock>
             <Border CornerRadius="10" Width="200" Height="200" Margin="0 0 0 10"
@@ -62,8 +65,6 @@
                     </ImageBrush>
                 </Border.Background>
             </Border>
-            <!--<TextBlock Name="ProductNameTextBlock"></TextBlock>
-            <TextBlock Name="SubsidiaryProductTextBlock"></TextBlock>-->
             <TextBlock Text="{Binding Товар.Наименование,FallbackValue=Товар.Наименование, StringFormat={} Товар:{0}}"></TextBlock>
             <TextBlock Text="{Binding Филиал.Наименование,FallbackValue=Филиал.Наименование, StringFormat={} Филиал:{0}}"></TextBlock>
         </StackPanel>

@@ -75,10 +75,6 @@ namespace GroceryStoreApp.CsClasses
                 }
             }
             return value.ToString();
-            return quantityString.Replace('.', ',');
-            //quantity = (decimal?)b;
-            //return quantity;
-            //return quantity.Replace(',', '.');
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

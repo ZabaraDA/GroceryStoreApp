@@ -4,17 +4,19 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GroceryStoreApp.Pages"
-      mc:Ignorable="d" 
-      
+      mc:Ignorable="d" FontFamily="{StaticResource Blogger Sans}"
       Title="FormProductPage">
     <Page.Resources>
         <Style TargetType="ToolTip" BasedOn="{StaticResource {x:Type ToolTip}}">
+            <Setter Property="Width" Value="Auto"/>
+            <Setter Property="Height" Value="Auto"/>
             <Setter Property="Background" Value="Gray"/>
+            <Setter Property="FontFamily" Value="{StaticResource Blogger Sans}"></Setter>
             <Setter Property="FontSize" Value="20"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ToolTip">
-                        <Border Name="Border" CornerRadius="10"
+                        <Border Name="Border"
                 BorderThickness="1"
                 Width="{TemplateBinding Width}"
                 Height="{TemplateBinding Height}">
@@ -25,7 +27,7 @@
                                         <GradientStopCollection>
                                             <GradientStop Color="AliceBlue"
                                 Offset="0.0" />
-                                            <GradientStop Color="Beige"
+                                            <GradientStop Color="White"
                                 Offset="1.0" />
                                         </GradientStopCollection>
                                     </LinearGradientBrush.GradientStops>
@@ -33,9 +35,10 @@
 
                             </Border.Background>
                             <Border.BorderBrush>
-                                <SolidColorBrush Color="#FFE6AB2A" />
+                                <SolidColorBrush Color="Gray" />
                             </Border.BorderBrush>
-                            <ContentPresenter Margin="4" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                            <ContentPresenter Margin="4" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                                              Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="HasDropShadow" Value="true">
@@ -47,12 +50,14 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="TextWrapping" Value="NoWrap"/>
             <Setter Property="TextTrimming" Value="None"/>
+            <Setter Property="FontFamily" Value="{StaticResource Blogger Sans}"/>
             <Setter Property="Width" Value="auto"/>
             <Setter Property="Height" Value="35"/>
-            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontSize" Value="16"/>
             <Setter Property="Margin" Value="1"/>
             <Setter Property="HorizontalAlignment" Value="Left"></Setter>
 
@@ -65,32 +70,97 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Margin" Value="1"/>
         </Style>
-        <Style TargetType="{x:Type ComboBox}">
-            <Setter Property="Width" Value="225"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="1"/>
-        </Style>
         <Style TargetType="{x:Type Button}">
             <Setter Property="Width" Value="225"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Margin" Value="1"/>
         </Style>
+        <Style TargetType="ListViewItem">
+            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border x:Name="Border" Padding="2" SnapsToDevicePixels="true" Margin="1"
+                                BorderThickness="0 0 0 1" BorderBrush="{TemplateBinding BorderBrush}"
+                                Background="{TemplateBinding Background}">
+                            <Grid Width="auto">
+                                <Border Name="LabelBorder" Height="auto" Width="3" Background="{StaticResource ListViewItem.MouseOver.Border}" 
+                                        HorizontalAlignment="Left" Visibility="Hidden"></Border>
+                                <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"  Value="True">
+                                <Setter Property="Background" Value="{StaticResource ListViewItem.MouseOver.Background}" />
+                                <Setter TargetName="LabelBorder" Property="Visibility" Value="Visible"></Setter>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="{StaticResource ListViewItem.Pressed.Background}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Padding" Value="5 0 5 0"></Setter>
+            <Setter Property="Width" Value="auto"></Setter>
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Background" Value="{StaticResource Chart.Header.Background}" />
+            <Setter Property="FontFamily" Value="{StaticResource Blogger Sans}" />
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                        <Border BorderThickness="{TemplateBinding BorderThickness}" 
+                                BorderBrush="#FFB5B5B5" Background="{TemplateBinding Background}">
+                            <TextBlock x:Name="ContentHeader" FontSize="{TemplateBinding FontSize}" 
+                                       Text="{TemplateBinding Content}" Padding="{TemplateBinding Padding}" 
+                                       Width="{TemplateBinding Width}" TextAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource ComboBoxBaseStyle}">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0"/>
+        </Style>
+        <Style TargetType="{x:Type Border}" x:Key="InfoBorder">
+            <Setter Property="CornerRadius" Value="10"></Setter>
+            <Setter Property="Width" Value="30"></Setter>
+            <Setter Property="Height" Value="30"></Setter>
+            <Setter Property="Margin" Value="10"></Setter>
+        </Style>
+        <!--<Style TargetType="ComboBoxItem">
+            <Setter Property="Height" Value="30"></Setter>
+        </Style>-->
+
     </Page.Resources>
     <ScrollViewer>
-        <Grid Background="LightGray">
+        <Grid>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="330"></RowDefinition>
-                <RowDefinition Height="70"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="*" ></RowDefinition>
             </Grid.RowDefinitions>
 
 
-            <Border Background="White" Height="330" Padding="10">
-                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                    <Border CornerRadius="10" Width="300" Height="300"
+            <Border Background="White" Height="300" Width="1100" 
+                    Padding="20" Margin="10" CornerRadius="5">
+                <StackPanel Orientation="Horizontal">
+                    <Border CornerRadius="10" Width="260" Height="260"
                             HorizontalAlignment="Left" 
                             BorderBrush="Black" BorderThickness="1">
                         <Border.Background>
@@ -108,53 +178,58 @@
                             </ImageBrush>
                         </Border.Background>
                     </Border>
-                    <StackPanel Width="300" Margin="10">
-
-                        <TextBlock Text="Информация"></TextBlock>
-                        <TextBlock Text="{Binding Наименование}"></TextBlock>
-                        <TextBlock Text="{Binding Категория.Наименование}"/>
-                        <TextBlock Text="{Binding Производитель.Наименование}"/>
-                        <TextBlock Text="{Binding Количество,StringFormat={}Общее количество на складе: {0}}"/>
+                    <StackPanel Width="auto" Margin="10">
+                        <TextBlock Text="{Binding Наименование}" FontSize="24"></TextBlock>
+                        <TextBlock Text="{Binding Производитель.Наименование}" FontSize="20"/>
+                        <TextBlock Text="{Binding Категория.Наименование}" FontSize="20"/>
+                        <TextBlock Text="{Binding Количество,StringFormat={}На складе: {0}}" FontSize="20"/>
                     </StackPanel>
-                    <StackPanel Width="300" Margin="10">
-                        <TextBlock Text="Ценообразование"/>
+                    <!--<StackPanel Width="300" Margin="10">
                         <TextBlock Text="{Binding Цена,StringFormat={}Себестоимость: {0}}"/>
                         <TextBlock Text="{Binding НДС,StringFormat={}Ндс: {0}}"/>
                         <TextBlock Text="{Binding Количество,StringFormat={}На складе: {0}}"/>
-                    </StackPanel>
+                    </StackPanel>-->
                 </StackPanel>
             </Border>
+            <Border Grid.Row="2" HorizontalAlignment="Center" 
+                    Margin="10" Height="600" VerticalAlignment="Top"
+                    CornerRadius="5" Background="White">
+                <Grid>
 
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel Margin="20 10 0 0" Orientation="Horizontal">
+                        <TextBlock Text="Статистика за" Height="auto" VerticalAlignment="Center" Margin="10"></TextBlock>
+                        <ComboBox Name="ShowYearComboBox" SelectionChanged="ShowYearComboBox_SelectionChanged" 
+                              HorizontalAlignment="Left"></ComboBox>
+                    </StackPanel>
+                    <StackPanel Margin="0 10 30 0" Orientation="Horizontal" Grid.Row="0"
+                                HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <Border Style="{StaticResource InfoBorder}" Background="{StaticResource Chart.Delivery.Background}"></Border>
+                        <TextBlock Text="Доставлено" FontSize="16" Height="auto" VerticalAlignment="Center"></TextBlock>
+                        <Border Style="{StaticResource InfoBorder}" Background="{StaticResource Chart.Remainder.Background}"></Border>
+                        <TextBlock Text="Остаток" FontSize="16" Height="auto" VerticalAlignment="Center"></TextBlock>
+                        <Border Style="{StaticResource InfoBorder}" Background="{StaticResource Chart.Selling.Background}"></Border>
+                        <TextBlock Text="Реализовано" FontSize="16" Height="auto" VerticalAlignment="Center"></TextBlock>
+                        <Border Style="{StaticResource InfoBorder}" Background="{StaticResource Chart.WriteOff.Background}"></Border>
+                        <TextBlock Text="Списано" FontSize="16" Height="auto" VerticalAlignment="Center"></TextBlock>
+                    </StackPanel>
+                    <Canvas Name="ChartCanvas" Grid.Row="1"
+                            HorizontalAlignment="Left" VerticalAlignment="Top"
+                            Height="530" Width="1100">
+                        <Canvas.LayoutTransform>
+                            <ScaleTransform ScaleX="1" ScaleY="-1"/>
+                        </Canvas.LayoutTransform>
+                    </Canvas>
 
-            <StackPanel Orientation="Horizontal" Background="#FFBBBBBB" Grid.Row="1">
-                <ComboBox Name="ShowYearComboBox" DropDownClosed="ShowYearComboBox_DropDownClosed"></ComboBox>
-                <TextBlock Name="InfoTextBlock"></TextBlock>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock >X</TextBlock>
-                    <TextBlock Name="txtbX"></TextBlock>
-                    <TextBlock>Y</TextBlock>
-                    <TextBlock Name="txtbY"></TextBlock>
-                </StackPanel>
-                <Button Content="+" Name="ZoomInChartBtton" Click="ZoomInChartBtton_Click" VerticalContentAlignment="Top" FontSize="36" Width="60" Height="60"></Button>
-                <Button Content="-" Name="ZoomOutChartBtton" Click="ZoomOutChartBtton_Click" VerticalContentAlignment="Top" FontSize="36" Width="60" Height="60"></Button>
-                <TextBlock Text="Маштаб "></TextBlock>
-                <TextBlock Name ="ScaleChartTextBlock"></TextBlock>
+                </Grid>
 
-            </StackPanel>
-
-
-            <Canvas Name="ChartCanvas" HorizontalAlignment="Left" VerticalAlignment="Top"
-                    MouseMove="ChartCanvas_MouseMove" Height="400"  Grid.Row="2" Background="#FFEAEAEA">
-                <Canvas.LayoutTransform>
-                    <ScaleTransform ScaleX="1" ScaleY="-1"/>
-                </Canvas.LayoutTransform>
-            </Canvas>
-            <StackPanel Grid.Row="2" Margin="10" HorizontalAlignment="Right">
-                <Rectangle Width="50" Height="50" Fill="Aqua"></Rectangle>
-                <Rectangle Width="50" Height="50" Fill="#FFFFF500"></Rectangle>
-                <Rectangle Width="50" Height="50" Fill="#FFFF00BB"></Rectangle>
-
-            </StackPanel>
+            </Border>
+            <TextBlock Name="InfoTextBlock" Grid.Row="2" HorizontalAlignment="Center" 
+                       Background="LightGray" Opacity="0.5"
+                       Visibility="Hidden" Text="Нет поставок"></TextBlock>
 
         </Grid>
     </ScrollViewer>

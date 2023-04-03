@@ -7,7 +7,6 @@
       mc:Ignorable="d" xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
       Title="DataOfSupplyPage" FontFamily="{StaticResource Blogger Sans}" 
       Loaded="Page_Loaded">
-
     <Page.Resources>
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="TextWrapping" Value="NoWrap"/>
@@ -45,7 +44,7 @@
             <Setter Property="Margin" Value="0 5 0 0"/>
         </Style>
         <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource ComboBoxBaseStyle}">
-            <Setter Property="Width" Value="320"/>
+            <Setter Property="Width" Value="250"/>
             <Setter Property="Height" Value="30"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -72,7 +71,6 @@
             <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="Background" Value="{StaticResource ListViewItem.Static.Background}"/>
-            <!--<EventSetter Event="ComboBoxItem.PreviewMouseDown" Handler="ComboBoxItem_PreviewMouseDown"/>-->
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
@@ -133,7 +131,6 @@
         </Grid.ColumnDefinitions>
         <Border Background="#FFD6D6D6" Grid.ColumnSpan="2"></Border>
         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-            <Button Content="Назад"></Button>
             <TextBlock Text="Поставки" Margin="10" Width="auto" FontSize="24"/>
         </StackPanel>
         <ListView x:Name="SupplyListView" Style="{StaticResource ProductListViewStyle}" Grid.Row="2">
@@ -201,6 +198,13 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+                    <GridViewColumn Header="Шаблон" Width="65">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding Шаблон}" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"></CheckBox>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Header="Управление">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -258,6 +262,7 @@
                         <TextBlock Text="До" Margin="0 0 3 0"></TextBlock>
                         <DatePicker Name="MaximumDateOfCreationDatePicker"  SelectedDateChanged="DatePicker_SelectedDateChanged"></DatePicker>
                     </StackPanel>
+                    
                 </StackPanel>
                 <StackPanel Name="DateOfSupplySortStackPanel" Visibility="Collapsed">
                     <TextBlock Text="Дата поставки"></TextBlock>
@@ -266,6 +271,7 @@
                         <ComboBoxItem Content="По возрастанию"></ComboBoxItem>
                         <ComboBoxItem Content="По убыванию"></ComboBoxItem>
                     </ComboBox>
+                    
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="От" Margin="0 0 3 0"></TextBlock>
                         <DatePicker Name="MinimumDateOfDeliveryDatePicker" SelectedDateChanged="DatePicker_SelectedDateChanged"></DatePicker>
