@@ -1,6 +1,7 @@
 ﻿using GroceryStoreApp.Databases;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,6 +38,14 @@ namespace GroceryStoreApp.Pages
         {
             InitializeComponent();
             GroupListView.ItemsSource = _databasesEntities.Группа.ToList();
+        }
+
+        private void border_Click(object sender, RoutedEventArgs e)
+        {
+            var a = sender as Button;
+            var b = a.Parent as Grid;
+            var c = b.Parent as ListViewItem;
+            
         }
     }
 }

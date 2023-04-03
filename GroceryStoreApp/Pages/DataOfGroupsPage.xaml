@@ -32,7 +32,6 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
-
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
@@ -42,11 +41,17 @@
                                 <RowDefinition Height="auto"></RowDefinition>
                                 <RowDefinition Height="*"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <Button Name="border" Height="50" Grid.ColumnSpan="2" 
-                                    BorderBrush="Gray" BorderThickness="2" Margin="5" 
-                                    Background="LightGray" HorizontalContentAlignment="Left" Style="{x:Null}" Padding="20 0">
+                            <ToggleButton Name="PART_ToggleButton" Height="50" Grid.ColumnSpan="2" 
+                                          IsChecked="{TemplateBinding local:AP.IsChecked}"
+                                          BorderBrush="Gray" BorderThickness="2" Margin="5"
+                                          Background="LightGray" HorizontalContentAlignment="Left" 
+                                          Style="{x:Null}" Padding="20 0">
                                 <StackPanel Orientation="Horizontal">
-                                    <CheckBox Name="PART_CheckBox" IsChecked="{TemplateBinding local:AP.IsChecked}"></CheckBox>
+                                    <CheckBox Name="PART_CheckBox" 
+                                        IsChecked="{TemplateBinding local:AP.IsChecked}">
+                                        <!--IsChecked="{Binding RelativeSource={RelativeSource TenplateParent},Path=IsSelected,Mode=TwoWay }"-->
+                                              
+                                    </CheckBox>
                                     <!--<Border  CornerRadius="10" HorizontalAlignment="Left" 
                                              BorderThickness="1" BorderBrush="Black"
                                              Height="50" Width="50" Margin="5" >
@@ -65,31 +70,39 @@
                                     <TextBlock Text="{Binding Наименование}" Margin="20 0 0 0" FontSize="18"
                                                HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </StackPanel>
-                            </Button>
+                            </ToggleButton>
                             <ListBox Grid.Row="1" Margin="20 0 0 0" Grid.Column="0" Grid.ColumnSpan="2" Name="ListBox" 
-                                     Visibility="{Binding ElementName=PART_CheckBox,Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                     Visibility="{Binding ElementName=PART_ToggleButton,Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                      ItemsSource="{Binding Категория}"
                                      BorderBrush="Gray" BorderThickness="1 0 0 0" Background="{x:Null}">
+                                <!--<Listbox.Visibility>
+                                    <MultiBinding Converter="{StaticResource a}">
+                                        
+                                    </MultiBinding>
+                                </Listbox.Visibility>-->
                             </ListBox>
                         </Grid>
 
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver"  Value="True">
+                                <Setter TargetName="PART_ToggleButton" Property="BorderBrush" Value="DarkGreen"></Setter>
+                            </Trigger> 
+                            <!--<Trigger SourceName="border" Property="IsSelected"  Value="True">
                                 <Setter TargetName="border" Property="BorderBrush" Value="DarkGreen"></Setter>
-                            </Trigger>
-                            <MultiDataTrigger>
+                            </Trigger>-->
+                            <!--<MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <!--<Condition Binding="{Binding ElementName=border, Path=IsPressed}" Value="True"></Condition>-->
-                                    <!--<Condition Binding="{Binding ElementName=PART_CheckBox, Path=IsChecked}" Value="False"></Condition>-->
+                                    --><!--<Condition Binding="{Binding ElementName=border, Path=IsPressed}" Value="True"></Condition>-->
+                                    <!--<Condition Binding="{Binding ElementName=PART_CheckBox, Path=IsChecked}" Value="False"></Condition>--><!--
                                     <Condition Binding="{Binding ElementName=ListBox, Path=Visibility,Converter={StaticResource BooleanToVisibilityConverter}}" 
                                                Value="Visible"></Condition>
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
-                                    <!--<Setter TargetName="PART_CheckBox" Property="IsChecked" Value="True"/>-->
+                                    --><!--<Setter TargetName="PART_CheckBox" Property="IsChecked" Value="True"/>--><!--
                                     <Setter Property="local:AP.IsChecked" Value="True"></Setter>
-                                    <!--<Setter TargetName="ListBox" Property="Visibility" Value="Visible"/>-->
+                                    --><!--<Setter TargetName="ListBox" Property="Visibility" Value="Visible"/>--><!--
                                 </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>
+                            </MultiDataTrigger>-->
                             <!--<MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding ElementName=border, Path=IsPressed}" Value="True"></Condition>
