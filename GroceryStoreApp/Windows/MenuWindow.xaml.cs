@@ -30,7 +30,7 @@ namespace GroceryStoreApp.Windows
           (1,new DataOfUserPage(), "Сотрудники","ProfilePathData"),
           (1,new DataOfAddressPage(), "Адреса","ProfilePathData"),
           (3,new DataOfProductPage(), "Товары","ProductPathData"),
-          (3,new AddProductPage(), "Добавить товар","AddProductPathData"),
+          //(3,new AddProductPage(), "Добавить товар","AddProductPathData"),
           (3,new DataOfCategoriesPage(), "Категории","ProductPathData"),
           (3,new DataOfSupplyPage(), "Поставки","SupplyPathData"),
           (3,new DataOfGroupsPage(), "Товары","ProductPathData"),

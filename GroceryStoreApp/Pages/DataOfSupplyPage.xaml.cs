@@ -140,10 +140,11 @@ namespace GroceryStoreApp.Pages
                     List<ТоварПоставка> productSupplyList = selectedSupply.ТоварПоставка.ToList();
                     for (int i = 0; i < productSupplyList.Count; i++)
                     {
-                        Товар currentProduct = _databaseEntities.Товар.ToList().Where(x => x.Equals(productSupplyList[i].Товар)).FirstOrDefault();
+                        Товар currentProduct = productSupplyList[i].Товар;
                         currentProduct.Количество += productSupplyList[i].Количество;
-                        ФилиалТовар subsidiaryProduct = _databaseEntities.ФилиалТовар.ToList().Where(x => x.Филиал.Equals(selectedSupply.Филиал)
-                                                                                                 && x.Товар.Equals(currentProduct)).FirstOrDefault();
+
+                        ФилиалТовар subsidiaryProduct = currentProduct.ФилиалТовар.Where(x => x.КодФилиала.Equals(selectedSupply.КодФилиала)).FirstOrDefault();
+
                         if (subsidiaryProduct != null)
                         {
                             subsidiaryProduct.Количество += productSupplyList[i].Количество;

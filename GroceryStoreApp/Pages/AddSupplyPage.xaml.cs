@@ -177,6 +177,10 @@ namespace GroceryStoreApp.Pages
                     ProductEditStackPanel.IsEnabled = false;
                     AddSupplyButton.Visibility = Visibility.Collapsed;
                     SampleCombobBox.IsEnabled = false;
+                    DateOfArrivalDatePicker.IsEnabled = false;
+                    DateOfCreationDatePicker.IsEnabled = false;
+                    AddSupplyStackPanel.Visibility = Visibility.Collapsed;
+                    ViewProductListButton.IsEnabled = false;
                 }
             }
             else
@@ -825,12 +829,12 @@ namespace GroceryStoreApp.Pages
         }
         private void TypeFillingCombobBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            ComboBox comboBox = sender as ComboBox;
             if (_handleSelection == true)
             {
                 if (ProductList.Count > 0 &&
                     MessageBox.Show("При изменении способа заполнения будут сброшены товары в поставке", "Вы уверены", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
                 {
-                    ComboBox comboBox = sender as ComboBox;
                     _handleSelection = false;
                     comboBox.SelectedItem = e.RemovedItems[0];
                     return;
@@ -842,10 +846,15 @@ namespace GroceryStoreApp.Pages
                 }
             }
             _handleSelection = true;
-            ClearSupplyData();
             if(TypeFillingCombobBox.SelectedIndex == 1)
             {
                 List<ФилиалТовар> subsdinaryProductList = (SubsidiaryComboBox.SelectedItem as Филиал).ФилиалТовар.Where(x => x.Количество < x.МинимальныйЛимит).ToList();
+                if(subsdinaryProductList.Count < 1)
+                {
+                    MessageBox.Show("Нет лимитов для выбранного филиала");
+                    comboBox.SelectedIndex = 0;
+                    return;
+                }
                 List<Товар> productList = new List<Товар>();
                 for (int i = 0; i < subsdinaryProductList.Count; i++)
                 {
@@ -881,7 +890,7 @@ namespace GroceryStoreApp.Pages
                 }
                     UpdateProductList();
             }
-            else if (TypeFillingCombobBox.SelectedIndex == 1)
+            else if (TypeFillingCombobBox.SelectedIndex == 2)
             {
 
             }

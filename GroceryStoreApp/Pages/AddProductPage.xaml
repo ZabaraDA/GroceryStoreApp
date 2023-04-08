@@ -54,7 +54,7 @@
                         <Border.Background>
                             <ImageBrush Stretch="UniformToFill" x:Name="PhotoProductImageBrush">
                                 <ImageBrush.ImageSource>
-                                    <Binding>
+                                    <Binding Path="Фото">
                                         <Binding.TargetNullValue>
                                             <ImageSource>/Images/ImageStub.png</ImageSource>
                                         </Binding.TargetNullValue>
@@ -66,49 +66,104 @@
                             </ImageBrush>
                         </Border.Background>
                     </Border>
+
+                    <Grid x:Name="aa">
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Fill="#2a52be" StrokeThickness="1" StrokeDashArray="2 2"
+                                   Stroke="Beige" HorizontalAlignment="Center"
+                                   VerticalAlignment="Top" Height="{Binding ElementName=WidthTextBox, Path=Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=15}"
+                                   Width="{Binding ElementName=WidthTextBox, Path=Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=50}" Grid.ColumnSpan="2">
+                            <Rectangle.RenderTransform>
+                                <SkewTransform AngleX="-60" AngleY="0"></SkewTransform>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                        <Rectangle StrokeThickness="1" Fill="#2a52be" StrokeDashArray="2 2" Stroke="Beige" HorizontalAlignment="Right"
+                                   Height="{Binding ElementName=WidthTextBox, Path=Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=50}" Grid.Row="1"
+                                   Width="{Binding ElementName=WidthTextBox, Path=Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged ,FallbackValue=50}">
+                        </Rectangle>
+                        <Rectangle Fill="#2a52be" StrokeThickness="1" StrokeDashArray="2 2" Grid.Column="1" Grid.Row="1"
+                                           Height="{Binding ElementName=WidthTextBox, Path=Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=50}" 
+                                           Stroke="Beige" HorizontalAlignment="Left" 
+                                           Width="{Binding ElementName=WidthTextBox, Path=Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=25}">
+                            <Rectangle.RenderTransform>
+                                <SkewTransform AngleX="0" AngleY="-30"></SkewTransform>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                    </Grid>
                     <Button x:Name="AddPhotoButton" Content="Добавить фото" Width="200" Click="AddPhotoButton_Click"></Button>
                     <TextBlock Text="Штрих код"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите штрих код" x:Name="BarcodeCodeTextBox"></my:TextBoxWithRemoved>
+                    <my:TextBoxWithRemoved Uid="Введите штрих код" Text="{Binding ШтрихКод}"
+                                           x:Name="BarcodeCodeTextBox"></my:TextBoxWithRemoved>
                     <TextBlock Text="Артикул товара"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите артикул товара" x:Name="VendorCodeTextBox"></my:TextBoxWithRemoved>
+                    <my:TextBoxWithRemoved Uid="Введите артикул товара" Text="{Binding Артикул}"
+                                           x:Name="VendorCodeTextBox"></my:TextBoxWithRemoved>
                     <TextBlock Text="Наименование товара"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите наименование товара" x:Name="NameTextBox"></my:TextBoxWithRemoved>
+                    <my:TextBoxWithRemoved Uid="Введите наименование товара" Text="{Binding Наименование}"
+                                           x:Name="NameTextBox"></my:TextBoxWithRemoved>
                     <TextBlock Text="Описание товара"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите описание товара" x:Name="DescriptionTextBox"></my:TextBoxWithRemoved>
+                    <my:TextBoxWithRemoved Uid="Введите описание товара" Text="{Binding Описание}"
+                                           x:Name="DescriptionTextBox"></my:TextBoxWithRemoved>
                 </StackPanel>
-               
+
                 <StackPanel Margin="10 10 30 0">
                     <TextBlock Text="Стоимость товара"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите стоимость" x:Name="CostTextBox"></my:TextBoxWithRemoved>
+                    <my:TextBoxWithRemoved Uid="Введите стоимость" Text="{Binding Цена}"
+                                           x:Name="CostTextBox"></my:TextBoxWithRemoved>
                     <TextBlock Text="НДС к цене"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите НДС" x:Name="VATTextBox"></my:TextBoxWithRemoved>
+                    <my:TextBoxWithRemoved Uid="Введите НДС" Text="{Binding НДС}"
+                                           x:Name="VATTextBox"></my:TextBoxWithRemoved>
                     <TextBlock Text="Категория товара"></TextBlock>
-                    <ComboBox x:Name="CategoryComboBox"></ComboBox>
+                    <ComboBox x:Name="CategoryComboBox" 
+                              SelectedItem="{Binding Path= Категория}" 
+                              SelectedIndex="{Binding Path=SelectedIndex, TargetNullValue=0,FallbackValue=0}"
+                              SelectedValue="{Binding Path= Категория.Код}"
+                              SelectedValuePath="Код"></ComboBox>
                     <TextBlock Text="Производитель товара"></TextBlock>
-                    <ComboBox x:Name="ManufacturerComboBox"></ComboBox>
-                    <TextBlock Text="Срок годности товара(нед.)"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите срок годности" x:Name="ExpirationDateTextBox"></my:TextBoxWithRemoved>
+                    <ComboBox x:Name="ManufacturerComboBox" 
+                              SelectedItem="{Binding Path= Производитель}" 
+                              SelectedIndex="{Binding Path=SelectedIndex, TargetNullValue=0,FallbackValue=0}"
+                              SelectedValue="{Binding Path= Производитель.Код}"
+                              SelectedValuePath="Код"></ComboBox>
+                    <TextBlock Text="Срок годности товара(дней)"></TextBlock>
+                    <my:TextBoxWithRemoved Uid="Введите срок годности" Text="{Binding СрокГодности}"
+                                           x:Name="ExpirationDateTextBox"></my:TextBoxWithRemoved>
                     <TextBlock Text="Единица измерения"></TextBlock>
-                    <ComboBox x:Name="UnitComboBox"></ComboBox>
+                    <ComboBox x:Name="UnitComboBox" 
+                              SelectedItem="{Binding Path= ЕдиницаИзмерения}" 
+                              SelectedIndex="{Binding Path=SelectedIndex, TargetNullValue=0,FallbackValue=0}"
+                              SelectedValue="{Binding Path= ЕдиницаИзмерения.Код}"
+                              SelectedValuePath="Код"></ComboBox>
                     <TextBlock Text="Вес единицы,кг"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите вес нестандартной единицы товара"  x:Name="WeightTextBox"></my:TextBoxWithRemoved>
+                    <my:TextBoxWithRemoved Uid="Введите вес нестандартной единицы товара" Text="{Binding Вес}"
+                                           x:Name="WeightTextBox"></my:TextBoxWithRemoved>
                     <TextBlock Text="Ширина при размещении"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите ширина товара" x:Name="WidthTextBox"></my:TextBoxWithRemoved>
+                    <my:TextBoxWithRemoved Uid="Введите ширина товара" Text="{Binding Ширина,FallbackValue=50}"
+                                           x:Name="WidthTextBox"></my:TextBoxWithRemoved>
                     <TextBlock Text="Высота при размещении"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите высоту товара" x:Name="HeightTextBox"></my:TextBoxWithRemoved>
+                    <my:TextBoxWithRemoved Uid="Введите высоту товара" Text="{Binding Высота,FallbackValue=50}"
+                                           x:Name="HeightTextBox"></my:TextBoxWithRemoved>
+                    <TextBlock Text="Высота при размещении"></TextBlock>
+                    <my:TextBoxWithRemoved Uid="Введите высоту товара" Text="{Binding Глубина,FallbackValue=50}"
+                                           x:Name="GTextBox"></my:TextBoxWithRemoved>
                 </StackPanel>
 
             </StackPanel>
         </ScrollViewer>
         <StackPanel Grid.Row="1" Background="#FFC7C7C7" VerticalAlignment="Bottom">
-            <!--<TextBlock Text="Панель действий" HorizontalAlignment="Center"></TextBlock>-->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button x:Name="AddProductButton" Content="Добавить товар" Click="AddProductButton_Click"></Button>
                 <Button Content="Очистить все поля" x:Name="ClearInputFieldsButton" Click="ClearInputFieldsButton_Click"></Button>
                 <Button Content="Назад" x:Name="GoBackButton" Click="GoBackButton_Click"></Button>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 20">
-                
+
                 <Button Content="Категории" x:Name="AddCategoryButton" Click="AddCategoryButton_Click"></Button>
                 <Button Content="Производители" x:Name="AddManufacturerButton" Click="AddManufacturerButton_Click"></Button>
                 <Button Content="Единицы измерения" x:Name="AddUnitButton" Click="ClearInputFields_Click"></Button>

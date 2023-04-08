@@ -61,7 +61,7 @@
                         <Border x:Name="Border" Padding="2" SnapsToDevicePixels="true" Margin="1"
                                 BorderThickness="0 0 0 1" BorderBrush="{TemplateBinding BorderBrush}"
                                 Background="{TemplateBinding Background}">
-                            <Grid Width="auto" >
+                            <Grid>
                                 <Border Name="LabelBorder" Height="auto" Width="3" Background="{StaticResource ListViewItem.MouseOver.Border}" HorizontalAlignment="Left" Visibility="Hidden"></Border>
                                 <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                             </Grid>
@@ -133,7 +133,7 @@
             <TextBlock Text="Заказ поставщику №" Margin="10" FontFamily="{StaticResource Blogger Sans}"
                            Width="auto" FontSize="24" Name="NumberSupplyTextBlock"/>
         </StackPanel>
-        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.ColumnSpan="2">
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.ColumnSpan="2" Name="AddSupplyStackPanel" Margin="0 0 10 0">
             <Button Content="Отменить"></Button>
             <Button Content="Сохранить" Name="AddSupplyButton" Click="AddSupplyButton_Click"
                     Background="#FF23C523" Foreground="White"></Button>

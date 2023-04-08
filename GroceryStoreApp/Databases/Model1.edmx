@@ -245,7 +245,7 @@
             <PropertyRef Name="Код" />
           </Key>
           <Property Name="Код" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Актикул" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Артикул" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ШтрихКод" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Наименование" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Описание" Type="nvarchar" MaxLength="350" />
@@ -1406,7 +1406,7 @@
             <PropertyRef Name="Код" />
           </Key>
           <Property Name="Код" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Актикул" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Артикул" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ШтрихКод" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Наименование" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Описание" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
@@ -2485,7 +2485,7 @@
             <EntityTypeMapping TypeName="GroceryStoreDatabasesModel.Товар">
               <MappingFragment StoreEntitySet="Товар">
                 <ScalarProperty Name="Код" ColumnName="Код" />
-                <ScalarProperty Name="Актикул" ColumnName="Актикул" />
+                <ScalarProperty Name="Артикул" ColumnName="Артикул" />
                 <ScalarProperty Name="ШтрихКод" ColumnName="ШтрихКод" />
                 <ScalarProperty Name="Наименование" ColumnName="Наименование" />
                 <ScalarProperty Name="Описание" ColumnName="Описание" />

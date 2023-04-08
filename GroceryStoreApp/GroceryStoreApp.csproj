@@ -372,12 +372,9 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
-    <Content Include="Images\Devide1.svg" />
-    <Content Include="Images\DivideData.svg" />
-    <Content Include="Images\Фигура 347 1.svg" />
+    <Content Include="Images\AddSVG.svg" />
+    <Content Include="Images\DeacitvateSVG.svg" />
     <Resource Include="Images\plus.png" />
-    <Content Include="Images\DatePickerData.svg" />
-    <Content Include="Images\Supply.svg" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

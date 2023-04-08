@@ -155,9 +155,48 @@
             10.08,0,0,1-10.086-10.075L566.47,499.8A10.08,10.08,0,0,1,576.543,489.71ZM576.577,604.4h80.636a10.079,10.079,0,
             0,1,10.079,10.081v80.654a10.08,10.08,0,0,1-10.079,10.082H576.577a10.081,10.081,0,0,1-10.08-10.082V614.483A10.08,
             10.08,0,0,1,576.577,604.4Z</Geometry>
+
+        <Geometry x:Key="InfoPathData">M500,381.091a31.2,31.2,0,1,1,31.014-31.2A31.109,31.109,0,0,1,500,381.091Zm-10.338,
+            22.881h20.676a10.37,10.37,0,0,1,10.338,10.4V670.924a10.37,10.37,0,0,1-10.338,10.4H489.662a10.37,10.37,0,0,
+            1-10.338-10.4V414.373A10.37,10.37,0,0,1,489.662,403.972ZM500,777.5c-153.259,0-277.5-124.241-277.5-277.5S346.741,
+            222.5,500,222.5,777.5,346.741,777.5,500,653.259,777.5,500,777.5Zm0-529.668c-139.269,0-252.168,112.9-252.168,
+            252.168S360.731,752.168,500,752.168,752.168,639.269,752.168,500,639.269,247.832,500,247.832Z</Geometry>
+        <Geometry x:Key="ChangedPathData">M716.125,728H283.873A11.875,11.875,0,0,1,272,716.125V283.873A11.874,11.874,0,0,1,283.873,
+            272H438.248a11.875,11.875,0,0,1,11.876,11.875v5.937a11.875,11.875,0,0,1-11.876,11.875H301.685V698.312H698.312V561.749a11.875,
+            11.875,0,0,1,11.875-11.875h5.938A11.875,11.875,0,0,1,728,561.749V716.125A11.875,11.875,0,0,1,716.125,
+            728Zm6.119-363.766L475.711,610.767l-0.068.068-1.083,1.083a8.552,8.552,0,0,1-7.523,2.379l-0.74.116-84.626,
+            13.21-3.744.585c-4.136.645-6.965-2.192-6.318-6.337l0.586-3.753,13.41-85.9a8.588,8.588,0,0,1,.626-4.01l0.169-1.081,
+            0.24,0.241a8.565,8.565,0,0,1,1.442-1.925L635.766,277.756l3.028-3.028a8.557,8.557,0,0,1,12.1-.009l3.024,3.024,68.336,
+            68.336,3.024,3.024a8.558,8.558,0,0,1-.009,12.1ZM403.2,540.558A8.543,8.543,0,0,1,401.275,542l0.925,0.924L392.089,
+            607.69l64.766-10.11L458,598.725a8.541,8.541,0,0,1,1.442-1.926L671.205,385.036,614.964,328.8ZM644.829,298.93l-18.164,
+            18.164,56.241,56.241,18.164-18.164Z</Geometry>
+        <Geometry x:Key="ControlMenuPathData">M706.751,671h-412.5A9.245,9.245,0,0,1,285,661.759v-23.1a9.245,9.245,0,0,1,
+            9.249-9.241h412.5A9.245,9.245,0,0,1,716,638.656v23.1A9.245,9.245,0,0,1,706.751,671Zm0-149.707h-412.5A9.246,
+            9.246,0,0,1,285,512.051v-23.1a9.246,9.246,0,0,1,9.249-9.242h412.5A9.246,9.246,0,0,1,716,488.949v23.1A9.246,
+            9.246,0,0,1,706.751,521.293Zm0-149.708h-412.5A9.245,9.245,0,0,1,285,362.344v-23.1A9.245,9.245,0,0,1,294.249,
+            330h412.5A9.245,9.245,0,0,1,716,339.241v23.1A9.245,9.245,0,0,1,706.751,371.585Z</Geometry>
+        <Geometry x:Key="AddPathData">M500.5,752C361.6,752,249,639.4,249,500.5S361.6,249,500.5,249,752,361.6,752,500.5,
+            639.4,752,500.5,752Zm0-480.042c-126.22,0-228.542,102.322-228.542,228.542S374.28,729.042,500.5,729.042,
+            729.042,626.72,729.042,500.5,626.72,271.958,500.5,271.958ZM611.184,520.175H519.747v91.437a19.247,19.247,
+            0,1,1-38.494,0V520.175H389.816a19.248,19.248,0,1,1,0-38.495h91.437V390.243a19.247,19.247,0,1,1,38.494,
+            0V481.68h91.437A19.248,19.248,0,1,1,611.184,520.175Z</Geometry>
+        <Geometry x:Key="DeactivatePathData">M500,752c-139.176,0-252-112.824-252-252S360.824,248,500,248,752,360.824,
+            752,500,639.176,752,500,752Zm0-481c-126.471,0-229,102.525-229,229S373.529,729,500,729,729,626.471,729,
+            500,626.471,271,500,271Zm92.126,321.55a19.333,19.333,0,0,1-27.342-.067L500,527.7l-64.784,64.784a19.286,
+            19.286,0,1,1-27.274-27.274l64.784-64.784-64.784-64.785a19.286,19.286,0,1,1,27.274-27.274L500,
+            473.154l64.784-64.784a19.286,19.286,0,1,1,27.274,27.274l-64.784,64.785,64.784,64.784A19.333,
+            19.333,0,0,1,592.126,592.554Z</Geometry>
         <!--#endregion-->
         <!--#region  brush-->
 
+        <SolidColorBrush x:Key="Button.Changed.Background" Color="#339933"/>
+        <SolidColorBrush x:Key="Button.Add.Background" Color="#999999"/>
+        <SolidColorBrush x:Key="Button.Delete.Background" Color="#FF3366"/>
+        <SolidColorBrush x:Key="Button.All.Background" Color="#333333"/>
+        
+        
+        <SolidColorBrush x:Key="ToggleButton.All.Background" Color="White"/>
+        <SolidColorBrush x:Key="ToggleButton.IsMouseOver.Background" Color="#CCCCCC"/>
 
         <SolidColorBrush x:Key="Chart.Delivery.Background" Color="#CCCCCC"/>
         <SolidColorBrush x:Key="Chart.Remainder.Background" Color="#00CCFF"/>
@@ -586,6 +625,7 @@
             <Setter Property="Background" Value="{StaticResource Window.NavigationBar.Background}"></Setter>
             <Setter Property="BorderBrush" Value="{StaticResource Window.NavigationBar.Border}"></Setter>
             <Setter Property="Foreground" Value="{StaticResource Window.NavigationBar.Foreground}"></Setter>
+            <Setter Property="Opacity" Value="1"></Setter>
             <Setter Property="Width" Value="58"></Setter>
             <Setter Property="Height" Value="36"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
@@ -595,8 +635,11 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type my:NavigationButton}">
-                        <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}" Name="border"
-                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <Border Name="border" Opacity="{TemplateBinding Opacity}"
+                                Padding="{TemplateBinding Padding}" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}">
                             <Path Margin="0" Data="{TemplateBinding Data}" x:Name="path" Width="20"  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"  Style="{StaticResource NavigationPath}" Fill="{TemplateBinding Foreground}"></Path>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -649,11 +692,60 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style TargetType="my:NavigationButton" x:Key="PopupNavigationButton">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="{StaticResource Button.All.Background}"/>
+            <Setter Property="FontFamily" Value="{StaticResource Blogger Sans}"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Margin" Value="1"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FocusVisualStyle"
+                    Value="{StaticResource ButtonFocusVisual}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type my:NavigationButton}">
+                        <Border CornerRadius="5" Background="{TemplateBinding Background}" 
+                                x:Name="ColorBackground" Margin="{TemplateBinding Margin}">
+                            <StackPanel Orientation="Horizontal">
+                                <Path Margin="5 5 10 5" Data="{TemplateBinding Data}" x:Name="path" Width="20"  
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"  
+                                      Style="{StaticResource NavigationPath}" Fill="{TemplateBinding Foreground}"></Path>
+                                <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" 
+                                                  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 5 5 5"/>
+                            </StackPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Background" TargetName="ColorBackground" Value="{StaticResource ToggleButton.IsMouseOver.Background}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Background" TargetName="ColorBackground" Value="{StaticResource Button.Pressed.Background}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <ControlTemplate TargetType="my:NavigationButton" x:Key="ListViewButtonTemplate">
-            <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}" Name="border" CornerRadius="5"
-                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                <Path Margin="0" Data="{TemplateBinding Data}" x:Name="path" Width="20"  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"  Style="{StaticResource NavigationPath}" Fill="{TemplateBinding Foreground}"></Path>
-            </Border>
+            <Grid>
+                <Border Padding="{TemplateBinding Padding}" Opacity="0"
+                    Background="{TemplateBinding Background}" 
+                    Name="border" CornerRadius="5"
+                    BorderBrush="{TemplateBinding BorderBrush}" 
+                    BorderThickness="{TemplateBinding BorderThickness}">
+                </Border>
+                <Path Margin="0" Opacity="1" Data="{TemplateBinding Data}" 
+                      x:Name="path" Width="20" 
+                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                      Style="{StaticResource NavigationPath}" 
+                      Fill="{TemplateBinding Foreground}"></Path>
+            </Grid>
+
             <ControlTemplate.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter TargetName="border" Property="Background" Value="#FF4C4C4C" />
@@ -713,7 +805,7 @@
             </Setter>
         </Style>
         <Style x:Key="ProductListViewStyle" TargetType="{x:Type ListView}">
-            <Setter Property="Background" Value="White"/>
+            <Setter Property="Background" Value="#CCCCCC"/>
             <Setter Property="BorderBrush" Value="{StaticResource ListViewItem.MouseOver.Background}"/>
             <Setter Property="BorderThickness" Value="2 0 2 2"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -890,7 +982,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
         <Style TargetType="{x:Type CheckBox}">
             <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
             <Setter Property="Background" Value="{StaticResource OptionMark.Static.Background}"/>
@@ -960,5 +1051,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
+    
     </Application.Resources>
 </Application>

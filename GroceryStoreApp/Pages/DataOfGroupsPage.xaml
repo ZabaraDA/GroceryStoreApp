@@ -7,61 +7,168 @@
       xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
       mc:Ignorable="d" FontFamily="{StaticResource Blogger Sans}">
     <Page.Resources>
-        <Style TargetType="ListViewItem" x:Key="ProductItemStyle">
-            <Setter Property="Foreground" Value="Black"></Setter>
-            <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="Background" Value="{StaticResource ListViewItem.Static.Background}"/>
+        <Style TargetType="{x:Type ToggleButton}" x:Key="GroupingToggleButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+            <Setter Property="Foreground" Value="{StaticResource Button.All.Background}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="ListBoxItem">
-                        <Border x:Name="Border" Padding="2" SnapsToDevicePixels="true" Margin="1"
-                                BorderThickness="0 0 0 1" BorderBrush="{TemplateBinding BorderBrush}"
-                                Background="{TemplateBinding Background}">
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                SnapsToDevicePixels="true" CornerRadius="5">
+
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" 
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" 
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Button.IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Cursor" Value="Hand"></Setter>
+                                <Setter Property="Background" TargetName="border" Value="WhiteSmoke"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Add.Background}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Add.Background}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="{x:Type ToggleButton}" x:Key="ListToggleButton">
+            <Setter Property="Background" Value="{StaticResource ToggleButton.All.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+            <Setter Property="Foreground" Value="{StaticResource Button.All.Background}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Width" Value="Auto"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                SnapsToDevicePixels="true" Height="{TemplateBinding Height}">
                             <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-                                <!--<Border CornerRadius="5" Width="60" Height="60" HorizontalAlignment="Center"
-                                        BorderBrush="Black" BorderThickness="1" SnapsToDevicePixels="True">
-                                    <Border.Background>
-                                        <ImageBrush Stretch="Fill">
-                                            <ImageBrush.ImageSource>
-                                                <Binding Path="Фото">
-                                                    <Binding.TargetNullValue>
-                                                        <ImageSource>/Images/ImageStub.png</ImageSource>
-                                                    </Binding.TargetNullValue>
-                                                    <Binding.FallbackValue>
-                                                        <ImageSource>/Images/ImageStub.png</ImageSource>
-                                                    </Binding.FallbackValue>
-                                                </Binding>
-                                            </ImageBrush.ImageSource>
-                                        </ImageBrush>
-                                    </Border.Background>
-                                </Border>-->
-                                <Border Name="LabelBorder" Height="auto" Width="3" Background="{StaticResource ListViewItem.MouseOver.Border}" HorizontalAlignment="Left" Visibility="Hidden"></Border>
-                                <ContentPresenter Margin="20 0 0 0" Content="{Binding Наименование}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Left">
-                                    <my:NavigationButton  Background="Blue" Data="{StaticResource ProductPathData}" 
-                                                          Name="ViewProductButton" Click="ViewProductButton_Click"
-                                                          ToolTip="Информация о товаре"></my:NavigationButton>
-                                    <my:NavigationButton  Background="Green" Data="{StaticResource ExpandPathData}" 
-                                                          Name="ChangeProductButton" Click="ChangeProductButton_Click"
-                                                          ToolTip="Редактировать товар"></my:NavigationButton>
-                                    <my:NavigationButton  Background="Red" Data="{StaticResource ExitPathData}" 
-                                                          Name="DeleteProductButton" Click="DeleteProductButton_Click"
-                                                          ToolTip="Деактивировать товар"></my:NavigationButton>
-                                </StackPanel>
+
+                                <ContentPresenter x:Name="contentPresenter" Focusable="False" 
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" 
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver"  Value="True">
-                                <Setter Property="Background" Value="{StaticResource ListViewItem.MouseOver.Background}" />
-                                <Setter TargetName="LabelBorder" Property="Visibility" Value="Visible"></Setter>
+                            <!--<Trigger Property="Button.IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
                             </Trigger>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Background" Value="{StaticResource ListViewItem.Pressed.Background}"/>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Cursor" Value="Hand"></Setter>
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource ToggleButton.IsMouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="red"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                            </Trigger>-->
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="ListViewItem" x:Key="ProductItemStyle">
+            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="Background" Value="White"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Background" Value="{StaticResource ToggleButton.All.Background}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Border Name="Border" Grid.ColumnSpan="2"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"></Border>
+                            <Border Name="LabelBorder" Height="auto" Width="3" 
+                                    Background="{StaticResource ListViewItem.MouseOver.Border}" 
+                                    HorizontalAlignment="Left" Visibility="Hidden"></Border>
+                            <TextBlock Margin="20 0 0 0" Text="{Binding Наименование}" 
+                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       IsHitTestVisible="False"/>
+
+                            <ToggleButton Name="ControlMenuButton" Click="AddProductButton_Click" 
+                                                  Style="{StaticResource GroupingToggleButton}" Grid.Column="1">
+                                <ToggleButton.Content>
+                                    <Grid>
+                                        <Path Data="{StaticResource ControlMenuPathData}" 
+                                                  Fill="{StaticResource Button.Add.Background}" Stretch="UniformToFill" 
+                                                  HorizontalAlignment="Center"
+                                                  Width="20" Height="20"></Path>
+                                        <Popup PopupAnimation="Fade" Placement="Left"
+                                               StaysOpen="False"
+                                               AllowsTransparency="True"
+                                               IsOpen="{Binding ElementName=ControlMenuButton,Path=IsChecked,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                            <Border Background="White" CornerRadius="5" Margin="10">
+                                                <Border.Effect>
+                                                    <DropShadowEffect BlurRadius="10" ShadowDepth="1" Opacity="0.6"/>
+                                                </Border.Effect>
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding Наименование}" HorizontalAlignment="Center" Margin="5" MaxWidth="250"></TextBlock>
+                                                    <my:NavigationButton Content="Информация" Data="{StaticResource InfoPathData}" 
+                                                                              Name="ViewProductButton" Click="ViewProductButton_Click" 
+                                                                              Style="{StaticResource PopupNavigationButton}"
+                                                                              ToolTip="Просмотр информации о товаре"></my:NavigationButton>
+                                                    <my:NavigationButton Data="{StaticResource ChangedPathData}" 
+                                                                             Name="ChangeProductButton" Click="ChangeProductButton_Click" 
+                                                                             Style="{StaticResource PopupNavigationButton}"
+                                                                             ToolTip="Редактировать товар" 
+                                                                             Content="Редактировать"></my:NavigationButton>
+                                                    <my:NavigationButton Data="{StaticResource DeactivatePathData}" 
+                                                                             Name="DeleteProductButton" Click="DeleteProductButton_Click" 
+                                                                             Style="{StaticResource PopupNavigationButton}"
+                                                                             ToolTip="Деактивировать товар"
+                                                                             Content="Деактивировать"></my:NavigationButton>
+
+
+                                                </StackPanel>
+                                            </Border>
+                                        </Popup>
+                                    </Grid>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Cursor" Value="Hand"></Setter>
+                                <Setter Property="Background" TargetName="Border" Value="WhiteSmoke"/>
+                                <Setter Property="BorderBrush" TargetName="Border" Value="{StaticResource Button.Add.Background}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -71,7 +178,7 @@
         <Style TargetType="ListViewItem" x:Key="CategoryItemStyle">
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate>
+                    <ControlTemplate TargetType="ListViewItem">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -81,41 +188,63 @@
                                 <RowDefinition Height="auto"></RowDefinition>
                                 <RowDefinition Height="*"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <ToggleButton Name="PART_ToggleButton" Height="50" Grid.ColumnSpan="2" 
-                                          BorderBrush="Gray" BorderThickness="2" Margin="5"
-                                          Background="LightGray" HorizontalContentAlignment="Left" 
-                                          Style="{x:Null}" Padding="20 0">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Наименование}" Margin="20 0 0 0" FontSize="18"
-                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </StackPanel>
+                            <ToggleButton Name="PART_ToggleButton" Grid.ColumnSpan="2"
+                                          Style="{StaticResource ListToggleButton}">
                             </ToggleButton>
-                            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Left" Margin="10">
-                                <my:NavigationButton  Background="Blue" Data="{StaticResource ProductPathData}" 
-                                                          Name="AddProductButton" Click="AddProductButton_Click"
-                                                          ToolTip="Информация о товаре"></my:NavigationButton>
-                                <my:NavigationButton  Background="Green" Data="{StaticResource ExpandPathData}" 
-                                                          Name="ChangeCategoryButton" Click="ChangeProductButton_Click"
-                                                          ToolTip="Редактировать товар"></my:NavigationButton>
-                                <!--<my:NavigationButton  Background="Red" Data="{StaticResource ExitPathData}" 
-                                                          Name="DeleteCategorytButton" Click="DeleteProductButton_Click"
-                                                          ToolTip="Деактивировать товар"></my:NavigationButton>-->
+                            <StackPanel Orientation="Horizontal" 
+                                        IsHitTestVisible="False" 
+                                        VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Наименование}"
+                                       Margin="20 0 0 0" FontSize="18"
+                                       HorizontalAlignment="Left"/>
+                                <TextBlock Text="{Binding Товар.Count,
+                                           StringFormat={}(Товаров в категории: {0})}"></TextBlock>
                             </StackPanel>
+                            <ToggleButton Name="ControlMenuButton" Click="AddProductButton_Click" 
+                                              Style="{StaticResource GroupingToggleButton}" Grid.Column="1">
+                                <ToggleButton.Content>
+                                    <Grid>
+                                        <Path Data="{StaticResource ControlMenuPathData}" 
+                                                  Fill="{StaticResource Button.Add.Background}" Stretch="UniformToFill" 
+                                                  HorizontalAlignment="Center"
+                                                  Width="20" Height="20"></Path>
+                                        <Popup PopupAnimation="Fade" Placement="Left"
+                                                   StaysOpen="False"
+                                                   AllowsTransparency="True"
+                                                   IsOpen="{Binding ElementName=ControlMenuButton,Path=IsChecked,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+
+
+                                            <Border Background="White" CornerRadius="5" Margin="10">
+                                                <Border.Effect>
+                                                    <DropShadowEffect BlurRadius="10" ShadowDepth="1" Opacity="0.6"/>
+                                                </Border.Effect>
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding Наименование}" HorizontalAlignment="Center" Margin="5"></TextBlock>
+                                                    <my:NavigationButton  Content="Добавить товар" Data="{StaticResource AddProductPathData}" 
+                                                          Name="AddProductButton" Click="AddProductButton_Click" Style="{StaticResource PopupNavigationButton}"
+                                                          ToolTip="Добавить новый товар"></my:NavigationButton>
+                                                    <my:NavigationButton Data="{StaticResource ChangedPathData}" 
+                                                          Name="ChangeCategoryButton" Click="ChangeProductButton_Click" Style="{StaticResource PopupNavigationButton}"
+                                                          ToolTip="Редактировать группу" Content="Редактировать группу"></my:NavigationButton>
+
+                                                </StackPanel>
+                                            </Border>
+                                        </Popup>
+                                    </Grid>
+                                </ToggleButton.Content>
+                            </ToggleButton>
                             <ListView Grid.Row="1" Margin="20 0 0 0" Grid.Column="0" Grid.ColumnSpan="2" Name="ListBox" 
                                      Visibility="{Binding ElementName=PART_ToggleButton,Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                      ItemsSource="{Binding Товар}" ItemContainerStyle="{StaticResource ProductItemStyle}"
-                                     BorderBrush="Gray" BorderThickness="1 0 0 0" Background="{x:Null}">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Наименование}"></TextBlock>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
+                                     BorderBrush="Gray" BorderThickness="1 0 0 0" Background="{x:Null}"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                             </ListView>
                         </Grid>
-
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver"  Value="True">
-                                <Setter TargetName="PART_ToggleButton" Property="BorderBrush" Value="DarkGreen"></Setter>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Cursor" Value="Hand"></Setter>
+                                <Setter Property="Background" TargetName="PART_ToggleButton" Value="WhiteSmoke"/>
+                                <Setter Property="BorderBrush" TargetName="PART_ToggleButton" Value="{StaticResource Button.Add.Background}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -124,57 +253,87 @@
         </Style>
         <Style TargetType="ListViewItem" x:Key="GroupItemStyle">
             <Setter Property="FontFamily" Value="{StaticResource Blogger Sans}"></Setter>
+            <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="FontSize" Value="18"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate>
+                    <ControlTemplate TargetType="ListBoxItem">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"></RowDefinition>
                                 <RowDefinition Height="*"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <ToggleButton Name="PART_ToggleButton" Height="50" Grid.ColumnSpan="2" 
-                                          BorderBrush="Gray" BorderThickness="2" Margin="5"
-                                          Background="LightGray" HorizontalContentAlignment="Left" 
-                                          Style="{x:Null}" Padding="20 0">
-                                <StackPanel Orientation="Horizontal">
-                                    <!--<Border  CornerRadius="10" HorizontalAlignment="Left" 
-                                             BorderThickness="1" BorderBrush="Black"
-                                             Height="50" Width="50" Margin="5" >
-                                        <Border.Background>
-                                            <ImageBrush Stretch="UniformToFill">
-                                                <ImageBrush.ImageSource>
-                                                    <Binding Path="Фото">
-                                                        <Binding.TargetNullValue>
-                                                            <ImageSource>/Images/ImageStub.png</ImageSource>
-                                                        </Binding.TargetNullValue>
-                                                    </Binding>
-                                                </ImageBrush.ImageSource>
-                                            </ImageBrush>
-                                        </Border.Background>
-                                    </Border>-->
-                                    <TextBlock Text="{Binding Наименование}" Margin="20 0 0 0" FontSize="18"
-                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </StackPanel>
+                            <ToggleButton Name="PART_ToggleButton" Grid.ColumnSpan="2"
+                                          Style="{StaticResource ListToggleButton}">
+                            </ToggleButton>
+                            <StackPanel Orientation="Horizontal" 
+                                        IsHitTestVisible="False" 
+                                        VerticalAlignment="Center">
+                                
+                            <TextBlock Text="{Binding Наименование}" 
+                                       Margin="20 0 0 0" FontSize="18"
+                                       HorizontalAlignment="Left"/>
+                            <TextBlock Text="{Binding Категория.Count,
+                                       StringFormat={}(Категорий в группе: {0})}"></TextBlock>
+                            </StackPanel>
+                            <ToggleButton Name="ControlMenuButton" Click="AddProductButton_Click" 
+                                              Style="{StaticResource GroupingToggleButton}" Grid.Column="1">
+                                <ToggleButton.Content>
+                                    <Grid>
+                                        <Path Data="{StaticResource ControlMenuPathData}" 
+                                                  Fill="{StaticResource Button.Add.Background}" Stretch="UniformToFill" 
+                                                  HorizontalAlignment="Center"
+                                                  Width="20" Height="20"></Path>
+                                        <Popup PopupAnimation="Fade" Placement="Left"
+                                                   StaysOpen="False"
+                                                   AllowsTransparency="True"
+                                                   IsOpen="{Binding ElementName=ControlMenuButton,Path=IsChecked,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+
+
+                                            <Border Background="White" CornerRadius="5" Margin="10">
+                                                <Border.Effect>
+                                                    <DropShadowEffect BlurRadius="10" ShadowDepth="1" Opacity="0.6"/>
+                                                </Border.Effect>
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding Наименование}" HorizontalAlignment="Center" Margin="5"></TextBlock>
+                                                    <my:NavigationButton  Content="Добавить категорию" Data="{StaticResource AddPathData}" 
+                                                                              Name="AddCategoryButton" Click="AddCategoryButton_Click" 
+                                                                              Style="{StaticResource PopupNavigationButton}"
+                                                                              ToolTip="Добавить новую категорию в группу"></my:NavigationButton>
+                                                    <my:NavigationButton Data="{StaticResource ChangedPathData}" 
+                                                                             Name="ChangeGroupButton" Click="ChangeGroupButton_Click" 
+                                                                             Style="{StaticResource PopupNavigationButton}"
+                                                                             ToolTip="Редактировать группу" 
+                                                                             Content="Редактировать группу"></my:NavigationButton>
+
+                                                </StackPanel>
+                                            </Border>
+                                        </Popup>
+                                    </Grid>
+                                </ToggleButton.Content>
                             </ToggleButton>
                             <ListView Grid.Row="1" Margin="20 0 0 0" Grid.Column="0" Grid.ColumnSpan="2" Name="ListBox" 
                                      Visibility="{Binding ElementName=PART_ToggleButton,Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                      ItemsSource="{Binding Категория}" ItemContainerStyle="{StaticResource CategoryItemStyle}"
-                                     BorderBrush="Gray" BorderThickness="1 0 0 0" Background="{x:Null}"></ListView>
+                                     BorderBrush="Gray" BorderThickness="1 0 0 0" Background="{x:Null}"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                            </ListView>
                         </Grid>
-
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver"  Value="True">
-                                <Setter TargetName="PART_ToggleButton" Property="BorderBrush" Value="DarkGreen"></Setter>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Cursor" Value="Hand"></Setter>
+                                <Setter Property="Background" TargetName="PART_ToggleButton" Value="WhiteSmoke"/>
+                                <Setter Property="BorderBrush" TargetName="PART_ToggleButton" Value="{StaticResource Button.Add.Background}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+
         </Style>
         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource NavigationStyle}">
             <Setter Property="Height" Value="40"/>
@@ -187,8 +346,10 @@
         </Style>
         <Style TargetType="{x:Type my:NavigationButton}" BasedOn="{StaticResource StateNavigationButtonStyle}">
             <Setter Property="Height" Value="30"/>
-            <Setter Property="Width" Value="30"/>
-            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Template" Value="{StaticResource ListViewButtonTemplate}"></Setter>
         </Style>
     </Page.Resources>
@@ -197,10 +358,29 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Text="Группы товаров" FontSize="24"></TextBlock>
-        <ListView x:Name="GroupListView" Grid.Row="1" 
-                  ItemContainerStyle="{StaticResource GroupItemStyle}"
-                  Style="{StaticResource ProductListViewStyle}">
+        <TextBlock Text="Товары" VerticalAlignment="Center" FontSize="24" Margin="20 5 5 5"></TextBlock>
+        <my:TextBoxWithRemoved Name="NameSearchTextBox"
+                               TextChanged="NameSearchTextBox_TextChanged"
+                               Width="200" Height="35"
+                               FontSize="22"
+                               VerticalContentAlignment="Center"
+                               HorizontalAlignment="Right" 
+                               Margin="0 0 20 0"></my:TextBoxWithRemoved>
+        <!--<StackPanel HorizontalAlignment="Right" Margin="0 0 10 0" Orientation="Horizontal">
+            <my:NavigationButton Content="+ Группа" Style="{StaticResource NavigationStyle}" Margin="0" Background="Transparent"></my:NavigationButton>
+            <my:NavigationButton Content="|Товар" Style="{StaticResource NavigationStyle}" Margin="0" Background="Transparent"></my:NavigationButton>
+        </StackPanel>-->
+        <ListView x:Name="GroupListView" Grid.Row="1" Margin="1" BorderThickness="0"
+                  ItemContainerStyle="{StaticResource GroupItemStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  Style="{StaticResource ProductListViewStyle}" Background="White">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Группа" Width="200"></GridViewColumn>
+                    <GridViewColumn Header="Категрория" Width="200"></GridViewColumn>
+                    <GridViewColumn Header="Товар" Width="200"></GridViewColumn>
+                    <GridViewColumn Header="Производитель" Width="200"></GridViewColumn>
+                </GridView>
+            </ListView.View>
         </ListView>
     </Grid>
 </Page>

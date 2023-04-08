@@ -23,9 +23,20 @@ namespace GroceryStoreApp.Pages
         public DataOfGroupsPage()
         {
             InitializeComponent();
-            GroupListView.ItemsSource = _databasesEntities.Группа.ToList();
+            UpdateProductList();
         }
 
+        private void UpdateProductList()
+        {
+            var groupList = _databasesEntities.Группа.ToList();
+
+            if (!string.IsNullOrEmpty(NameSearchTextBox.Text))
+            {
+                groupList = groupList.Where(x => x.Наименование.ToLower().Contains(NameSearchTextBox.Text.ToLower())).ToList();
+            }
+
+            GroupListView.ItemsSource = groupList.ToList();
+        }
         private void ViewProductButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -34,7 +45,11 @@ namespace GroceryStoreApp.Pages
 
         private void ChangeProductButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Товар selectedProduct = (sender as Button).DataContext as Товар;
+            if(selectedProduct != null)
+            {
+                NavigationService.Navigate(new AddProductPage(selectedProduct));
+            }
         }
 
         private void DeleteProductButton_Click(object sender, RoutedEventArgs e)
@@ -45,6 +60,21 @@ namespace GroceryStoreApp.Pages
         private void AddProductButton_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void AddCategoryButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ChangeGroupButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void NameSearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateProductList();
         }
     }
 }

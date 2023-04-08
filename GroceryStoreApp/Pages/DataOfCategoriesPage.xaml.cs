@@ -64,8 +64,8 @@ namespace GroceryStoreApp.Pages
             compositeCollection.Add(categoryItems);
             //compositeCollection.Add(item);
 
-            CategoryListView.Items.Add(categoryItems);
-            CategoryListView.Items.Add(item);
+            //CategoryListView.Items.Add(categoryItems);
+            //CategoryListView.Items.Add(item);
         }
 
         private void Page_MouseDown(object sender, MouseButtonEventArgs e)

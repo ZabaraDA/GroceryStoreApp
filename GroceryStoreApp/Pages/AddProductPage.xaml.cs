@@ -13,22 +13,45 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace GroceryStoreApp.Pages
 {
+    public class Cube
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Z { get; set; }
+        public int CathetusA { get; set; }
+        public int CathetusB { get; set; }
+        public Cube()
+        {
+
+        }
+
+    }
     public partial class AddProductPage : Page
     {
-        readonly GroceryStoreDatabasesEntities databasesEntities = new GroceryStoreDatabasesEntities();
+
+        public Cube Cube = new Cube();
+
+        private readonly GroceryStoreDatabasesEntities databasesEntities = new GroceryStoreDatabasesEntities();
         readonly OpenFileDialog openFileDialog = new OpenFileDialog()
         {
             Multiselect = false,
             Filter = "Images (*.JPG; *.PNG)| *.JPG;*.PNG"
         };
-        public AddProductPage()
+        private Товар _currentProduct;
+        public AddProductPage(Товар selectedProduct)
         {
             InitializeComponent();
+            if (selectedProduct != null)
+            {
+                _currentProduct = selectedProduct;
+            }
+
         }
 
         byte[] photoProduct;
@@ -116,7 +139,7 @@ namespace GroceryStoreApp.Pages
                 errors.AppendLine("Укажите категорию товара");
             }
 
-            if(ManufacturerComboBox.SelectedIndex == 0)
+            if (ManufacturerComboBox.SelectedIndex == 0)
             {
                 errors.AppendLine("Укажите производителя товара");
             }
@@ -198,7 +221,7 @@ namespace GroceryStoreApp.Pages
                 }
             }
 
-            if(DescriptionTextBox.Text == null|| DescriptionTextBox.Text == "")
+            if (DescriptionTextBox.Text == null || DescriptionTextBox.Text == "")
             {
                 if (MessageBox.Show("Добавить товар без описания?", "Внимание", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
                 {
@@ -209,7 +232,7 @@ namespace GroceryStoreApp.Pages
             #endregion
             databasesEntities.Товар.Add(new Товар
             {
-                Актикул = VendorCodeTextBox.Text,
+                Артикул = VendorCodeTextBox.Text,
                 ШтрихКод = BarcodeCodeTextBox.Text,
                 ЕдиницаИзмерения = UnitComboBox.SelectedItem as ЕдиницаИзмерения,
                 Категория = CategoryComboBox.SelectedItem as Категория,
@@ -315,9 +338,8 @@ namespace GroceryStoreApp.Pages
             manufacturerItems.Insert(0, new Производитель
             {
                 Наименование = "Выберите производителя"
-                
-            });
 
+            });
             ManufacturerComboBox.ItemsSource = manufacturerItems.ToList();
             ManufacturerComboBox.DisplayMemberPath = "Наименование";
             ManufacturerComboBox.SelectedIndex = 0;
@@ -333,6 +355,7 @@ namespace GroceryStoreApp.Pages
             UnitComboBox.ItemsSource = unitItems.ToList();
             UnitComboBox.DisplayMemberPath = "Наименование";
             UnitComboBox.SelectedIndex = 0;
+            DataContext = _currentProduct;
         }
 
         private void AddManufacturerButton_Click(object sender, RoutedEventArgs e)

@@ -26,7 +26,7 @@ namespace GroceryStoreApp.Databases
         }
     
         public int Код { get; set; }
-        public string Актикул { get; set; }
+        public string Артикул { get; set; }
         public string ШтрихКод { get; set; }
         public string Наименование { get; set; }
         public string Описание { get; set; }
