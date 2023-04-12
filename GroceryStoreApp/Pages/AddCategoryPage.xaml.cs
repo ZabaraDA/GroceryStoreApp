@@ -41,7 +41,7 @@ namespace GroceryStoreApp.Pages
         private void AddPhotoButton_Click(object sender, RoutedEventArgs e)
         {
             //photo =  PhotoImportClass.Import(800);
-            PhotoCategoryImageBrush.ImageSource = PhotoImportClass.Import(800);
+            PhotoCategoryImageBrush.ImageSource = PhotoImportClass.ImportToBitmapImage(800);
         }
 
         private void AddCategoryButton_Click(object sender, RoutedEventArgs e)

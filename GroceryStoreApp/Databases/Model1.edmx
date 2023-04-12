@@ -245,8 +245,8 @@
             <PropertyRef Name="Код" />
           </Key>
           <Property Name="Код" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Артикул" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="ШтрихКод" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Артикул" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="ШтрихКод" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Наименование" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Описание" Type="nvarchar" MaxLength="350" />
           <Property Name="КодПроизводителя" Type="int" Nullable="false" />
@@ -261,6 +261,7 @@
           <Property Name="Вес" Type="decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="Высота" Type="int" Nullable="false" />
           <Property Name="Ширина" Type="int" Nullable="false" />
+          <Property Name="Глубина" Type="int" Nullable="false" />
           <Property Name="Статус" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ТоварПоставка">
@@ -1406,8 +1407,8 @@
             <PropertyRef Name="Код" />
           </Key>
           <Property Name="Код" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Артикул" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ШтрихКод" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Артикул" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ШтрихКод" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Наименование" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Описание" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
           <Property Name="КодПроизводителя" Type="Int32" Nullable="false" />
@@ -1422,6 +1423,7 @@
           <Property Name="Вес" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="Высота" Type="Int32" Nullable="false" />
           <Property Name="Ширина" Type="Int32" Nullable="false" />
+          <Property Name="Глубина" Type="Int32" Nullable="false" />
           <Property Name="Статус" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ЕдиницаИзмерения" Relationship="Self.FK_Товар_ЕдиницаИзмерения" FromRole="Товар" ToRole="ЕдиницаИзмерения" />
           <NavigationProperty Name="ЗаказТовар" Relationship="Self.FK_ЗаказТовар_Товар" FromRole="Товар" ToRole="ЗаказТовар" />
@@ -2501,6 +2503,7 @@
                 <ScalarProperty Name="Вес" ColumnName="Вес" />
                 <ScalarProperty Name="Высота" ColumnName="Высота" />
                 <ScalarProperty Name="Ширина" ColumnName="Ширина" />
+                <ScalarProperty Name="Глубина" ColumnName="Глубина" />
                 <ScalarProperty Name="Статус" ColumnName="Статус" />
               </MappingFragment>
             </EntityTypeMapping>

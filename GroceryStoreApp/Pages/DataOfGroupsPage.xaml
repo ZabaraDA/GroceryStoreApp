@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GroceryStoreApp.Pages"
-      xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
+      xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary" xmlns:vm="clr-namespace:GroceryStoreApp.ViewModels"
       mc:Ignorable="d" FontFamily="{StaticResource Blogger Sans}">
     <Page.Resources>
         <Style TargetType="{x:Type ToggleButton}" x:Key="GroupingToggleButton">
@@ -353,6 +353,9 @@
             <Setter Property="Template" Value="{StaticResource ListViewButtonTemplate}"></Setter>
         </Style>
     </Page.Resources>
+    <Page.DataContext>
+        <vm:AddProductViewModel></vm:AddProductViewModel>
+    </Page.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -370,7 +373,7 @@
             <my:NavigationButton Content="+ Группа" Style="{StaticResource NavigationStyle}" Margin="0" Background="Transparent"></my:NavigationButton>
             <my:NavigationButton Content="|Товар" Style="{StaticResource NavigationStyle}" Margin="0" Background="Transparent"></my:NavigationButton>
         </StackPanel>-->
-        <ListView x:Name="GroupListView" Grid.Row="1" Margin="1" BorderThickness="0"
+        <ListView x:Name="GroupListView" Grid.Row="1" Margin="1" BorderThickness="0" ItemsSource="{Binding ProductList}"
                   ItemContainerStyle="{StaticResource GroupItemStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   Style="{StaticResource ProductListViewStyle}" Background="White">
             <ListView.View>

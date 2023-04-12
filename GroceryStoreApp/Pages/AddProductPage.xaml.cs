@@ -1,9 +1,14 @@
-﻿using GroceryStoreApp.Databases;
+﻿using GroceryStoreApp.CsClasses;
+//using GroceryStoreApp.Databases;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,37 +29,38 @@ namespace GroceryStoreApp.Pages
         public int X { get; set; }
         public int Y { get; set; }
         public int Z { get; set; }
-        public int CathetusA { get; set; }
-        public int CathetusB { get; set; }
+        public double CathetusA { get; set; }
+        public double CathetusB { get; set; }
+        public int MaxSize { get; set; }
         public Cube()
         {
-
+            CathetusB = Z * 0.5;
+            CathetusA = Z * 0.3;
+        }
+        public void CalculateCathetusA()
+        {
+            CathetusA = Z * 0.3;
+        }
+        public void CalculateCathetusB()
+        {
+            CathetusB = Z * 0.5;
         }
 
     }
+    
     public partial class AddProductPage : Page
     {
+        //private Товар _currentProduct = new Товар();
 
-        public Cube Cube = new Cube();
-
-        private readonly GroceryStoreDatabasesEntities databasesEntities = new GroceryStoreDatabasesEntities();
-        readonly OpenFileDialog openFileDialog = new OpenFileDialog()
-        {
-            Multiselect = false,
-            Filter = "Images (*.JPG; *.PNG)| *.JPG;*.PNG"
-        };
-        private Товар _currentProduct;
-        public AddProductPage(Товар selectedProduct)
+        //private readonly GroceryStoreDatabasesEntities _databasesEntities = new GroceryStoreDatabasesEntities();
+        public AddProductPage()
         {
             InitializeComponent();
-            if (selectedProduct != null)
-            {
-                _currentProduct = selectedProduct;
-            }
-
+            //if (selectedProduct != null)
+            //{
+            //    _currentProduct = selectedProduct;
+            //}
         }
-
-        byte[] photoProduct;
 
         private void AddProductButton_Click(object sender, RoutedEventArgs e)
         {
@@ -102,7 +108,7 @@ namespace GroceryStoreApp.Pages
                     }
                 }
             }
-            if (CostTextBox.Text == null || CostTextBox.Text == "")
+            if (string.IsNullOrEmpty(CostTextBox.Text))
             {
                 errors.AppendLine("Поле стоимость не может быть пустым");
             }
@@ -118,7 +124,7 @@ namespace GroceryStoreApp.Pages
                 }
             }
 
-            if (VATTextBox.Text == null || VATTextBox.Text == "")
+            if (string.IsNullOrEmpty(VATTextBox.Text))
             {
                 errors.AppendLine("Поле стоимость не может быть пустым");
             }
@@ -144,28 +150,12 @@ namespace GroceryStoreApp.Pages
                 errors.AppendLine("Укажите производителя товара");
             }
 
-            if (VATTextBox.Text == null || VATTextBox.Text == "")
-            {
-                errors.AppendLine("Поле стоимость не может быть пустым");
-            }
-            else
-            {
-                for (int i = 0; i < VATTextBox.Text.Length; i++)
-                {
-                    if (!Char.IsDigit(VATTextBox.Text[i]))
-                    {
-                        errors.AppendLine("Стоимость должна состоять из цифр");
-                        break;
-                    }
-                }
-            }
-
             if (UnitComboBox.SelectedIndex == 0)
             {
                 errors.AppendLine("Укажите единицу измерения товара");
             }
 
-            if (WeightTextBox.Text == null || WeightTextBox.Text == "")
+            if (string.IsNullOrEmpty(WeightTextBox.Text))
             {
                 errors.AppendLine("Поле стоимость не может быть пустым");
             }
@@ -181,7 +171,7 @@ namespace GroceryStoreApp.Pages
                 }
             }
 
-            if (WidthTextBox.Text == null || WidthTextBox.Text == "")
+            if (string.IsNullOrEmpty(WidthTextBox.Text))
             {
                 errors.AppendLine("Поле ширина не может быть пустым");
             }
@@ -197,7 +187,7 @@ namespace GroceryStoreApp.Pages
                 }
             }
 
-            if (HeightTextBox.Text == null || WidthTextBox.Text == "")
+            if (string.IsNullOrEmpty(HeightTextBox.Text))
             {
                 errors.AppendLine("Поле ширина не может быть пустым");
             }
@@ -213,15 +203,15 @@ namespace GroceryStoreApp.Pages
                 }
             }
 
-            if (photoProduct == null)
-            {
-                if (MessageBox.Show("Добавить товар без изображения?", "Внимание", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
-                {
-                    return;
-                }
-            }
+            //if (_currentProduct.Фото == null)
+            //{
+            //    if (MessageBox.Show("Добавить товар без изображения?", "Внимание", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
+            //    {
+            //        return;
+            //    }
+            //}
 
-            if (DescriptionTextBox.Text == null || DescriptionTextBox.Text == "")
+            if (string.IsNullOrEmpty(DescriptionTextBox.Text))
             {
                 if (MessageBox.Show("Добавить товар без описания?", "Внимание", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
                 {
@@ -230,91 +220,42 @@ namespace GroceryStoreApp.Pages
             }
 
             #endregion
-            databasesEntities.Товар.Add(new Товар
-            {
-                Артикул = VendorCodeTextBox.Text,
-                ШтрихКод = BarcodeCodeTextBox.Text,
-                ЕдиницаИзмерения = UnitComboBox.SelectedItem as ЕдиницаИзмерения,
-                Категория = CategoryComboBox.SelectedItem as Категория,
-                Производитель = ManufacturerComboBox.SelectedItem as Производитель,
-                Описание = DescriptionTextBox.Text,
-                Количество = 0,
-                НДС = Convert.ToByte(VATTextBox.Text),
-                Фото = photoProduct,
-                Наименование = NameTextBox.Text,
-                Высота = Convert.ToInt16(WidthTextBox.Text),
-                Ширина = Convert.ToInt16(HeightTextBox.Text),
-                Цена = Convert.ToInt16(CostTextBox.Text),
-                СрокГодности = Convert.ToInt16(ExpirationDateTextBox.Text),
-                Вес = Convert.ToInt32(WeightTextBox.Text),
-                Статус = true
-            });
-            try
-            {
-                databasesEntities.SaveChanges();
+            //databasesEntities.Товар.Add(new Товар
+            //{
+            //    Артикул = VendorCodeTextBox.Text,
+            //    ШтрихКод = BarcodeCodeTextBox.Text,
+            //    ЕдиницаИзмерения = UnitComboBox.SelectedItem as ЕдиницаИзмерения,
+            //    Категория = CategoryComboBox.SelectedItem as Категория,
+            //    Производитель = ManufacturerComboBox.SelectedItem as Производитель,
+            //    Описание = DescriptionTextBox.Text,
+            //    Количество = 0,
+            //    НДС = Convert.ToByte(VATTextBox.Text),
+            //    Фото = photoProduct,
+            //    Наименование = NameTextBox.Text,
+            //    Высота = Convert.ToInt16(WidthTextBox.Text),
+            //    Ширина = Convert.ToInt16(HeightTextBox.Text),
+            //    Цена = Convert.ToInt16(CostTextBox.Text),
+            //    СрокГодности = Convert.ToInt16(ExpirationDateTextBox.Text),
+            //    Вес = Convert.ToInt32(WeightTextBox.Text),
+            //    Статус = true
+            //});
+            //_currentProduct.Фото = _photoProduct;
+            //_databasesEntities.Товар.AddOrUpdate(_currentProduct);
+            //try
+            //{
+            //    _databasesEntities.SaveChanges();
 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
 
         }
 
         private void AddPhotoButton_Click(object sender, RoutedEventArgs e)
         {
-            if (openFileDialog.ShowDialog() == true)
-            {
-                BitmapImage bitmapImage = new BitmapImage();
-                bitmapImage.BeginInit();
-                bitmapImage.UriSource = new Uri(openFileDialog.FileName);
-                bitmapImage.EndInit();
-
-                CroppedBitmap croppedBitmap;
-                int pixelSizeImage = 800;
-
-                if (bitmapImage.PixelWidth > bitmapImage.PixelHeight)
-                {
-                    int widthPoint = (bitmapImage.PixelWidth - bitmapImage.PixelHeight) / 2;
-                    croppedBitmap = new CroppedBitmap(bitmapImage, new Int32Rect(widthPoint, 0, bitmapImage.PixelHeight, bitmapImage.PixelHeight));
-                }
-                else if (bitmapImage.PixelWidth < bitmapImage.PixelHeight)
-                {
-                    int heightPoint = (bitmapImage.PixelHeight - bitmapImage.PixelWidth) / 2;
-                    croppedBitmap = new CroppedBitmap(bitmapImage, new Int32Rect(0, heightPoint, bitmapImage.PixelWidth, bitmapImage.PixelWidth));
-                }
-                else
-                {
-                    croppedBitmap = new CroppedBitmap(bitmapImage, new Int32Rect(0, 0, (int)(bitmapImage.PixelWidth), (int)(bitmapImage.PixelWidth)));
-                }
-
-                using (MemoryStream memoryStream = new MemoryStream())
-                {
-                    JpegBitmapEncoder bitmapEncoder = new JpegBitmapEncoder();
-                    bitmapEncoder.Frames.Add(BitmapFrame.Create(croppedBitmap));
-                    bitmapEncoder.Save(memoryStream);
-
-                    bitmapImage = new BitmapImage();
-                    bitmapImage.BeginInit();
-                    bitmapImage.StreamSource = memoryStream;
-
-                    bitmapImage.DecodePixelHeight = pixelSizeImage;
-                    bitmapImage.DecodePixelWidth = pixelSizeImage;
-                    memoryStream.Seek(0, SeekOrigin.Begin);
-                    bitmapImage.EndInit();
-
-                    MemoryStream memory = new MemoryStream();
-                    bitmapEncoder = new JpegBitmapEncoder();
-                    bitmapEncoder.Frames.Add(BitmapFrame.Create(bitmapImage));
-                    bitmapEncoder.Save(memory);
-
-
-                    photoProduct = memory.ToArray();
-                    PhotoProductImageBrush.ImageSource = bitmapImage;
-                    memory.Dispose();
-                }
-
-            }
+            //_currentProduct.Фото = PhotoImportClass.ImportToByte(800);
         }
 
         private void ClearInputFields_Click(object sender, RoutedEventArgs e)
@@ -322,49 +263,45 @@ namespace GroceryStoreApp.Pages
 
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            var categoryItems = databasesEntities.Категория.ToList();
-            categoryItems.Insert(0, new Категория
-            {
-                Наименование = "Выберите категорию",
-            });
+        //private void Page_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    var categoryItems = _databasesEntities.Категория.ToList();
+        //    categoryItems.Insert(0, new Категория
+        //    {
+        //        Наименование = "Выберите категорию",
+        //    });
 
-            CategoryComboBox.ItemsSource = categoryItems.ToList();
-            CategoryComboBox.DisplayMemberPath = "Наименование";
-            CategoryComboBox.SelectedIndex = 0;
+        //    CategoryComboBox.ItemsSource = categoryItems.ToList();
+        //    CategoryComboBox.DisplayMemberPath = "Наименование";
+        //    CategoryComboBox.SelectedIndex = 0;
 
-            var manufacturerItems = databasesEntities.Производитель.ToList();
-            manufacturerItems.Insert(0, new Производитель
-            {
-                Наименование = "Выберите производителя"
+        //    var manufacturerItems = _databasesEntities.Производитель.ToList();
+        //    manufacturerItems.Insert(0, new Производитель
+        //    {
+        //        Наименование = "Выберите производителя"
 
-            });
-            ManufacturerComboBox.ItemsSource = manufacturerItems.ToList();
-            ManufacturerComboBox.DisplayMemberPath = "Наименование";
-            ManufacturerComboBox.SelectedIndex = 0;
+        //    });
+        //    ManufacturerComboBox.ItemsSource = manufacturerItems.ToList();
+        //    ManufacturerComboBox.DisplayMemberPath = "Наименование";
+        //    ManufacturerComboBox.SelectedIndex = 0;
 
-            var unitItems = databasesEntities.ЕдиницаИзмерения.ToList();
-            unitItems.Insert(0, new ЕдиницаИзмерения
-            {
-                Наименование = "Выберите единицу измерения",
-                Формат = false,
+        //    var unitItems = _databasesEntities.ЕдиницаИзмерения.ToList();
+        //    unitItems.Insert(0, new ЕдиницаИзмерения
+        //    {
+        //        Наименование = "Выберите единицу измерения",
+        //        Формат = false,
 
-            });
+        //    });
 
-            UnitComboBox.ItemsSource = unitItems.ToList();
-            UnitComboBox.DisplayMemberPath = "Наименование";
-            UnitComboBox.SelectedIndex = 0;
-            DataContext = _currentProduct;
-        }
+        //    UnitComboBox.ItemsSource = unitItems.ToList();
+        //    UnitComboBox.DisplayMemberPath = "Наименование";
+        //    UnitComboBox.SelectedIndex = 0;
+
+        //    //DataContext = _currentProduct;
+        //}
 
         private void AddManufacturerButton_Click(object sender, RoutedEventArgs e)
         {
-            //List<Товар> product = databasesEntities.Товар.ToList();
-            //databasesEntities.Списание.Add(new Списание
-            //{
-            //    Товар = product,
-            //});
         }
 
         private void AddCategoryButton_Click(object sender, RoutedEventArgs e)
@@ -381,5 +318,12 @@ namespace GroceryStoreApp.Pages
         {
 
         }
+
+        private void TextBoxWithRemoved_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //Cube.CalculateCathetusB();
+            //Cube.CalculateCathetusA();
+        }
     }
 }
+

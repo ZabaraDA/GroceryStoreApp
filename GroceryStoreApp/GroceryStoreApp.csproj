@@ -65,6 +65,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\ActionCommand.cs" />
     <Compile Include="CsClasses\ConverterClass.cs" />
     <Compile Include="CsClasses\ParametersClass.cs" />
     <Compile Include="CsClasses\PhotoImportClass.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="Databases\ЭлементПланировка.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Pages\AddCategoryPage.xaml.cs">
       <DependentUpon>AddCategoryPage.xaml</DependentUpon>
     </Compile>
@@ -215,6 +217,11 @@
     <Compile Include="Pages\WelcomePage.xaml.cs">
       <DependentUpon>WelcomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\PageService.cs" />
+    <Compile Include="ViewModels\AddProductViewModel.cs" />
+    <Compile Include="ViewModels\GroupViewModel.cs" />
+    <Compile Include="ViewModels\MenuViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Windows\CaptchaWindow.xaml.cs">
       <DependentUpon>CaptchaWindow.xaml</DependentUpon>
     </Compile>
@@ -374,6 +381,7 @@
     </Content>
     <Content Include="Images\AddSVG.svg" />
     <Content Include="Images\DeacitvateSVG.svg" />
+    <Content Include="Images\Deletes.svg" />
     <Resource Include="Images\plus.png" />
   </ItemGroup>
   <ItemGroup />

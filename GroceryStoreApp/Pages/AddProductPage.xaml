@@ -4,10 +4,20 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GroceryStoreApp.Pages" 
-      xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
+      xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary" 
+      xmlns:vm="clr-namespace:GroceryStoreApp.ViewModels"
       mc:Ignorable="d" 
-      Title="AddProductPage" Loaded="Page_Loaded">
+      Title="AddProductPage">
     <Page.Resources>
+        <Style TargetType="{x:Type my:NavigationButton}" BasedOn="{StaticResource StateNavigationButtonStyle}">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Foreground" Value="White"/>
+            <!--<Setter Property="Background" Value="Gray"/>-->
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template" Value="{StaticResource ListViewButtonTemplate}"></Setter>
+        </Style>
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="TextWrapping" Value="NoWrap"/>
             <Setter Property="TextTrimming" Value="None"/>
@@ -42,6 +52,9 @@
             <Setter Property="Margin" Value="10 20 0 0"/>
         </Style>
     </Page.Resources>
+    <Page.DataContext>
+        <vm:AddProductViewModel></vm:AddProductViewModel>
+    </Page.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
@@ -50,11 +63,14 @@
         <ScrollViewer>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Background="#FFCCCCCC">
                 <StackPanel Margin="30">
-                    <Border CornerRadius="10" Width="400" Height="400" HorizontalAlignment="Center" BorderBrush="Black" BorderThickness="1" Margin="0 0 0 20">
+                    <Border CornerRadius="10"  Width="400" Height="400" HorizontalAlignment="Center" BorderBrush="Black" BorderThickness="1" Margin="0 0 0 20">
                         <Border.Background>
-                            <ImageBrush Stretch="UniformToFill" x:Name="PhotoProductImageBrush">
+                            <ImageBrush Stretch="UniformToFill" 
+                                        x:Name="PhotoProductImageBrush">
                                 <ImageBrush.ImageSource>
-                                    <Binding Path="Фото">
+                                    <Binding Path="Photo" Mode="TwoWay"
+                                             UpdateSourceTrigger="PropertyChanged" 
+                                             Converter="{StaticResource ByteArrayToBitmapImageConverter}">
                                         <Binding.TargetNullValue>
                                             <ImageSource>/Images/ImageStub.png</ImageSource>
                                         </Binding.TargetNullValue>
@@ -67,7 +83,56 @@
                         </Border.Background>
                     </Border>
 
-                    <Grid x:Name="aa">
+                    <!--<Grid Width="200" Height="200" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Fill="#2a52be" StrokeThickness="1" StrokeDashArray="2 2"
+                                   Stroke="Beige" HorizontalAlignment="Left" Grid.Column="0" 
+                                   VerticalAlignment="Top" 
+                                   Width="{Binding ElementName=WidthTextBox, Path=Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=50}"
+                                   Grid.ColumnSpan="2">
+                            <Rectangle.Height>
+                                <Binding Converter="{StaticResource CubeCathetusAConverter}" 
+                                         Path="Глубина" Mode="TwoWay"
+                                         UpdateSourceTrigger="PropertyChanged" 
+                                         TargetNullValue="15"
+                                         FallbackValue="15">
+
+                                </Binding>
+                            </Rectangle.Height>
+                            <Rectangle.LayoutTransform>
+                                <SkewTransform AngleX="-60" AngleY="0"></SkewTransform>
+                            </Rectangle.LayoutTransform>
+                        </Rectangle>
+                        <Rectangle StrokeThickness="1" Fill="#2a52be" StrokeDashArray="2 2" Stroke="Beige" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                   Height="{Binding ElementName=HeightTextBox, Path=Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=50}" Grid.Row="1"
+                                   Width="{Binding ElementName=WidthTextBox, Path=Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged ,FallbackValue=50}">
+                        </Rectangle>
+                        <Rectangle Fill="#2a52be" StrokeThickness="1" StrokeDashArray="2 2" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top"
+                                           Height="{Binding ElementName=HeightTextBox, Path=Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=50}" 
+                                           Stroke="Beige" HorizontalAlignment="Left">
+                            <Rectangle.Width>
+                                <Binding Converter="{StaticResource CubeCathetusBConverter}" 
+                                         Path="Глубина" Mode="TwoWay"
+                                         UpdateSourceTrigger="PropertyChanged" 
+                                         TargetNullValue="25"
+                                         FallbackValue="25">
+
+                                </Binding>
+                            </Rectangle.Width>
+                            <Rectangle.RenderTransform>
+                                <SkewTransform AngleX="0" AngleY="-30"></SkewTransform>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                    </Grid>-->
+                    <!--<StackPanel x:Name="aa">
+                        <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
@@ -78,46 +143,62 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Fill="#2a52be" StrokeThickness="1" StrokeDashArray="2 2"
                                    Stroke="Beige" HorizontalAlignment="Center"
-                                   VerticalAlignment="Top" Height="{Binding ElementName=WidthTextBox, Path=Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=15}"
-                                   Width="{Binding ElementName=WidthTextBox, Path=Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=50}" Grid.ColumnSpan="2">
+                                   VerticalAlignment="Top" Height="{Binding Path=CathetusA,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=15}"
+                                   Width="{Binding Path=X,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=50}" Grid.ColumnSpan="2">
                             <Rectangle.RenderTransform>
                                 <SkewTransform AngleX="-60" AngleY="0"></SkewTransform>
                             </Rectangle.RenderTransform>
                         </Rectangle>
                         <Rectangle StrokeThickness="1" Fill="#2a52be" StrokeDashArray="2 2" Stroke="Beige" HorizontalAlignment="Right"
-                                   Height="{Binding ElementName=WidthTextBox, Path=Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=50}" Grid.Row="1"
-                                   Width="{Binding ElementName=WidthTextBox, Path=Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged ,FallbackValue=50}">
+                                   Height="{Binding Path=Y,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=50}" Grid.Row="1"
+                                   Width="{Binding Path=X,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged ,FallbackValue=50}">
                         </Rectangle>
                         <Rectangle Fill="#2a52be" StrokeThickness="1" StrokeDashArray="2 2" Grid.Column="1" Grid.Row="1"
-                                           Height="{Binding ElementName=WidthTextBox, Path=Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=50}" 
+                                           Height="{Binding Path=Y,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=50}" 
                                            Stroke="Beige" HorizontalAlignment="Left" 
-                                           Width="{Binding ElementName=WidthTextBox, Path=Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=25}">
+                                           Width="{Binding Path=CathetusB,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=25}">
                             <Rectangle.RenderTransform>
                                 <SkewTransform AngleX="0" AngleY="-30"></SkewTransform>
                             </Rectangle.RenderTransform>
                         </Rectangle>
                     </Grid>
-                    <Button x:Name="AddPhotoButton" Content="Добавить фото" Width="200" Click="AddPhotoButton_Click"></Button>
+                    
+                        
+                    <TextBlock Text="Ширина при размещении"></TextBlock>
+                    <my:TextBoxWithRemoved Uid="Введите ширина товара" Text="{Binding Path=X,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=50}"
+                                           TextChanged="TextBoxWithRemoved_TextChanged" Cursor="IBeam"></my:TextBoxWithRemoved>
+                    <TextBlock Text="Высота при размещении"></TextBlock>
+                    <my:TextBoxWithRemoved Uid="Введите высоту товара" Text="{Binding Path=Y,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=50}"
+                                           TextChanged="TextBoxWithRemoved_TextChanged"></my:TextBoxWithRemoved>
+                    <TextBlock Text="Высота при размещении"></TextBlock>
+                    <my:TextBoxWithRemoved Uid="Введите высоту товара" Text="{Binding Path=Z,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,FallbackValue=50}"
+                                           TextChanged="TextBoxWithRemoved_TextChanged" Cursor="IBeam"></my:TextBoxWithRemoved>
+                    </StackPanel>-->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        
+                    <Button Content="Добавить фото" Width="200" Command="{Binding AddPhotoCommand}"  Margin="0"></Button>
+                    <my:NavigationButton Data="{StaticResource DeletePathData}" Command="{Binding ClearPhotoCommand}"></my:NavigationButton>
+                    </StackPanel>
                     <TextBlock Text="Штрих код"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите штрих код" Text="{Binding ШтрихКод}"
+                    <my:TextBoxWithRemoved Uid="Введите штрих код" Text="{Binding Barcode}"
                                            x:Name="BarcodeCodeTextBox"></my:TextBoxWithRemoved>
                     <TextBlock Text="Артикул товара"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите артикул товара" Text="{Binding Артикул}"
+                    <my:TextBoxWithRemoved Uid="Введите артикул товара" Text="{Binding Article}"
                                            x:Name="VendorCodeTextBox"></my:TextBoxWithRemoved>
                     <TextBlock Text="Наименование товара"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите наименование товара" Text="{Binding Наименование}"
+                    <my:TextBoxWithRemoved Uid="Введите наименование товара" Text="{Binding Name}"
                                            x:Name="NameTextBox"></my:TextBoxWithRemoved>
                     <TextBlock Text="Описание товара"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите описание товара" Text="{Binding Описание}"
+                    <my:TextBoxWithRemoved Uid="Введите описание товара" Height="140" Text="{Binding Description}"
                                            x:Name="DescriptionTextBox"></my:TextBoxWithRemoved>
                 </StackPanel>
 
                 <StackPanel Margin="10 10 30 0">
                     <TextBlock Text="Стоимость товара"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите стоимость" Text="{Binding Цена}"
+                    <my:TextBoxWithRemoved Uid="Введите стоимость" Text="{Binding Cost}"
                                            x:Name="CostTextBox"></my:TextBoxWithRemoved>
                     <TextBlock Text="НДС к цене"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите НДС" Text="{Binding НДС}"
+                    <my:TextBoxWithRemoved Uid="Введите НДС" Text="{Binding VAT}"
                                            x:Name="VATTextBox"></my:TextBoxWithRemoved>
                     <TextBlock Text="Категория товара"></TextBlock>
                     <ComboBox x:Name="CategoryComboBox" 
@@ -144,31 +225,37 @@
                     <my:TextBoxWithRemoved Uid="Введите вес нестандартной единицы товара" Text="{Binding Вес}"
                                            x:Name="WeightTextBox"></my:TextBoxWithRemoved>
                     <TextBlock Text="Ширина при размещении"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите ширина товара" Text="{Binding Ширина,FallbackValue=50}"
+                    <my:TextBoxWithRemoved Uid="Введите ширина товара" Text="{Binding Ширина,FallbackValue=50,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                            x:Name="WidthTextBox"></my:TextBoxWithRemoved>
                     <TextBlock Text="Высота при размещении"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите высоту товара" Text="{Binding Высота,FallbackValue=50}"
+                    <my:TextBoxWithRemoved Uid="Введите высоту товара" Text="{Binding Высота,FallbackValue=50,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                            x:Name="HeightTextBox"></my:TextBoxWithRemoved>
                     <TextBlock Text="Высота при размещении"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите высоту товара" Text="{Binding Глубина,FallbackValue=50}"
-                                           x:Name="GTextBox"></my:TextBoxWithRemoved>
+                    <my:TextBoxWithRemoved Uid="Введите глубину товара" Text="{Binding Глубина,FallbackValue=50,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                           x:Name="DepthTextBox"></my:TextBoxWithRemoved>
+                    <TextBlock Text="Высота при размещении"></TextBlock>
+                    <ComboBox  SelectedIndex="{Binding Path=Статус, TargetNullValue=0,FallbackValue=0}"
+                               x:Name="StatusComboBox">
+                        <ComboBoxItem Content="Не активен"></ComboBoxItem>
+                        <ComboBoxItem Content="Активен"></ComboBoxItem>
+                    </ComboBox>
                 </StackPanel>
 
             </StackPanel>
         </ScrollViewer>
-        <StackPanel Grid.Row="1" Background="#FFC7C7C7" VerticalAlignment="Bottom">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+        <StackPanel Grid.Row="1" Background="#FFC7C7C7" VerticalAlignment="Bottom" >
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 20">
                 <Button x:Name="AddProductButton" Content="Добавить товар" Click="AddProductButton_Click"></Button>
                 <Button Content="Очистить все поля" x:Name="ClearInputFieldsButton" Click="ClearInputFieldsButton_Click"></Button>
                 <Button Content="Назад" x:Name="GoBackButton" Click="GoBackButton_Click"></Button>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 20">
+            <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 20">
 
                 <Button Content="Категории" x:Name="AddCategoryButton" Click="AddCategoryButton_Click"></Button>
                 <Button Content="Производители" x:Name="AddManufacturerButton" Click="AddManufacturerButton_Click"></Button>
                 <Button Content="Единицы измерения" x:Name="AddUnitButton" Click="ClearInputFields_Click"></Button>
 
-            </StackPanel>
+            </StackPanel>-->
         </StackPanel>
     </Grid>
 </Page>

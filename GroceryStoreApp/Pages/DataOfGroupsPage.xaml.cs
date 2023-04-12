@@ -23,7 +23,7 @@ namespace GroceryStoreApp.Pages
         public DataOfGroupsPage()
         {
             InitializeComponent();
-            UpdateProductList();
+            //UpdateProductList();
         }
 
         private void UpdateProductList()
@@ -48,7 +48,7 @@ namespace GroceryStoreApp.Pages
             Товар selectedProduct = (sender as Button).DataContext as Товар;
             if(selectedProduct != null)
             {
-                NavigationService.Navigate(new AddProductPage(selectedProduct));
+                NavigationService.Navigate(new AddProductPage());
             }
         }
 

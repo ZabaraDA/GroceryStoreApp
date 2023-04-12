@@ -3,12 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GroceryStoreApp.Windows" xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
+        xmlns:local="clr-namespace:GroceryStoreApp.Windows" 
+        xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary" 
+        xmlns:vm="clr-namespace:GroceryStoreApp.ViewModels"
         mc:Ignorable="d" StateChanged="Window_StateChanged"
         Title="MenuWindow" Height="900" Width="1440" WindowStartupLocation="CenterScreen"
         MouseLeftButtonDown="Window_MouseLeftButtonDown" WindowStyle="None"
         FontSize="20" FontFamily="Bahnschrift Light SemiCondensed"
         BorderBrush="Transparent">
+    <Window.DataContext>
+        <vm:MenuViewModel></vm:MenuViewModel>
+    </Window.DataContext>
     <WindowChrome.WindowChrome>
         <WindowChrome NonClientFrameEdges="None" GlassFrameThickness="{x:Static WindowChrome.GlassFrameCompleteThickness}"
                       CaptionHeight="40" ResizeBorderThickness="5" />
@@ -26,7 +31,7 @@
         </Border>
 
         <Frame NavigationUIVisibility="Hidden" Background="{StaticResource Frame.Static.Background}" 
-               x:Name="MenuFrame" Grid.Row="1" Grid.Column="1"/>
+               x:Name="MenuFrame" Grid.Row="1" Grid.Column="1" Content="{Binding PageSource}"/>
         <TextBlock Width="auto" Margin="0 5 0 0"
                Foreground="White" Grid.ColumnSpan="2" Name="StatusBarTextBlock"
                HorizontalAlignment="Center"/>
