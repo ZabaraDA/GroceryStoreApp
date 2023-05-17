@@ -1,4 +1,5 @@
 ﻿using GroceryStoreApp.Databases;
+using GroceryStoreApp.Models.Databases;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
@@ -19,11 +20,11 @@ namespace GroceryStoreApp.Pages
 {
     public partial class DataOfGroupsPage : Page
     {
-        GroceryStoreDatabasesEntities _databasesEntities = new GroceryStoreDatabasesEntities();
+        public readonly GroceryStoreDatabasesEntities _databasesEntities = new GroceryStoreDatabasesEntities();
         public DataOfGroupsPage()
         {
             InitializeComponent();
-            //UpdateProductList();
+            UpdateProductList();
         }
 
         private void UpdateProductList()

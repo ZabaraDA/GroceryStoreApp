@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:GroceryStoreApp.CsClasses"
              xmlns:my="clr-namespace:WpfCustomControlLibrary;assembly=WpfCustomControlLibrary"
              xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
-             StartupUri="Windows/AuthorizationWindow.xaml">
+             StartupUri="Windows/MenuWindow.xaml">
     <!--StartupUri="Windows/MenuWindow.xaml">-->
     <Application.Resources>
         <!--#region converter-->

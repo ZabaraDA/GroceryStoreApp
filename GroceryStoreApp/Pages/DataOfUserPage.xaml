@@ -14,7 +14,6 @@
             <Setter Property="Height" Value="auto"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="HorizontalAlignment" Value="Left"></Setter>
-
         </Style>
         <Style TargetType="{x:Type my:TextBoxWithRemoved}">
             <Setter Property="Width" Value="auto"/>
@@ -46,11 +45,11 @@
                 <Setter.Value>
                     <ControlTemplate>
                         <Grid Width="220">
-                            <Border CornerRadius="5" x:Name="border">
+                            <Border CornerRadius="5" x:Name="border" BorderThickness="1">
                                 <Border.Background >
                                     <LinearGradientBrush>
-                                        <GradientStop Color="{Binding Color}" Offset="0"/>
-                                        <GradientStop Color="Aquamarine" Offset="1"/>
+                                        <GradientStop Color="LightGray" Offset="0"/>
+                                        <GradientStop Color="Gray" Offset="1"/>
                                     </LinearGradientBrush>
                                 </Border.Background>
                                 <StackPanel Orientation="Vertical">
@@ -77,8 +76,8 @@
                             </Border>
                         </Grid>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver"  Value="True">
-                                <Setter TargetName="border" Property="Background" Value="Black"></Setter>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="Green"></Setter>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -100,14 +99,15 @@
 
         <ListView Name="UserListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   HorizontalAlignment="Center" HorizontalContentAlignment="Center" 
-                  BorderBrush="{x:Null}" Background="{x:Null}" SelectionChanged="UserListView_SelectionChanged" Grid.RowSpan="2">
+                  BorderBrush="{x:Null}" Background="{x:Null}" 
+                  SelectionChanged="UserListView_SelectionChanged" Grid.RowSpan="2">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel></WrapPanel>
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
-           
         </ListView>
+        
         <Grid Height="220" Name="UserGrid" VerticalAlignment="Top" Visibility="Collapsed" Width="1050"  HorizontalAlignment="Center" Margin="0,103,0,0" Grid.Row="1">
             <Border CornerRadius="5" BorderBrush="#FF3E3E3E" BorderThickness="1">
                 <Border.Background>

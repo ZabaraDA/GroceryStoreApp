@@ -18,7 +18,7 @@
         <WindowChrome NonClientFrameEdges="None" GlassFrameThickness="{x:Static WindowChrome.GlassFrameCompleteThickness}"
                       CaptionHeight="40" ResizeBorderThickness="5" />
     </WindowChrome.WindowChrome>
-    <Grid Margin="0">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition/>

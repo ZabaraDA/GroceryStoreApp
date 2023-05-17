@@ -1,4 +1,5 @@
 ﻿using GroceryStoreApp.Databases;
+using GroceryStoreApp.Models.Databases;
 using GroceryStoreApp.Windows;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,9 @@ namespace GroceryStoreApp.Pages
 {
     public class Product
     {
+        
         public int ID { get; set; }
+
         public int ProductID { get; set; }
         public string Name { get; set; }
         public decimal Quantity { get; set; }
@@ -100,7 +103,6 @@ namespace GroceryStoreApp.Pages
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
-
     public partial class AddSupplyPage : Page
     {
         readonly GroceryStoreDatabasesEntities _databaseEntities = new GroceryStoreDatabasesEntities();
@@ -639,7 +641,6 @@ namespace GroceryStoreApp.Pages
         }
         private void QuantityProductTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            TextBox textBox = sender as TextBox;
 
             if (e.Key >= Key.D0 && e.Key <= Key.D9 || e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9
                 || e.Key == Key.Back || e.Key == Key.Right || e.Key == Key.Left)
@@ -897,7 +898,6 @@ namespace GroceryStoreApp.Pages
             ReminderTextBlockVisiblity();
 
         }
-
         private void DivideProductButton_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;

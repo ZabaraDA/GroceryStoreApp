@@ -27,14 +27,13 @@ namespace GroceryStoreApp.Windows
         readonly List<(int access,Page page, string content, string geometryName)> navigationButtonList = new List<(int access, Page page, string content, string data)>()
         {
           (1,new AddUserPage(null), "Аккаунты","ProfilePathData"),
-          (1,new DataOfUserPage(), "Сотрудники","ProfilePathData"),
-          (1,new DataOfAddressPage(), "Адреса","ProfilePathData"),
+          (1,new DataOfUserPage(), "Сотрудники","UserPathData"),
+          (1,new DataOfAddressPage(), "Адреса","InfoPathData"),
           (3,new DataOfProductPage(), "Товары","ProductPathData"),
           (3,new AddProductPage(), "Добавить товар","AddProductPathData"),
           (3,new DataOfCategoriesPage(), "Категории","ProductPathData"),
           (3,new DataOfSupplyPage(), "Поставки","SupplyPathData"),
           (3,new DataOfGroupsPage(), "Товары","ProductPathData"),
-
         };
         public MenuWindow()
         {

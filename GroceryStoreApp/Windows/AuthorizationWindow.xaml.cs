@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using GroceryStoreApp.Databases;
+using GroceryStoreApp.Models.Databases;
 
 namespace GroceryStoreApp
 {
@@ -52,6 +53,8 @@ namespace GroceryStoreApp
 
         private void OpenButton_Click(object sender, RoutedEventArgs e)
         {
+
+
             Аккаунт selectedAccount = databasesEntities.Аккаунт.Where(x => x.Логин.Equals(LoginTextBox.Text) && x.Пароль.Equals(PasswordBox.Password)).FirstOrDefault();
 
             if (selectedAccount == null)
@@ -75,9 +78,9 @@ namespace GroceryStoreApp
             }
             else
             {
-                ParametersClass.SelectedAccount = selectedAccount;
-                //ParametersClass.SelectedUser = databasesEntities.Сотрудник.Where(x => x.Код.Equals(selectedAccount.КодСотрудника)).FirstOrDefault();
-                ParametersClass.SelectedUser = selectedAccount.Сотрудник;
+                //ParametersClass.SelectedAccount = selectedAccount;
+                ////ParametersClass.SelectedUser = databasesEntities.Сотрудник.Where(x => x.Код.Equals(selectedAccount.КодСотрудника)).FirstOrDefault();
+                //ParametersClass.SelectedUser = selectedAccount.Сотрудник;
 
                 if (incorrectly == true)
                 {                 

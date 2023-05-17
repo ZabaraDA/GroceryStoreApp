@@ -69,115 +69,116 @@
     <Compile Include="CsClasses\ConverterClass.cs" />
     <Compile Include="CsClasses\ParametersClass.cs" />
     <Compile Include="CsClasses\PhotoImportClass.cs" />
-    <Compile Include="Databases\Model1.Context.cs">
+    <Compile Include="Models\Databases\GroceryStoreDatabase.cs" />
+    <Compile Include="Models\Databases\Model1.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\Model1.cs">
+    <Compile Include="Models\Databases\Model1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\Model1.Designer.cs">
+    <Compile Include="Models\Databases\Model1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Databases\Адрес.cs">
+    <Compile Include="Models\Databases\Адрес.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\Аккаунт.cs">
+    <Compile Include="Models\Databases\Аккаунт.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\Группа.cs">
+    <Compile Include="Models\Databases\Группа.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\Должность.cs">
+    <Compile Include="Models\Databases\Должность.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\ЕдиницаИзмерения.cs">
+    <Compile Include="Models\Databases\ЕдиницаИзмерения.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\Заказ.cs">
+    <Compile Include="Models\Databases\Заказ.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\ЗаказТовар.cs">
+    <Compile Include="Models\Databases\ЗаказТовар.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\Категория.cs">
+    <Compile Include="Models\Databases\Категория.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\МодификаторЦены.cs">
+    <Compile Include="Models\Databases\МодификаторЦены.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\НаселённыйПункт.cs">
+    <Compile Include="Models\Databases\НаселённыйПункт.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\Планировка.cs">
+    <Compile Include="Models\Databases\Планировка.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\Поставка.cs">
+    <Compile Include="Models\Databases\Поставка.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\Поставщик.cs">
+    <Compile Include="Models\Databases\Поставщик.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\Производитель.cs">
+    <Compile Include="Models\Databases\Производитель.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\Регион.cs">
+    <Compile Include="Models\Databases\Регион.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\Склад.cs">
+    <Compile Include="Models\Databases\Склад.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\Сотрудник.cs">
+    <Compile Include="Models\Databases\Сотрудник.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\Списание.cs">
+    <Compile Include="Models\Databases\Списание.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\СписаниеТовар.cs">
+    <Compile Include="Models\Databases\СписаниеТовар.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\Стеллаж.cs">
+    <Compile Include="Models\Databases\Стеллаж.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\ТипНаселённогоПункта.cs">
+    <Compile Include="Models\Databases\ТипНаселённогоПункта.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\ТипРегиона.cs">
+    <Compile Include="Models\Databases\ТипРегиона.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\ТипСтелажа.cs">
+    <Compile Include="Models\Databases\ТипСтелажа.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\Товар.cs">
+    <Compile Include="Models\Databases\Товар.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\ТоварПоставка.cs">
+    <Compile Include="Models\Databases\ТоварПоставка.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\ТорговыйЗал.cs">
+    <Compile Include="Models\Databases\ТорговыйЗал.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\ТорговыйЗалСтеллаж.cs">
+    <Compile Include="Models\Databases\ТорговыйЗалСтеллаж.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\Улица.cs">
+    <Compile Include="Models\Databases\Улица.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\Филиал.cs">
+    <Compile Include="Models\Databases\Филиал.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\ФилиалТовар.cs">
+    <Compile Include="Models\Databases\ФилиалТовар.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\Элемент.cs">
+    <Compile Include="Models\Databases\Элемент.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Databases\ЭлементПланировка.cs">
+    <Compile Include="Models\Databases\ЭлементПланировка.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductModel.cs" />
@@ -218,7 +219,7 @@
       <DependentUpon>WelcomePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\PageService.cs" />
-    <Compile Include="ViewModels\AddProductViewModel.cs" />
+    <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\GroupViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
@@ -337,11 +338,11 @@
     <Resource Include="Fonts\CaviarDreams_Bold.ttf" />
     <Resource Include="Fonts\CaviarDreams_BoldItalic.ttf" />
     <Resource Include="Fonts\CaviarDreams_Italic.ttf" />
-    <EntityDeploy Include="Databases\Model1.edmx">
+    <EntityDeploy Include="Models\Databases\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Databases\Model1.edmx.diagram">
+    <None Include="Models\Databases\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
@@ -369,19 +370,19 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Databases\Model1.Context.tt">
+    <Content Include="Images\AddSVG.svg" />
+    <Content Include="Images\DeacitvateSVG.svg" />
+    <Content Include="Images\Deletes.svg" />
+    <Content Include="Models\Databases\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Databases\Model1.tt">
+    <Content Include="Models\Databases\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
-    <Content Include="Images\AddSVG.svg" />
-    <Content Include="Images\DeacitvateSVG.svg" />
-    <Content Include="Images\Deletes.svg" />
     <Resource Include="Images\plus.png" />
   </ItemGroup>
   <ItemGroup />

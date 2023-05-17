@@ -354,7 +354,7 @@
         </Style>
     </Page.Resources>
     <Page.DataContext>
-        <vm:AddProductViewModel></vm:AddProductViewModel>
+        <vm:ProductViewModel></vm:ProductViewModel>
     </Page.DataContext>
     <Grid>
         <Grid.RowDefinitions>

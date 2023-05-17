@@ -20,22 +20,16 @@ namespace GroceryStoreApp.Pages
 {
     public partial class AddCategoryPage : Page
     {
-        GroceryStoreDatabasesEntities databasesEntities = new GroceryStoreDatabasesEntities();
 
-        Категория _currentCategory;
-        Группа _currentGroup;
-        public AddCategoryPage(Группа selectedGroup, Категория selectedCategory,bool topLevel)
+      
+
+        public AddCategoryPage()
         {
             InitializeComponent();
-            DataContext = _currentCategory;
-            if (selectedCategory != null)
-            {
-                _currentCategory = selectedCategory;
-            }
-            else if(selectedGroup != null)
-            {
-                DataContext = _currentGroup = selectedGroup;
-            }
+          
+           
+            
+
         }
 
         private void AddPhotoButton_Click(object sender, RoutedEventArgs e)

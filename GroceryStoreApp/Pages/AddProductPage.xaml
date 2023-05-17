@@ -8,6 +8,9 @@
       xmlns:vm="clr-namespace:GroceryStoreApp.ViewModels"
       mc:Ignorable="d" 
       Title="AddProductPage">
+    <Page.DataContext>
+        <vm:ProductViewModel></vm:ProductViewModel>
+    </Page.DataContext>
     <Page.Resources>
         <Style TargetType="{x:Type my:NavigationButton}" BasedOn="{StaticResource StateNavigationButtonStyle}">
             <Setter Property="Height" Value="40"/>
@@ -52,9 +55,6 @@
             <Setter Property="Margin" Value="10 20 0 0"/>
         </Style>
     </Page.Resources>
-    <Page.DataContext>
-        <vm:AddProductViewModel></vm:AddProductViewModel>
-    </Page.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
@@ -181,7 +181,7 @@
                     </StackPanel>
                     <TextBlock Text="Штрих код"></TextBlock>
                     <my:TextBoxWithRemoved Uid="Введите штрих код" Text="{Binding Barcode}"
-                                           x:Name="BarcodeCodeTextBox"></my:TextBoxWithRemoved>
+                                           x:Name="BarcodeCodeTextBox" Cursor="IBeam"></my:TextBoxWithRemoved>
                     <TextBlock Text="Артикул товара"></TextBlock>
                     <my:TextBoxWithRemoved Uid="Введите артикул товара" Text="{Binding Article}"
                                            x:Name="VendorCodeTextBox"></my:TextBoxWithRemoved>
@@ -189,7 +189,7 @@
                     <my:TextBoxWithRemoved Uid="Введите наименование товара" Text="{Binding Name}"
                                            x:Name="NameTextBox"></my:TextBoxWithRemoved>
                     <TextBlock Text="Описание товара"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите описание товара" Height="140" Text="{Binding Description}"
+                    <my:TextBoxWithRemoved Uid="Введите описание товара" Text="{Binding Description}"
                                            x:Name="DescriptionTextBox"></my:TextBoxWithRemoved>
                 </StackPanel>
 
@@ -213,8 +213,8 @@
                               SelectedValue="{Binding Path= Производитель.Код}"
                               SelectedValuePath="Код"></ComboBox>
                     <TextBlock Text="Срок годности товара(дней)"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите срок годности" Text="{Binding СрокГодности}"
-                                           x:Name="ExpirationDateTextBox"></my:TextBoxWithRemoved>
+                    <my:TextBoxWithRemoved Uid="Введите срок годности" Text="{Binding ExpirationDate}"
+                                           x:Name="ExpirationDateTextBox" Cursor="IBeam"></my:TextBoxWithRemoved>
                     <TextBlock Text="Единица измерения"></TextBlock>
                     <ComboBox x:Name="UnitComboBox" 
                               SelectedItem="{Binding Path= ЕдиницаИзмерения}" 
@@ -222,19 +222,19 @@
                               SelectedValue="{Binding Path= ЕдиницаИзмерения.Код}"
                               SelectedValuePath="Код"></ComboBox>
                     <TextBlock Text="Вес единицы,кг"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите вес нестандартной единицы товара" Text="{Binding Вес}"
+                    <my:TextBoxWithRemoved Uid="Введите вес нестандартной единицы товара" Text="{Binding Weight,TargetNullValue=0,FallbackValue=0}"
                                            x:Name="WeightTextBox"></my:TextBoxWithRemoved>
                     <TextBlock Text="Ширина при размещении"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите ширина товара" Text="{Binding Ширина,FallbackValue=50,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                    <my:TextBoxWithRemoved Uid="Введите ширину товара" Text="{Binding Width}"
                                            x:Name="WidthTextBox"></my:TextBoxWithRemoved>
                     <TextBlock Text="Высота при размещении"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите высоту товара" Text="{Binding Высота,FallbackValue=50,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                    <my:TextBoxWithRemoved Uid="Введите высоту товара" Text="{Binding Height}"
                                            x:Name="HeightTextBox"></my:TextBoxWithRemoved>
                     <TextBlock Text="Высота при размещении"></TextBlock>
-                    <my:TextBoxWithRemoved Uid="Введите глубину товара" Text="{Binding Глубина,FallbackValue=50,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                    <my:TextBoxWithRemoved Uid="Введите глубину товара" Text="{Binding Depth}"
                                            x:Name="DepthTextBox"></my:TextBoxWithRemoved>
                     <TextBlock Text="Высота при размещении"></TextBlock>
-                    <ComboBox  SelectedIndex="{Binding Path=Статус, TargetNullValue=0,FallbackValue=0}"
+                    <ComboBox  SelectedItem="{Binding Status}"
                                x:Name="StatusComboBox">
                         <ComboBoxItem Content="Не активен"></ComboBoxItem>
                         <ComboBoxItem Content="Активен"></ComboBoxItem>
@@ -245,7 +245,7 @@
         </ScrollViewer>
         <StackPanel Grid.Row="1" Background="#FFC7C7C7" VerticalAlignment="Bottom" >
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 20">
-                <Button x:Name="AddProductButton" Content="Добавить товар" Click="AddProductButton_Click"></Button>
+                <Button x:Name="AddProductButton" Content="Добавить товар" Command="{Binding }"></Button>
                 <Button Content="Очистить все поля" x:Name="ClearInputFieldsButton" Click="ClearInputFieldsButton_Click"></Button>
                 <Button Content="Назад" x:Name="GoBackButton" Click="GoBackButton_Click"></Button>
             </StackPanel>

@@ -180,10 +180,11 @@
                             <StackPanel HorizontalAlignment="Left" Name="AddressInfoStackPanel">
                                 <my:TextBoxWithRemoved Uid="Фильтр по региону" Name="RegionTextBox" TextChanged="RegionTextBox_TextChanged"></my:TextBoxWithRemoved>
                                 <ComboBox x:Name="RegionComboBox" DropDownClosed="RegionComboBox_DropDownClosed"
-                                          SelectedItem="{Binding Path= Адрес.Регион}" 
-                                         
+                                          IsReadOnly="True"
+                                          IsEditable="False"
+                                          SelectedItem="{Binding Path= Адрес.Регион}"
                                           SelectedValue="{Binding Path= Адрес.КодРегиона,TargetNullValue=0,FallbackValue=0}"
-                                          SelectedValuePath="Код">
+                                          SelectedValuePath="Код" Cursor="Hand">
                                  
                                 </ComboBox>
                                 <ComboBox x:Name="TypeLocalityComboBox" DropDownClosed="TypeLocalityComboBox_DropDownClosed"

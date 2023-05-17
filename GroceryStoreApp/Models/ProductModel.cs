@@ -1,4 +1,5 @@
 ﻿using GroceryStoreApp.Databases;
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,7 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using static GroceryStoreApp.Models.ProductModel;
+using GroceryStoreApp;
+using GroceryStoreApp.Models.Databases;
 
 namespace GroceryStoreApp.Models
 {
@@ -22,13 +24,18 @@ namespace GroceryStoreApp.Models
     //}
     public interface IProductModel
     {
-        ObservableCollection<Товар> ProductList { get; set; }
+        //ObservableCollection<Товар> ProductList { get; set; }
         //event EventHandler<ProjectEventArgs> ProjectUpdated;
         //void UpdateProject(Товар updatedProject);
     }
     public class ProductModel
     {
-        private readonly GroceryStoreDatabasesEntities _databasesEntities = new GroceryStoreDatabasesEntities();
+        //private readonly GroceryStoreDatabasesEntities _databasesEntities;
+
+        public ProductModel()
+        {
+            //_databasesEntities = new GroceryStoreDatabasesEntities();
+        }
 
         //public ObservableCollection<Товар> ProductList { get; set; }
         //public event EventHandler<ProjectEventArgs> ProjectUpdated = delegate { };
@@ -46,8 +53,8 @@ namespace GroceryStoreApp.Models
         {
             try
             {
-                _databasesEntities.Товар.AddOrUpdate(currentProduct);
-                _databasesEntities.SaveChanges();
+                GroceryStoreDatabase.GetContext().Товар.AddOrUpdate(currentProduct);
+                GroceryStoreDatabase.GetContext().SaveChanges();
             }
             catch (Exception exception)
             {
@@ -70,7 +77,7 @@ namespace GroceryStoreApp.Models
 
         public List<Товар> GetAllProduct()
         {
-            return _databasesEntities.Товар.ToList();
+            return GroceryStoreDatabase.GetContext().Товар.ToList();
         }
 
     }

@@ -10,8 +10,8 @@ namespace GroceryStoreApp.CsClasses
     public class ParametersClass
     {
         public static bool TimerStart = false;
-        public static Аккаунт SelectedAccount;
-        public static Сотрудник SelectedUser;
-        public static Поставка SelectedSupply;
+        //public static Аккаунт SelectedAccount;
+        //public static Сотрудник SelectedUser;
+        //public static Поставка SelectedSupply;
     }
 }
